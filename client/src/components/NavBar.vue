@@ -70,7 +70,7 @@
 export default {
   props: ['loggedInTrue'],
   methods: {
-    onSignOut() {
+    onSignOut () {
       this.loggedInTrue = false
       localStorage.clear()
       this.$swal({
@@ -80,7 +80,7 @@ export default {
       console.log('coba')
     }
   },
-  data() {
+  data () {
     return {
 
     }

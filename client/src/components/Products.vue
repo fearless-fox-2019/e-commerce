@@ -77,7 +77,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .allProductsRow {
   margin-top: 20px;
 }
@@ -86,16 +86,10 @@ export default {
   background-color: #e0e0e0;
 }
 
-h5 {
-  font-family: 'Russo One', sans-serif;
-  text-transform: uppercase;
-  font-size: 32px;
+.card:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
-p {
-  font-family: 'Raleway', sans-serif;
-  font-size: 20px;
-}
 
 
 </style>

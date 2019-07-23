@@ -1,7 +1,7 @@
 <template>
     <b-container class="container">
       <!-- <div class="row"> -->
-        <div class="card bg-dark text-white">
+     <div class="card bg-dark text-white">
         <img src="../../public/images/shoeBackground.jpg" class="card-img" alt="cart">
           <div class="card-img-overlay" style="color: black;">
             <h5 class="card-title">Hacktiv8 Shoes</h5>

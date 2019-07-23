@@ -5,13 +5,16 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "vue-cli-service serve --open"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.0-rc.27",
     "core-js": "^2.6.5",
+    "eslint-loader": "^2.2.1",
+    "mdbvue": "git+https://oauth2:@git.mdbootstrap.com/mdb/vue/vu-pro.git",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vue-sweetalert2": "^2.1.1",
@@ -20,13 +23,15 @@
   "devDependencies": {
     "@babel/polyfill": "^7.4.4",
     "@vue/cli-plugin-babel": "^3.9.0",
-    "@vue/cli-plugin-eslint": "^3.9.0",
+    "@vue/cli-plugin-eslint": "^3.9.2",
     "@vue/cli-service": "^3.9.0",
     "@vue/eslint-config-standard": "^4.0.0",
     "babel-eslint": "^10.0.1",
     "bootstrap": "^4.3.1",
     "eslint": "^5.16.0",
+    "eslint-plugin-html": "^5.0.5",
     "eslint-plugin-vue": "^5.0.0",
+    "eslint-plugin-vue-libs": "^3.0.0",
     "lint-staged": "^8.1.5",
     "mutationobserver-shim": "^0.3.3",
     "node-sass": "^4.12.0",
@@ -34,6 +39,7 @@
     "portal-vue": "^2.1.4",
     "sass-loader": "^7.1.0",
     "vue-cli-plugin-bootstrap-vue": "^0.4.0",
+    "vue-cli-plugin-mdb": "^1.5.0",
     "vue-template-compiler": "^2.6.10"
   },
   "gitHooks": {
@@ -44,5 +50,8 @@
       "vue-cli-service lint",
       "git add"
     ]
+  },
+  "resolutions": {
+    "eslint-loader": "2.1.2"
   }
 }

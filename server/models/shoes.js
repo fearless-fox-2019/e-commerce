@@ -1,10 +1,12 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const uniqueValidator = require('mongoose-unique-validator');
 
 const shoeSchema = new Schema ({
   name: {
     type: String,
-    required: [true, 'name is required']
+    required: [true, 'name is required'],
+    unique: true
   },
   price: {
     type: Number,
@@ -12,7 +14,8 @@ const shoeSchema = new Schema ({
   },
   brand: {
     type: String,
-    required: [true, 'brand is required']
+    required: [true, 'brand is required'],
+    unique: true
   },
   quantity: {
     type: Number,
@@ -28,6 +31,7 @@ const shoeSchema = new Schema ({
   }
 })
 
+shoeSchema.plugin(uniqueValidator, { message:'Error, expected {PATH} must be unique.' });
 const Shoe = mongoose.model('Shoe',shoeSchema)
 
 module.exports = Shoe

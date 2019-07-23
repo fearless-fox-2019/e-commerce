@@ -17,27 +17,27 @@ export default {
     LoginForm,
     RegisterForm
   },
-  created() {
-      if(localStorage.getItem('token')) {
-          this.isLogin = true
-      } else {
-          this.isLogin = false
-      }
+  created () {
+    if (localStorage.getItem('token')) {
+      this.isLogin = true
+    } else {
+      this.isLogin = false
+    }
   },
-  data() { 
+  data () {
     return {
-        isLogin: false
+      isLogin: false
     }
   },
   methods: {
-      logInTrue() {
-          this.isLogin = true
-      }
+    logInTrue () {
+      this.isLogin = true
+    }
   },
   watch: {
-      isLogin: function() {
+    isLogin: function () {
 
-      }
+    }
   }
 
 }

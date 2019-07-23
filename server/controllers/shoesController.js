@@ -12,7 +12,7 @@ class ShoeController {
   static findAll(req,res,next) {
     Shoes.find()
       .then((data) => {
-        res.staus(200).json(data)
+        res.status(200).json(data)
       })
       .catch(next)
   }
