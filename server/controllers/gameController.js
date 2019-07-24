@@ -4,9 +4,11 @@ class GameController {
   static create(req, res, next){
     let newGame = {
       name : req.body.name,
+      description : req.body.description,
       image : req.body.image,
       price : req.body.price,
-      stock : req.body.stock
+      stock : req.body.stock,
+      screenShots : req.body.screenShots
     }
     Game.create(newGame)
     .then(data => {

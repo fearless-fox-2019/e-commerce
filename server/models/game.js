@@ -9,6 +9,9 @@ let GameSchema = new Schema({
         required : [true, 'name can\'t be blank!'],
         unique : true
     },
+    description : {
+        type : String,
+    },
     image : {
         type : String        
     },
@@ -19,7 +22,8 @@ let GameSchema = new Schema({
     stock : {
         type :  Number,
         required : [true, 'stock can\'t be blank!']
-    },    
+    },
+    screenShots : []    
 })
 
 /* middlewares/hooks */
