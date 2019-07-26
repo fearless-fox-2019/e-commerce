@@ -1,0 +1,229 @@
+<template>
+    <div>
+         <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-flex justify-content-between">
+            <!-- Logo -->
+            <div>
+                <a class="navbar-brand" style="color: gold">
+                    <img src="@/assets/clover.png" alt="Logo" style="height: 40px">
+                    Claves Patisserie
+                </a>
+            </div>
+            
+            <!-- Menu -->
+            <div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link">Chocolate Cake</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Cheesecake</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Ice Cream Cake</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Nougat Cake</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Classic</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Wedding Cake</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Login Register -->
+
+            <div style="color: white">
+                <a data-toggle="modal" data-target="#modalLogin">
+                    Login /
+                </a>
+                <a data-toggle="modal" data-target="#modalRegister">
+                    Register
+                </a>
+            </div>
+        </nav> 
+
+        <!-- Modal Login -->
+        <div class="modal animated zoomIn" id="modalLogin">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <h5>Login </h5>
+                    <form @submit.prevent="login">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i> </span>
+                            </div>
+                            <input type="email" class="form-control" placeholder="Email" required v-model="user.email">
+                        </div><br>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-lock"></i> </span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="Password" required v-model="user.password">
+                            </div><br>
+                    </form> 
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" @click="login" data-dismiss="modal">Login</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Register -->
+        <div class="modal animated zoomIn" id="modalRegister">
+            <div class="modal-dialog">
+                <div class="modal-content">
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <h5>Register</h5>
+                    <form @submit.prevent="register">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-user"></i> </span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Name" required v-model="newUser.name">
+                        </div><br>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-envelope"></i> </span>
+                            </div>
+                            <input type="email" class="form-control" placeholder="Email" required v-model="newUser.email">
+                        </div><br>
+
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-lock"></i> </span>
+                            </div>
+                            <input type="password" class="form-control" placeholder="Password" required v-model="newUser.password">
+                            </div><br>
+                    </form>
+   
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" @click="register" data-dismiss="modal">Register</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</template>
+
+<script>
+import axios from '@/api/api.js'
+
+export default {
+    name:'navbarLanding',
+    data(){
+        return {
+            newUser:{
+                name:'',
+                email:'',
+                password:''
+            },
+            user:{
+                email:'',
+                password:''
+            }
+        }
+    },
+    methods:{
+
+        login(){
+            axios({
+                url:`/users/login`,
+                method: 'POST',
+                data: this.user
+            })
+            .then(({data}) => {
+                localStorage.setItem('name', data.name)
+                localStorage.setItem('userId', data.userId)
+                localStorage.setItem('role', data.role)
+                localStorage.setItem('token', data.token)
+
+                if(data.role == 'admin'){
+                    this.$router.push('/home')
+                    this.$store.commit('Set_isLogin', true)
+                }else{
+                    this.$router.push('/catalog/chocolate-cake')
+                    this.$store.commit('Set_isLogin', true)
+                }
+            })
+            .catch(err =>{
+                console.log('error register user')
+                console.log(err)
+
+                Swal.fire({
+                    position: 'center',
+                    type: 'error',
+                    text: 'Please Check Your Email/ Password !',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+        },
+        register(){
+            axios({
+                url:`/users/register`,
+                method: 'POST',
+                data: this.newUser
+            })
+            .then(({data}) => {
+                localStorage.setItem('name', data.name)
+                localStorage.setItem('userId', data.userId)
+                localStorage.setItem('role', data.role)
+                localStorage.setItem('token', data.token)
+
+                if(data.role == 'admin'){
+                    this.$store.commit('Set_isLogin', true)
+                    this.$router.push('/home')
+                }else{
+                    this.$store.commit('Set_isLogin', true)
+                    this.$router.push('/cake/chocolate')
+                }
+            })
+            .catch(err =>{
+                console.log('error register user')
+                console.log(err)
+
+                Swal.fire({
+                    position: 'center',
+                    type: 'error',
+                    text: 'Registration Failed. Please Try Again!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+        }
+    }
+}
+</script>
+
+<style>
+    html, body{
+        height: 100vh
+    }
+
+    ul a{
+        color: burlywood
+    }
+
+</style>
+ 
