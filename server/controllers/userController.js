@@ -20,11 +20,15 @@ class UserController {
                                 username : user.username,
                                 email : user.email
                             })
-                            res.status(200).json({ access_token : token, user : {
-                                _id : user._id,
-                                username : user.username,
-                                email : user.email
-                            }})
+                            res.status(200).json({ 
+                                access_token : token, 
+                                user : {
+                                    _id : user._id,
+                                    username : user.username,
+                                    email : user.email,
+                                    role : user.role
+                                }
+                            })
                         } else {
                             res.status(404).json({ message : 'invalid email / password'})
                         }
@@ -93,6 +97,45 @@ class UserController {
                 res.status(500).json(err)
             })
             
+    }
+
+    static loginGoogle(req, res, next) {
+        let newEmail = ''
+        let newName = ''
+
+        client.verifyIdToken({
+                idToken: req.headers.access_token,
+                audience: process.env.GOOGLE_CLIENT_ID
+            })
+            .then(function(ticket) {
+                newEmail = ticket.getPayload().email
+                newName = ticket.getPayload().name
+                return User.findOne({
+                    email: newEmail
+                })
+            })
+            .then(function(userLogin) {
+                if (!userLogin) {
+                    return User.create({
+                        username: newName,
+                        email: newEmail,
+                        password: 'password'
+                    })
+                } else {
+                    return userLogin
+                }
+            })
+            .then(function(newUser) {
+                let access_token = Helper.generateJWT({
+                    email: newUser.email,
+                    firstName: newUser.firstName,
+                    lastName: newUser.lastName,
+                    id: newUser._id
+                });
+
+                res.status(200).json({access_token, userId : newUser._id, email: newUser.email, username: newUser.username})
+            })
+            .catch(next)
     }
 }
 
