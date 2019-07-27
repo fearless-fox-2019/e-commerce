@@ -1,23 +1,17 @@
 module.exports = {
     errHandler: function (err, req, res, next) {
-        console.log(err,'==== ini err')
+        // res.json(err)
+        console.log(err, '==== ini err')
         if (err.name == 'ValidationError') {
-            if (err.errors.email) {
-                if (err.errors.email.reason) {
-                    res.status(404).json(err.errors.email.reason)
-                } else {
-                    res.status(404).json(err.message)
-                }
-            } else {
-
-                res.status(404).json(err.message)
-            }
+            console.log(err, '==== ini err')
+            res.json(err.errors)
         } else if (!err.code) {
             if (err.message.includes('Cast to ObjectId failed')) {
                 res.status(404).json({
                     message: 'Bad request'
                 })
             } else {
+                console.log("disinika??")
                 res.status(500).json({
                     message: 'Internal server error'
                 })

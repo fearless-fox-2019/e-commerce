@@ -10,7 +10,7 @@ const {
 
 class UserController {
     static signup(req, res, next) {
-        // console.log('masuk sign up===-')
+        console.log('masuk sign up===-')
         let {
             username,
             email,
@@ -21,30 +21,30 @@ class UserController {
             email,
             password
         }
-
+        console.log(newUser)
         userModel
             .create(newUser)
             .then(created => {
-                // console.log(created, 'created user')
+                console.log(created, 'created user')
                 res.status(201).json(created)
             })
-            .catch(err => {
-                res.status(400).json(err)
-            })
+            .catch(next)
     }
 
     static signin(req, res, next) {
+        console.log('masuk signinmya servermloh')
         let searched = {}
-        let password = req.body.password
+        let {
+            ue,
+            password
+        } = req.body
 
-        if (req.body.email) {
-            searched.email = req.body.email
-        } else if (req.body.username) {
-            searched.username = req.body.username
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(ue)) {
+            searched.email = ue
         } else {
-            searched.username = undefined
+            searched.username = ue
         }
-        
+
         userModel
             .findOne(searched)
             .then(found => {
@@ -77,12 +77,30 @@ class UserController {
             .catch(next)
     }
 
-    static googleSignin(req,res,next){
+    static googleSignin(req, res, next) {
 
     }
 
-    static whoami(req,res,next){}
-    static addWishlist(req,res,next){}
+    static whoami(req, res, next) {
+        let logedUser = req.logedUser._id
+
+        userModel
+            .findById(logedUser)
+            .then(foundLoged => {
+                res.status(200).json({
+                    cart: foundLoged.cart ,
+                    createdAt: foundLoged.createdAt ,
+                    email: foundLoged.email ,
+                    role: foundLoged.role ,
+                    updatedAt: foundLoged.updatedAt ,
+                    username: foundLoged.username ,
+                    wishlist: foundLoged.wishlist ,
+                    _id: foundLoged._id
+                })
+            })
+            .catch(next)
+    }
+    static addWishlist(req, res, next) {}
 }
 
 module.exports = UserController

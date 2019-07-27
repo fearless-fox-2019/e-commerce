@@ -18,5 +18,10 @@ export default new Router({
       name: 'about',
       component: () => import('./views/About.vue'),
     },
+    {
+      path: '/sign',
+      name: 'sign',
+      component: () => import('./views/sign.vue')
+    }
   ],
 });

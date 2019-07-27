@@ -7,6 +7,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const app = express()
 const router = require('./routes')
+const morgan = require('morgan')
 const {
     errHandler
 } = require('./middlewares/errHandler')
@@ -34,6 +35,7 @@ app.use(express.urlencoded({
     extended: false
 }))
 app.use(express.json())
+app.use(morgan('dev'))
 
 app.use('/', router)
 
