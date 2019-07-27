@@ -33,10 +33,11 @@ const UserSchema = new Schema({
 });
 
 UserSchema.plugin(uniqueValidator, { message: 'Error, {PATH} has already taken by another user!' });
-// UserSchema.pre('save', function(next) {
-//     this.password = encrypt(this.password)
-//     next()
-// })
+
+UserSchema.pre('save', function(next) {
+    this.password = encrypt(this.password)
+    next()
+})
 
 const User = mongoose.model('User', UserSchema)
 

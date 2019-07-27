@@ -16,7 +16,9 @@ class UserController {
         .then(data => {
             res.status(201).json(data)
         })
-        .catch(next)
+        .catch(/* err => {
+            console.log(err.message)
+        } */next)
     }
 
     static login(req, res, next){
@@ -24,24 +26,24 @@ class UserController {
             email : req.body.email,
             password : req.body.password
         }
-
         User.findOne({email : userData.email})
         .then(data => {
             if(!data){
                 next({status : 404, message: 'email/password invalid'})
             }
             else{
-                // let check = comparePassword(userData.password, data.password)
-                // // console.log(data.password)
-                // console.log(check)
-                // if(check){                    
-                    // let token = jwtToken(data)
-                    // res.status(200).json({token})
-                    res.status(200).json(data)
-                // }
-                // else {
-                //     next({status : 404, message: 'email/password invalid'})
-                // }
+                let check = comparePassword(userData.password, data.password)
+                // console.log(data.password)
+                console.log(check)
+                if(check){                    
+                    let token = jwtToken(data)
+                    res.status(200).json({token, data})
+                    // console.log(data)
+                    // res.status(200).json()
+                }
+                else {
+                    next({status : 404, message: 'email/password invalid'})
+                }
             }
         })
         .catch(next)

@@ -26,12 +26,14 @@ class GameController {
   }
 
   static findOne(req, res, next){
-    Game.findOne({ name : req.body.name })
+    Game.findOne({ _id : req.params.id })
     .then(data => {
       if(!data){
         next({status : 404, message : 'game not found'})
       }
-      res.status(200).json(data)
+      else {
+        res.status(200).json(data)
+      }
     })
     .catch(next)
   }
@@ -39,15 +41,25 @@ class GameController {
   static delete(req, res, next){    
     Game.deleteOne({_id : req.params.id})
     .then(data => {
-      res.status(200).json(data)
+      if(data.deletedCount == 0){
+        next({status : 404, message : 'game not found'})
+      }
+      else {
+        res.status(200).json(data)
+      }
     })
     .catch(next)
   }
 
   static updateGame(req, res, next){
-    Game.update({ _id : req.params.id}, req.body)
+    Game.updateOne({ _id : req.params.id}, req.body)
     .then(data => {
-      res.status(200).json(data)
+      if(data.nModified == 0){
+        next({status : 404 , message : 'game not found'})
+      }
+      else {
+        res.status(200).json(data)
+      }
     })
     .catch(next)
   }

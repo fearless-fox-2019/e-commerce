@@ -11,14 +11,14 @@
         <v-container>
           <v-layout row wrap>
             <v-flex v-for="(image, i) in detail.screenShots" :key="i">
-              <v-img :src="image" width="300px" height="200px;"></v-img>
+              <v-img :src="image" width="300px" height="200px;" style="filter: brightness(0.81);"></v-img>
             </v-flex>
           </v-layout>
         </v-container>
         <v-card-text>{{ detail.description }}</v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="green darken-1" flat="flat" @click="dialog = false">CLOSE</v-btn>
+          <v-btn color="red darken-1"  @click="dialog = false">CLOSE</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

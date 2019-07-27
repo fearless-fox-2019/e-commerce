@@ -1,29 +1,28 @@
 <template>
-  <v-card>
-    <v-img :src="game.image" height="300px"></v-img>
-    <v-card-title primary-title>
-      <div>
-        <div class="headline">
-          <h1 style="font-size: 25px;">{{ game.name }}</h1>
-        </div>
+  <div>
+    <v-card>
+      <v-img :src="game.image" height="300px" style="filter: brightness(0.85);"></v-img>
+      <v-card-title primary-title>
         <div>
-        <span>Rp.{{ game.price }}</span>
+          <div class="headline">
+            <h1 style="font-size: 25px;">{{ game.name }}</h1>
+          </div>
+          <div>
+            <span>Rp.{{ game.price }}</span>
+          </div>
+          <small>Stock {{ game.stock }}</small>
         </div>
-        <small>Stock {{ game.stock }}</small>
-      </div>
-    </v-card-title>
+      </v-card-title>
 
-    <v-card-actions>
-      <v-btn flat>ADD To Cart</v-btn>
-      <v-spacer></v-spacer>
-      <div class="text-xs-center">
-        <detailGame  :detail="game" />
-      </div>
-    </v-card-actions>
-    <!-- <v-slide-y-transition>
-      <v-card-text v-show="show">{{ game.description }}</v-card-text>
-    </v-slide-y-transition>-->
-  </v-card>
+      <v-card-actions>
+        <v-btn flat @click="toCart">ADD To Cart</v-btn>
+        <v-spacer></v-spacer>
+        <div class="text-xs-center">
+          <detailGame :detail="game" />
+        </div>
+      </v-card-actions>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -38,7 +37,14 @@ export default {
   data: () => ({
     show: false
   }),
-  methods: {}
+  methods: {
+    toCart() {
+      this.$router.push("/cart");
+    }
+  },
+  created() {
+    this.$store.dispatch("getAllGames");
+  }
 };
 </script>
 

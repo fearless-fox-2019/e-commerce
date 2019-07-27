@@ -1,25 +1,32 @@
 <template>
-    <v-toolbar id="nav">
-      <v-snackbar class="mt-1" v-model="snackbar" top :color="status">
-        {{alertMessage}}
-      </v-snackbar>
-      <v-toolbar-title style="font-family: 'Stalinist One', cursive;">Infinity Game</v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <buttonLogin />
-        <buttonRegister />
-        <v-btn flat @click="logout">Logout</v-btn>
-      </v-toolbar-items>
-    </v-toolbar>
+  <v-toolbar id="nav">
+    <v-snackbar class="mt-1" v-model="snackbar" top :color="status">{{alertMessage}}</v-snackbar>
+    <v-toolbar-title
+      style="font-family: 'Stalinist One', cursive; cursor: pointer"
+      @click="toHome"
+    >Infinity Game</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-flex xs12 sm6>
+      <v-text-field label="Search for a Game" prepend-icon="search" single-line solo style="margin-top: 10px;"></v-text-field>
+    </v-flex>
+    <v-spacer></v-spacer>
+    <v-toolbar-items>
+      <v-btn flat @click="toCart">
+        <v-icon>mdi-cart-plus</v-icon>Cart
+      </v-btn>
+      <buttonLogin v-if="!$store.state.isLogin" @click="$store.commit('SET_MODAL_LOGIN', false)" />
+      <buttonRegister v-if="!$store.state.isLogin" />
+      <v-btn flat @click="logout" v-if="$store.state.isLogin">Logout</v-btn>
+    </v-toolbar-items>
+  </v-toolbar>
 </template>
 
 <script>
-import buttonLogin from './login-button'
-import buttonRegister from './register-button'
-import ax from '../api/api'
-// import buttonRegister from './register-button'
+import buttonLogin from "./login-button";
+import buttonRegister from "./register-button";
+import ax from "../api/api";
 export default {
-  components : {
+  components: {
     buttonLogin,
     buttonRegister
   },
@@ -29,16 +36,24 @@ export default {
     status: "",
     alertMessage: ""
   }),
-  props: {    
-  },
-  methods: {       
-    logout: function () {
-      this.snackbar = true
-      this.status = "success"
-      this.alertMessage = "HIYAAAAAAAAAAAAAA"
-      setTimeout(() =>{
-        this.snackbar = false
-      },2000)
+  props: {},
+  methods: {
+    toHome() {
+      this.$router.push("/");
+    },
+    logout: function() {
+      this.snackbar = true;
+      this.status = "warning";
+      this.alertMessage = "Successfully Logout..";
+      setTimeout(() => {
+        this.snackbar = false;
+      }, 2000);
+      localStorage.clear();
+      this.$store.commit("SET_LOGIN");
+    },
+    toCart() {
+      console.log("ashiap");
+      this.$router.push("/cart");
     }
   }
 };

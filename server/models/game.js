@@ -28,18 +28,19 @@ let GameSchema = new Schema({
 
 /* middlewares/hooks */
 
-/* 
-GameSchema.pre('save', function(next){
-    Game.findOne({ uniqueField : this.getUpdate().uniqueField })
-    .then(data => {
-        if(data){
-            next({status : 500, message : 'this uniqueField has been used!'})
-        }
-        else {
-            next()
-        }
-    })
-}) */
+
+// GameSchema.pre('updateOne', (next) => {
+//     Game.findOne({ name : this.getUpdate().name })
+//     .then(data => {
+//         console.log(data)
+//         if(data){
+//             next({status : 400, message : 'this name has been used!'})
+//         }
+//         else {
+//             next()
+//         }
+//     })
+// })
 
 GameSchema.plugin(uniqueValidator, { message: 'Error, {PATH} {VALUE} has already on the list!' });
 

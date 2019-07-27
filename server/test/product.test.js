@@ -8,23 +8,22 @@ chai.use(chaiHttp);
 
 const expect = chai.expect
 
-after(function(done) {
-  deleteAll(done)
-});
+// after(function(done) {
+//   deleteAll(done)
+// });
 
-// describe 'CREATE'
-// it('')
 
 describe('User Login/Register', function() {  
 
   describe('Success POST /user', function() {
     describe('success register', function() {
-      it('should send an object with 201 status code', function(done) {
+      it.only('should send an object with 201 status code', function(done) {
         chai
         .request(app)
         .post('/users/register')
         .send({ name: 'nino', email : 'nino@mail.com', password : '123456' })
-        .then(function(res) {  
+        .then(function(res) {
+          console.log(res.body.password)
           expect(res).to.have.status(201);
           expect(res.body).to.be.an('object');
           expect(res.body).to.have.property('_id');
@@ -32,15 +31,14 @@ describe('User Login/Register', function() {
           expect(res.body).to.have.property('email');
           expect(res.body).to.have.property('password');
           expect(res.body.name).to.equal('nino');
-          expect(res.body.email).to.equal('nino@mail.com');
-          expect(res.body.password).to.equal('123456');
+          expect(res.body.email).to.equal('nino@mail.com');          
           done();
         })
         .catch(err=> {
           console.log(err)
         })
       })
-      it('success login user', function(done) {        
+      it.only('success login user', function(done) {        
         chai
         .request(app)
         .post('/users/login')
@@ -51,7 +49,7 @@ describe('User Login/Register', function() {
           expect(res.body).to.have.property('email');
           expect(res.body).to.have.property('password');
           expect(res.body.email).to.equal('nino@mail.com');
-          expect(res.body.password).to.equal('123456');
+          expect(res.body.password).to.equal('123456')
           done()
         })
         .catch(err => {
@@ -177,17 +175,22 @@ describe('User Login/Register', function() {
   })
 })
 
+describe('product test', function() {
+  
+})
+
 describe('Game CRUD', function() {
+  var gameId;
 
   describe('POST /game', function() {
     describe('success', function() {
-      var gameId;
       it('sucess create game', function(done) {
         chai
         .request(app)
         .post('/games')
-        .send({ name : 'Assasins', price : 2000, stock : 30 })
+        .send({ name : 'Assasins', price : 2000, stock : 30 })        
         .then(function(res) {
+          console.log(res.body)
           gameId = res.body._id
           expect(res).to.have.status(201);
           expect(res.body).to.be.an('object');
@@ -204,7 +207,7 @@ describe('Game CRUD', function() {
           console.log(err)
         })
       })
-      it('find all game suces', function(done) {
+      it('find all game success', function(done) {
         chai
         .request(app)
         .get('/games')
@@ -217,7 +220,7 @@ describe('Game CRUD', function() {
           console.log(err)
         })
       })
-      it('find one game sucess', function(done) {
+      it('find one game success', function(done) {
         chai
         .request(app)
         .get(`/games/findOne/${gameId}`)
@@ -233,6 +236,7 @@ describe('Game CRUD', function() {
         })
       })
       it('update game sucess', function(done){
+        console.log(gameId)
         chai
         .request(app)
         .patch(`/games/${gameId}`)
@@ -246,9 +250,134 @@ describe('Game CRUD', function() {
         .catch(err => {
           console.log(err)
         })
+      })     
+    })
+    describe('failed', function() {
+      it('create failed name blank', function(done){
+        chai
+        .request(app)
+        .post('/games')
+        .send({ description : 'aaaaa', image : 'asdasds', price : 450000, stock : 25 })
+        .then(function(res) {
+          console.log(res.body)
+          expect(res.body.message).to.have.string('name can\'t be blank')
+          expect(res).to.have.status(400)
+          done()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })
+      it('create failed price blank', function(done){
+        chai
+        .request(app)
+        .post('/games')
+        .send({ name : 'aaaa', description : 'aaaaa', image : 'asdasds', stock : 25 })
+        .then(function(res) {
+          console.log(res.body)
+          expect(res.body.message).to.have.string('price can\'t be blank')
+          expect(res).to.have.status(400)
+          done()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })
+      it('create failed stock blank', function(done){
+        chai
+        .request(app)
+        .post('/games')
+        .send({ name : 'aaaa', description : 'aaaaa', image : 'asdasds',price : 500000 })
+        .then(function(res) {
+          console.log(res.body)
+          expect(res.body.message).to.have.string('stock can\'t be blank')
+          expect(res).to.have.status(400)
+          done()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })
+      it('findOne failed', function(done) {
+        chai
+        .request(app)
+        .get(`/games/findOne/5d374ad316c0f0428d408992`)
+        .send()
+        .then(function(res) {
+          console.log(res.body)  
+          expect(res.body.message).to.have.string('game not found')        
+          expect(res).to.have.status(404)
+          done()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })    
+      it('update failed', function(done) {
+        chai
+        .request(app)
+        .patch('/games/5d374ad316c0f0428d408992')
+        .send({ name : 'aaa', description : 'aaaaa', price : 40000, stock : 21 })
+        .then(function(res) {
+          console.log(res.body)
+          expect(res.body.message).to.have.string('game not found')
+          expect(res).to.have.status(404)
+          done()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      })
+      // it.only('update unique name failed', function(done) {
+        // let create =  chai.request(app).post('/games').send({ name : 'asda', description : 'asdadasda', image : 'sadsadsad', price : 2000, stock : 20 })
+        // let updateId;        
+        // new Promise((resolve,reject) => {
+        //   resolve(create)
+        // })
+        // .then(res => {
+        //   console.log(res.body)
+          // updateId = res.body._id
+          // console.log(updateId)
+          // return chai.request(app).patch(`/games/${updateId}`).send({ name : 'Assasins' })
+        // })
+        // .then(res => {
+        //   console.log(res.body)
+        // })        
+        // chai
+        // .request(app)
+        // .patch(`/games/${gameId}`)
+        // .send({ name : 'Assasins' })
+        // .then(function(res) {
+        //   console.log(gameId)
+        //   console.log(res.body)
+        //   expect(res.body.message).to.have.string('dup key: { : "assasins" }')
+        //   expect(res).to.have.status(500)
+        //   done()
+        // })
+        // .catch(err => {
+          // console.log(err)
+          // console.log(gameId)
+        // })
+      // })
+    })
+    describe('delete success or failed', function() {
+      it('delete failed', function(done) {       
+        chai
+        .request(app)
+        .delete('/games/5d374ad316c0f0428d408992')
+        .send()
+        .then(function(res) {
+          // console.log(res.body)
+          expect(res.body.message).to.have.string('game not found')
+          expect(res).to.have.status(404)
+          done()
+        })
+        .catch(err => {
+          console.log(err)
+        })
       })
       it('delete game sucess', function(done) {
-        console.log(gameId, 11111111)
+        // console.log(gameId, 11111111)
         chai
         .request(app)
         .delete(`/games/${gameId}`)
@@ -263,24 +392,8 @@ describe('Game CRUD', function() {
         })
       })
     })
-    describe('failed', function() {
-      it('findOne failed', function(done) {
-        chai
-        .request(app)
-        .get(`/games/findOne/asdsadsa`)
-        .send()
-        .then(function(res) {
-          console.log(res.body)  
-          expect(res.body.message).to.have.string('game not found')        
-          expect(res).to.have.status(404)
-          done()
-        })
-        .catch(err => {
-          console.log(err)
-        })
-      })
-    })
   })
+
 
 
 })

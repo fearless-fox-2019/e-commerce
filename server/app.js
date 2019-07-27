@@ -35,9 +35,11 @@ app.use(function (err, req, res, next) {
    const message = err.message || 'Internal server error'
    console.log(message)
    if(err.name === 'ValidationError') {
-       res.status(400).json({message})
+       res.status(400).json({message : message})
    }
-   res.status(status).json({message})
+   else {
+       res.status(status).json({message : message})
+   }
 })
 
 app.listen(port, () => console.log('Example app listening on port : ' + port))

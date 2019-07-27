@@ -1,8 +1,8 @@
 <template>
-  <v-app id="inspire" dark>  
+  <v-app id="inspire" dark>
     <navbar />
-    <v-content>
-      <home/>
+    <v-content grey>
+      <router-view />
     </v-content>
     <v-footer>
       <span>&copy; Infinity Game</span>

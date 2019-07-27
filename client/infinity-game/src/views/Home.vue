@@ -1,13 +1,19 @@
 <template>
   <v-content>
-    <v-container fluid id="home">
+    <v-container fluid id="home" grey darken-2>
       <v-layout row wrap>
         <v-flex xs12>
           <carousel />
         </v-flex>
-          <v-flex id="product" xs3 v-for="(game, i) in gameData" :key="i" class="pa-1">                                
-          <productCard :game="game" />
-          </v-flex>
+        <v-flex id="product" xs3 class="pa-1" v-for="game in $store.state.gameList" :key="game._id">
+          <v-hover>
+            <productCard
+              :game="game"
+              slot-scope="{ hover }"
+              :class="`elevation-${hover ? 12 : 2}`"
+            />
+          </v-hover>
+        </v-flex>      
       </v-layout>
     </v-container>
   </v-content>
@@ -16,51 +22,38 @@
 <script>
 import carousel from "../components/carousel";
 import productCard from "../components/productCard";
-import ax from "../api/api"
-import detail from '../components/detailGame'
+import ax from "../api/api";
+import detail from "../components/detailGame";
 
 export default {
-  name : 'home',
+  name: "home",
   components: {
     carousel,
     productCard
   },
   created() {
-    this.getAllGames();
+    this.$store.dispatch("getAllGames");
   },
   data() {
     return {
-      productImage: [],
-      gameData: []
+      
     };
   },
   methods: {
-    getAllGames() {
-      ax({
-        method: "get",
-        url: "/games"
-      })
-        .then(({ data }) => {
-          console.log(data);
-          this.gameData = data;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-    }
+
   }
 };
 </script>
 <style>
 * {
-  font-family: 'Yanone Kaffeesatz', sans-serif;
+  font-family: "Yanone Kaffeesatz", sans-serif;
   font-size: 20px;
 }
 #home {
   margin-top: 47px;
 }
 #product {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 </style>
 
