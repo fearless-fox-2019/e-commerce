@@ -79,7 +79,7 @@ export default {
                  formData.append('name', this.currentItem.name)
                  formData.append('image', this.currentItem.image)
                  formData.append('category', this.currentItem.category)
-                 formData.append('desription', this.currentItem.description)
+                 formData.append('description', this.currentItem.description)
                  formData.append('price', this.currentItem.price)
                  formData.append('stock', this.currentItem.stock)
 

@@ -10,27 +10,42 @@
             </div>
             
             <!-- Menu -->
-             <div>
+             <div style="margin-left: 60px">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                          <router-link to="/catalog/chocolate-cake">
-                            <a class="nav-link">Chocolate Cake</a>
+                            <a class="nav-link" id="menu-txt">Chocolate Cake</a>
                          </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Cheesecake</a>
+                        <router-link to="/catalog/cheese-cake">
+                            <a class="nav-link" id="menu-txt">Cheesecake</a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Ice Cream Cake</a>
+                        <router-link to="/catalog/icecream-cake">
+                            <a class="nav-link" id="menu-txt">Ice Cream Cake</a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Nougat Cake</a>
+                        <router-link to="/catalog/nougat-cake">
+                            <a class="nav-link" id="menu-txt">Nougat Cake</a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Classic</a>
+                        <router-link to="/catalog/classic-cake">
+                            <a class="nav-link" id="menu-txt">Classic</a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Wedding Cake</a>
+                        <router-link to="/catalog/wedding-cake">
+                            <a class="nav-link" id="menu-txt">Wedding Cake</a>
+                        </router-link>
+                    </li>
+                    <li class="nav-item" >
+                        <router-link to="/mytransaction">
+                            <a class="nav-link" id="menu-txt">My Order</a>
+                         </router-link>
                     </li>
                 </ul>
             </div>
@@ -38,7 +53,7 @@
             <!-- Shopping Cart-Logout -->
 
             <div class="ml-auto" style="color: white">
-                <a>
+                <a style="margin-right: 20px;">
                     <router-link to="/mycart">
                         <i class="fas fa-shopping-cart"></i>
                     </router-link>
@@ -63,6 +78,13 @@ export default {
 </script>
 
 <style scoped>
+    #menu-txt {
+        color: lightsalmon
+    }
 
+    #menu-txt:hover{
+        text-decoration: none;
+        font-weight: bold
+    }
 
 </style>

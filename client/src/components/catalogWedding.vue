@@ -1,6 +1,6 @@
 <template>
     <div class="row" style="margin-left: 5%; margin-top: 15px">
-        <cardItem v-for="cake in chocoCake" :key="cake._id" :item="cake"></cardItem>
+        <cardItem v-for="cake in weddingCake" :key="cake._id" :item="cake"></cardItem>
     </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
         this.getAllCake()
     },
     computed:{
-        ...mapState(['chocoCake'])
+        ...mapState(['weddingCake'])
     },
 
 }

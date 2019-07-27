@@ -16,6 +16,12 @@ export default new Vuex.Store({
     classicCake:[],
     weddingCake:[],
     myCart:[],
+    custTransaction: [],
+    allTransaction: [],
+    unpaidTransaction: [],
+    paidTransaction:[],
+    sendTransaction:[],
+    completeTransaction:[],
     isLogin: false
     
   },
@@ -49,7 +55,23 @@ export default new Vuex.Store({
     },
     Set_myCart(state, payload){
       this.state.myCart= payload
+    },
+    Set_CustTransaction(state, payload){
+      this.state.custTransaction= payload
+    },
+    Set_allTransaction(state, payload){
+      this.state.allTransaction= payload
+    },
+    Set_unpaidTransaction(state, payload){
+      this.state.unpaidTransaction= payload
+    },
+    Set_paidTransaction(state, payload){
+      this.state.paidTransaction= payload
+    },
+    Set_completeTransaction(state, payload){
+      this.state.completeTransaction= payload
     }
+
   },
   actions: {
     getAllCake({commit}){
@@ -95,13 +117,62 @@ export default new Vuex.Store({
         }
       })
       .then(({data}) => {
-        console.log(data, 'my cart')
+        // console.log(data, 'my cart')
         commit('Set_myCart', data)
       })
       .catch( err => {
           console.log('error get my cart')
           console.log(err)
       })
+    },
+    getCustTransaction({commit}){
+      let custId= localStorage.userId
+      // console.log('masuk get cust transaction', custId)
+      axios({
+        url:`/transaction/customer/${custId}`,
+        method: 'get',
+        headers:{
+          'token' : localStorage.token
+        }
+      })
+      .then(({data}) => {
+        // console.log(data)
+        commit('Set_CustTransaction', data)
+      })
+      .catch(err => {
+        console.log('error get customer transaction')
+        console.log(err)
+      })
+    },
+    getAllTransaction({commit}){
+        axios({
+          url: `/transaction`,
+          method: 'get',
+          headers:{
+            'token': localStorage.token
+          }
+        })
+        .then(({data}) => {
+          let unpaid=[]
+          let paid= []
+          let complete=[]
+
+          data.forEach(el => {
+            if(el.status === 'unpaid') unpaid.push(el)
+            else if(el.status === 'paid') paid.push(el)
+            else if(el.status === 'complete') complete.push(el)
+          })
+
+          commit('Set_allTransaction', data)
+          commit('Set_unpaidTransaction', unpaid)
+          commit('Set_paidTransaction', paid)
+          commit('Set_completeTransaction', complete)
+
+        })
+        .catch(err => {
+          console.log('error get all transaction')
+          console.log(err)
+        })
     }
     
   }

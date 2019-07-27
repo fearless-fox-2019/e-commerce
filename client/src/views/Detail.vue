@@ -19,14 +19,13 @@
                 <button type="button" class="btn btn-success" @click="addCart">Add To Cart</button>
             </div>
         </div>
-        <footerPage></footerPage>
+
     </div>
 </template>
 
 <script>
 import axios from '@/api/api.js'
 import navbarCust from '@/components/navbarCust.vue'
-import footerPage from '@/components/footer.vue'
 import { mapState, mapMutations, mapActions } from 'vuex'
 
 export default {
@@ -35,6 +34,10 @@ export default {
         return {
             quantity:0
         }
+    },
+    components:{
+        navbarCust,
+
     },
     methods:{
         ...mapActions(['getMyCart']),
@@ -54,7 +57,13 @@ export default {
                 }
             })
             .then(({data}) => {
-                console.log('sukses add to cart')
+                Swal.fire({
+                    position: 'center',
+                    type: 'success',
+                    text: 'Success add to your cart!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 this.getMyCart()
             })
             .catch(error => {
@@ -62,10 +71,6 @@ export default {
                 console.log(error)
             })
         }
-    },
-    components:{
-        navbarCust,
-        footerPage
     },
     computed:{
         ...mapState(['currentItem'])

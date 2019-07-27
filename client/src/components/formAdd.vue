@@ -80,7 +80,7 @@ export default {
                  formData.append('name', this.newItem.name)
                  formData.append('image', this.newItem.image)
                  formData.append('category', this.newItem.category)
-                 formData.append('desription', this.newItem.description)
+                 formData.append('description', this.newItem.description)
                  formData.append('price', this.newItem.price)
                  formData.append('stock', this.newItem.stock)
 
@@ -93,9 +93,9 @@ export default {
                 }
             })
             .then(({data}) =>{
-                // this.$store.dispatch('getAllCake')
-                this.getAllCake()
+
                 this.$router.push('/home')
+                this.getAllCake()
             })
             .catch(err =>{
                 console.log('error add item')

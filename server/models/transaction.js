@@ -7,18 +7,24 @@ let transactionSchema= new Schema({
         ref: 'User'
     },
     items:[{
-        item: {
-                type: Schema.Types.ObjectId, 
-                ref: 'Item'
+        itemId: {
+            type: Schema.Types.ObjectId, 
+            ref: 'Item'
             },
-        amount: {
-                type:Number,
-                min : [1, 'not valid input amount']
-            },
-        totalPrice:{
+        name: {
+            type: String,
+        },
+        price:{
             type: Number
-        }
+        },
+        quantity: {
+            type:Number,
+            min : [1, 'not valid input amount']
+            },
     }],
+    totalPrice: {
+        type: Number
+    },
     status: {
         type: String,
         required: [true, 'status required'],

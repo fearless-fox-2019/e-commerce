@@ -1,6 +1,6 @@
 <template>
     <div>
-        <navbarCust></navbarCust>
+        <navbarLanding></navbarLanding>
         <div class="row">
             <div class="col-sm-12">
                 <router-view></router-view>
@@ -10,12 +10,12 @@
 </template>
 
 <script>
-import navbarCust from '@/components/navbarCust.vue'
+import navbarLanding from '@/components/navbarLanding.vue'
 
 export default {
     name: 'catalog',
     components:{
-        navbarCust,
+        navbarLanding,
     },
     
 }

@@ -1,16 +1,12 @@
 <template>
-    <div>
-        <div class="card" style="width:300px">
-            <img class="card-img-top" :src="item.image" alt="Image Cake" style="height:300px">
-            <div class="card-body">
-                <h4 class="card-title">{{item.name}}</h4>
-                <p class="card-text">{{item.description}}</p>
-
-                <div v-if="isLogin" class="d-flex justify-content-around">
-                    <a class="btn btn-primary btn-sm" @click.prevent="toDetail">
-                        Buy Now
-                    </a>
-                </div>
+    <div id="card-item" class="card">
+        <img class="card-img-top" :src="item.image" alt="Image Cake" style="height:275px">
+        <div class="card-body">
+            <h5 class="card-title">{{item.name}}</h5>
+             <div v-if="isLogin" class="d-flex justify-content-around">
+                <button id="btn-buy" class="btn btn-primary btn-sm" @click.prevent="toDetail">
+                    Buy Now
+                </button>
             </div>
         </div>
     </div>
@@ -43,6 +39,16 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    #card-item{
+        width: 275px;
+        margin: 4px 4px;
+        
+    }
+    #card-item:hover{
+        box-shadow: 2px 2px 4px #000000;
+    }
+    #btn-buy:hover{
+        opacity: 0.8;
+    }
 </style>

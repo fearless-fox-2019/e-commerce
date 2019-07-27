@@ -13,7 +13,7 @@ class itemController{
             price: req.body.price,
             stock: req.body.stock,
         })
-
+        console.log(newItem, 'new item')
         newItem.save()
         .then(item=>{
             res.status(201).json(item)
@@ -26,6 +26,7 @@ class itemController{
 
     static findAll(req, res, next){
         Item.find({})
+        .sort({createdAt: -1})
         .then(items=>{
             res.status(200).json(items)
         })
@@ -34,6 +35,7 @@ class itemController{
 
     static findCategory(req, res, next){
         Item.find({category: req.params.category})
+        .sort({createdAt: -1})
         .then(items => {
             res.status(200).json(items)
         })
@@ -44,7 +46,6 @@ class itemController{
     }
 
     static findOne(req, res, next){
-        
         Item.findById(req.params.id)
         .then(item=>{
             if(item){

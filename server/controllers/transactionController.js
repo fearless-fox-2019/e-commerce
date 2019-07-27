@@ -1,29 +1,48 @@
 const Transaction= require('../models/transaction')
-
+const Item= require('../models/item')
+const Cart= require('../models/cart')
 
 class transactionController{
 
     static create(req, res, next){
 
+        let cartItem=req.body.items
+        let allPromise=[]
+        let totalPrice=0
+        
+        cartItem.forEach(el => {
+            console.log(el)
+            let qty= Number(el.quantity)
+            let price= Number(el.price)
+            totalPrice += qty*price
+
+            allPromise.push(Item.findByIdAndUpdate(el.itemId, {$inc: {stock: -qty}}))
+        })
 
         let newTransaction= new Transaction({
             customerId: req.decode.id,
             items: req.body.items,
+            totalPrice: totalPrice,
             address: req.body.address,
             shipping: req.body.shipping
         })
 
-        newTransaction.save()
-        .then(transaction=>{
-            res.status(201).json(transaction)
-        })
+        allPromise.push(newTransaction.save())
+        allPromise.push(Cart.deleteMany({customerId: req.decode.id}))
+       
+
+        Promise.all(allPromise)
+        .then(transactions=>{
+
+            res.status(201).json(transactions[transactions.length-2])
+        })  
         .catch(next)
     }
 
     static findAll(req, res, next){
         // console.log('masuk find transaction')
-        Transaction.find({status: req.params.status})
-        .populate('custId')
+        Transaction.find({})
+        .populate('customerId')
         .populate({
             path: 'items',
                 populate: {
@@ -31,6 +50,7 @@ class transactionController{
                 model: 'Item'
                 } 
         })
+        .sort({createdAt: -1})
         .then(transactions=>{
             
             res.status(200).json(transactions)
@@ -39,16 +59,11 @@ class transactionController{
     }
 
     static findAllCust(req, res, next){
-        
-        Transaction.find({customerId:req.params.custId, status: req.params.status})
-        .populate('custId')
-        .populate({
-            path: 'items',
-                populate: {
-                path: 'item',
-                model: 'Item'
-                } 
-        })
+        console.log('masuk find all cust')
+        Transaction.find({customerId:req.params.custId})
+        .populate('customerId')
+        .populate('items.itemId')
+        .sort({createdAt: -1})
         .then(transactions=>{
             
             res.status(200).json(transactions)

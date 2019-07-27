@@ -1,8 +1,8 @@
 <template>
         <div class="row">
             <div id= "table-allitem" class="col-10 offset-1">
-                <table>
-                    <thead class="thead-light">
+                <table  class="table">
+                    <thead class="thead-dark">
                         <tr>
                             <th scope="col">No</th>
                             <th scope="col">Name</th>
@@ -19,18 +19,14 @@
                             <td>{{cake.name}}</td>
                             <td><img :src="cake.image" alt="Image Product" style="width: 80px; height:70px;"></td>
                             <td>{{cake .category}}</td>
-                            <td>{{cake.price}}</td>
+                            <td>Rp. {{cake.price}}</td>
                             <td>{{cake.stock}}</td>
                             <td>
-                                <button type="button" class="btn">
-                                    <a @click="editItem(cake)">
+                                <button @click="editItem(cake)" type="button" class="btn">
                                         <i class="fas fa-edit" style="font-size: 18px"></i>
-                                    </a>
                                 </button>
-                                <button type="button" class="btn">
-                                    <a @click="removeItem(cake._id, cake.name)">
+                                <button @click="removeItem(cake._id, cake.name)" type="button" class="btn">
                                         <i class="fas fa-trash-alt" style="font-size: 18px"></i>
-                                    </a>
                                 </button>
                             </td>
                         </tr>
@@ -60,7 +56,7 @@ export default {
         },
         removeItem(id, name){
             Swal.fire({
-                title: `Are you sure to delete ${name}?`,
+                text: `Are you sure to delete ${name}?`,
                 type: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

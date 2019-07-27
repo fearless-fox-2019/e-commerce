@@ -14,27 +14,50 @@
                 <ul class="navbar-nav">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                            Items
+                            <router-link to="/home">Items </router-link>
                         </a>
                         <div class="dropdown-menu">
                             <a class="dropdown-item">
-                                <router-link to="/home">All Items </router-link>
+                                <router-link to="/home">
+                                    All Items
+                                </router-link>
                             </a>
                             <a class="dropdown-item">
-                                <router-link to="/item/add">Add New Item </router-link>
+                                <router-link to="/item/add">
+                                    Add New Item
+                                </router-link>
                             </a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                            Transactions
+                            <router-link to="/transaction/all"> Transactions </router-link>
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#">All Transaction</a>
-                            <a class="dropdown-item" href="#">Unpaid</a>
-                            <a class="dropdown-item" href="#">Paid</a>
-                            <a class="dropdown-item" href="#">Delivered</a>
+                            <a class="dropdown-item">
+                                <router-link to="/transaction/all">
+                                    All Transaction
+                                </router-link>
+                            </a>
+                            <a class="dropdown-item">
+                                <router-link to="/transaction/unpaid"> 
+                                    Unpaid 
+                                </router-link>
+                            </a>
+                            <a class="dropdown-item">
+                                <router-link to="/transaction/paid"> 
+                                    Paid
+                                </router-link>
+                            </a>
+                            <a class="dropdown-item">
+                                <router-link to="/transaction/complete"> 
+                                    Complete
+                                </router-link>
+                            </a>
                         </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link">Invite Admin</a>
                     </li>
                 </ul>
             </div>

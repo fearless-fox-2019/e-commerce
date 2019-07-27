@@ -1,6 +1,6 @@
 <template>
     <div class="row" style="margin-left: 5%; margin-top: 15px">
-        <cardItem v-for="cake in chocoCake" :key="cake._id" :item="cake"></cardItem>
+        <cardItem v-for="cake in cheeseCake" :key="cake._id" :item="cake"></cardItem>
     </div>
 </template>
 
@@ -9,7 +9,7 @@ import { mapState, mapActions } from 'vuex'
 import cardItem from '@/components/cardItem.vue'
 
 export default {
-    name: 'catalogChoco',
+    name: 'catalogCheese',
     components:{
         cardItem
     },
@@ -20,7 +20,7 @@ export default {
         this.getAllCake()
     },
     computed:{
-        ...mapState(['chocoCake'])
+        ...mapState(['cheeseCake'])
     },
 
 }

@@ -3,32 +3,46 @@
          <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-flex justify-content-between">
             <!-- Logo -->
             <div>
-                <a class="navbar-brand" style="color: gold">
-                    <img src="@/assets/clover.png" alt="Logo" style="height: 40px">
-                    Claves Patisserie
-                </a>
+                <router-link to="/">
+                    <a class="navbar-brand" style="color: gold">
+                        <img src="@/assets/clover.png" alt="Logo" style="height: 40px">
+                        Claves Patisserie
+                    </a>
+                </router-link>
             </div>
             
             <!-- Menu -->
             <div>
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link">Chocolate Cake</a>
+                     <li class="nav-item">
+                         <router-link to="/cake/chocolate">
+                            <a class="nav-link" id="menu-txt">Chocolate Cake</a>
+                         </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Cheesecake</a>
+                        <router-link to="/cake/cheese">
+                            <a class="nav-link" id="menu-txt">Cheesecake</a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Ice Cream Cake</a>
+                        <router-link to="/cake/icecream">
+                            <a class="nav-link" id="menu-txt">Ice Cream Cake</a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Nougat Cake</a>
+                        <router-link to="/cake/nougat">
+                            <a class="nav-link" id="menu-txt">Nougat Cake</a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Classic</a>
+                        <router-link to="/cake/classic">
+                            <a class="nav-link" id="menu-txt">Classic</a>
+                        </router-link>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link">Wedding Cake</a>
+                        <router-link to="/cake/wedding">
+                            <a class="nav-link" id="menu-txt">Wedding Cake</a>
+                        </router-link>
                     </li>
                 </ul>
             </div>
@@ -216,13 +230,15 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
     html, body{
-        height: 100vh
+        height: 100vh;
+
     }
 
-    ul a{
-        color: burlywood
+    li a{
+        color: lightsalmon
     }
 
 </style>
