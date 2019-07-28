@@ -25,6 +25,14 @@ class TransactionController {
       })
       .catch(next)
   }
+
+  static allTransaction(req,res,next) {
+    Transaction.find()
+      .then(dataFound => {
+        res.status(200).json(dataFound)
+      })
+      .catch(next)
+  }
 }
 
 module.exports = TransactionController

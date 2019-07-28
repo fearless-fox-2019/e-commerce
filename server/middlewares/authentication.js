@@ -7,15 +7,15 @@ module.exports = function (req, res, next) {
     try {
         // console.log(localStorage.getItem('token'))
         // console.log(req.token)
-        console.log('asd')
+        // console.log('asd')
         // console.log(req.headers['token'])
         let decoded = verifyToken(req.headers.token);
-        console.log(decoded)
+        // console.log(decoded)
         User.findById(decoded._id)
             .then(user => {
-                console.log('asd')
+                // console.log('asd')
                 if (user) {
-                    console.log(user)
+                    // console.log(user)
                     // console.log(user)
                     req.decoded = decoded;
                     next()

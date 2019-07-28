@@ -10,14 +10,17 @@ const cartSchema = new Schema({
   },
   userId: {
       type: Schema.Types.ObjectId,
-      ref: "User"
+      ref: "User",
+      required: [true, 'user is required']
   },
   productId: {
       type: Schema.Types.ObjectId,
-      ref: "Shoe"
+      ref: "Shoe",
+      required: [true, 'product is required']
   },
   quantity: {
       type: Number,
+      required: [true, 'number is reuqired']
   },
   checkoutDate: {
       type: Date

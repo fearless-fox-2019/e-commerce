@@ -27,10 +27,10 @@ class ShoeController {
   }
 
   static update(req,res,next) {
-    console.log('halo ini update')
+    // console.log('halo ini update')
     Shoes.findById(req.params.id)
       .then((data) => {
-        console.log('masuk ke update')
+        // console.log('masuk ke update')
         data.name = req.body.name
         data.price = req.body.price
         data.quantity = req.body.quantity

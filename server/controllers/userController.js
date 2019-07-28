@@ -29,7 +29,7 @@ class UserController {
     static create(req,res,next) {
         const {username,password,email,role}=req.body
         const input = {username,password,email,role}
-        console.log('halo')
+        // console.log('halo')
         // console.log(input);
         User.create(input)
             .then((dataCreated) => {

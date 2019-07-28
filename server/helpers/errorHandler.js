@@ -1,5 +1,5 @@
 let errHandler = function(err, req, res, next) {
-    console.log(err);
+    // console.log(err);
     if (err.name === 'ValidationError') {
       let key = Object.keys(err.errors)[0]
       res.status(400).json({ message: `Error: ${err.errors[key].message}` })

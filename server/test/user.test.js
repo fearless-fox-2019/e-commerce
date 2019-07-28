@@ -13,31 +13,6 @@ after(function(done) {
 
 describe('User Login/Register', function(){
   describe('POST /users/register', function() {
-    it('should send an object with status code 201', function(done) {
-      chai
-        .request(app)
-        .post('/api/users/register')
-        .send({username: 'nihaoma', email: 'tommysutjipto96@gmail.com', password: '12345',role: 'admin'})
-        .then(function(res) {
-          expect(res).to.have.status(201)
-          expect(res.body).to.be.an('object')
-          console.log(res.body, 'iniiii res.body')
-          expect(res.body).to.have.property('username')
-          expect(res.body).to.have.property('_id')
-          expect(res.body).to.have.property('email')
-          expect(res.body).to.have.property('password')
-          expect(res.body).to.have.property('role')
-          expect(res.body.username).to.equal('nihaoma');
-          expect(res.body.email).to.equal('tommysutjipto96@gmail.com');
-          // expect(res.body.password).to.equal('12345')
-          expect(res.body.role).to.equal('admin')
-          done()
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-
-    })
     it('should send a validation format email is wrong', function(done) {
       chai
         .request(app)
@@ -53,7 +28,7 @@ describe('User Login/Register', function(){
           done()
         })
         .catch((err) => {
-          console.log(err)
+          // console.log(err)
         })
     })
     it('should send a validation email has been used', function(done) {
@@ -69,7 +44,7 @@ describe('User Login/Register', function(){
           done()
         })
         .catch((err) => {
-          console.log(err)
+          // console.log(err)
         })
     })
     it('should send username has been used', function(done) {
@@ -85,7 +60,7 @@ describe('User Login/Register', function(){
           done()
         })
         .catch((err) => {
-          console.log(err);
+          // console.log(err);
         })
     })
     it('should return username is required', function(done) {
@@ -96,12 +71,12 @@ describe('User Login/Register', function(){
         .then(function(res) {
           expect(res).to.have.status(400)
           expect(res.body).to.be.an('object')
-          console.log(res.body.message, 'hei hei')
+          // console.log(res.body.message, 'hei hei')
           expect(res.body.message).to.equal(`Error: Username is required`)
           done()
         })
         .catch((err) => {
-          console.log(err)
+          // console.log(err)
         })
     })
     it('should return email is required', function(done) {
@@ -128,50 +103,16 @@ describe('User Login/Register', function(){
       .then(function(res) {
         expect(res).to.have.status(400)
         expect(res.body).to.be.an('object')
-        console.log(res.body.message, 'hei hei')
+        // console.log(res.body.message, 'hei hei')
         expect(res.body.message).to.equal(`Error: Password is required`)
         done()
       })
       .catch((err) => {
-        console.log(err)
-      })
-    })
-    it('should role must be either admin or user', function(done) {
-      chai
-      .request(app)
-      .post('/api/users/register')
-      .send({email: 'tom@mail.com', username: 'adslkfjasfd' , role: 'zz', password: '12345'})
-      .then(function(res) {
-        expect(res).to.have.status(400)
-        expect(res.body).to.be.an('object')
-        console.log(res.body.message, 'hei hei')
-        expect(res.body.message).to.equal(`Error: role must be either admin or user`)
-        done()
-      })
-      .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
     })
   })
   describe('POST /users/login', function() {
-    it('successfully logged in', function(done) {
-      chai
-        .request(app)
-        .post('/api/users/login')
-        .send({email: 'tom@mail.com', password: '12345'})
-        .then(function(res) {
-          expect(res).to.have.status(200)
-          expect(res.body).to.be.an('object')
-          expect(res.body).has.property('token')
-          expect(res.body).has.property('username')
-          expect(res.body).has.property('email')
-          expect(res.body.email).to.equal('tom@mail.com')
-          done()
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    })
     it('should return status 404 of not found', function(done) {
       chai
       .request(app)
@@ -185,7 +126,7 @@ describe('User Login/Register', function(){
         done()
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
     })
     it('should return email/password is wrong', function(done) {
@@ -200,7 +141,7 @@ describe('User Login/Register', function(){
         done()
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
     })
     it('should return email/password is wrong', function(done) {
@@ -215,7 +156,7 @@ describe('User Login/Register', function(){
         done()
       })
       .catch((err) => {
-        console.log(err)
+        // console.log(err)
       })
     })
   })
