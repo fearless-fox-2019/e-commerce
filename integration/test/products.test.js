@@ -77,6 +77,8 @@ after(function(done){
                 })
             })
 
+
+
             describe("GET /all", function() {
                 it("should get all product data", function(done) {
                     chai.request(app)
@@ -167,9 +169,31 @@ after(function(done){
                         .field("weaponType", "Assault Rifle")
                         .field("stock", '-1')
                     .then(res =>{
-                        expect(res).to.have.status(200)
+                        expect(res).to.have.status(400)
                         expect(res.body).to.equal('Product validation failed: stock: Path `stock` (-1) is less than minimum allowed value (1).')
                        
+                        done()
+                    })
+                    .catch(err =>{
+                        console.log(err)
+                        done()
+                    })
+                })
+
+                it("should throw an error when trying to input a negative integer into stock", function(done) {
+                    this.timeout(60000)
+                    chai.request(app)
+                        .put(`/products/edit/${productId}`)
+                        .set("token", token)
+                        .attach("image", "", "rickk.jpeg")
+                        // .field("title", "Edited Title")
+                        .field("description", "Edited Description")
+                        .field("price", '2000')
+                        .field("weaponType", "Assault Rifle")
+                        .field("stock", '1')
+                    .then(res =>{
+                        expect(res).to.have.status(400)
+                        expect(res.body).to.equal("Product validation failed: title: Product Title cannot be empty")
                         done()
                     })
                     .catch(err =>{
@@ -196,6 +220,24 @@ after(function(done){
                             expect(res.body).to.have.property("weaponType")
                             expect(res.body).to.have.property("stock")
                             expect(res.body.stock).to.equal(8)
+                            done()
+                        })
+                        .catch(err =>{
+                            console.log(err)
+                            done()
+                        })
+                })
+
+                it("should throw an error when product is out of stock", function(done) {
+                    chai.request(app)
+                        .patch(`/products/editquantity/${productId}`)
+                        .set("token", token)
+                        .send({
+                            quantity: 12
+                        })
+                        .then(res =>{
+                            expect(res).to.have.status(400)
+                            expect(res.body).to.equal("Sorry, Edited Title is out of stock, please contact our staffs")
                             done()
                         })
                         .catch(err =>{

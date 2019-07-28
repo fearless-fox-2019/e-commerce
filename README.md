@@ -1,410 +1,411 @@
 #### Deployed at : https://hacktivgun.fildabert.com
 
-## Getting Started
-Please follow this through before you start and use the server.
-1. Run this script in the terminal to install all dependencies
-```
-npm install
-```
-2. Create .env file. You could copy paste value in .env, from .env-template.
-- SECRET is used to generate jwt tokens
-- CLIENT_ID is used for google OAuth signin
-- CLOUD_BUCKET your bucket name in GCS (google cloud service)
-- GCLOUD_PROJECT your project name in GCS (google cloud service)
-- KEYFILE_PATH your credential path file, get it from GCS (google cloud service)
 
-3. Run this in your terminal to start the server
-```
-npm start
-```
+## User Schema
+| Key | Type | Description |
+| --- | ---- | ----------- |
+|username|String|user's username|
+| email | String | user's email |
+| password | String | user's password |
+| balance | Number | user's balance |
+| admin | Boolean | Admin Status(false by default)|
 
-# Route
-## User
-### Register Customer
-Register new customer as default login path, not using third party oAuth.
-URL : /users/register
-Method : Post
-Request Header : NONE
-Request Body : 
+#### Register User
+
 ```
+POST
+http://localhost:3000/users/register
+Body:
 {
-  username: filbert,
-  password; filbert,
-  email: filbert@mail.com,
-}
-```
-Success Status Code : 201
-Success Response : No Response
-Error Status Code : 400, 500
-Error Response :
-```
-{
-  message: 'User validation failed: username: filbert is already in our database. Please use other username. email: filbert@mail.com is already in our database. Please use other email'
-}
-```
-### Login Customer
-Login for both default login or oAuth google login. The difference is in the request body.
-URL : /users/login
-Method : Post
-Request Header : NONE
-Request Body : 
-```
-{
-  user:filbert,
-  password; filbert,
-  login_type: 'default'
-}
-```
-Success Status Code : 200
-Success Response : 
-```
-{ 
-  token: 'jsfiowjoefi29sd9d8fsa0aef890ewf8s9a',
-}
-```
-### Logout Customer
-Logout for both default login user and google login user
-URL : /users/register
-Method : Post
-Request Header : 
-```
-{
-  token: 'sd9f90a8f9e0fda0dfas0d9f8eew0f98sd90fa09f'
-}
-```
-Request Body : NONE
-Success Status Code : 201
-Success Response : 
-```
-{
-  message: 'Successfully log out'
-}
-```
-Error Status Code : 400, 500
-Error Response :
-```
-{
-  message: 'Internal Server Error'
+    username: filbert1,
+    email: filbert1@mail.com
+    password: filbert1
 }
 ```
 
-##Product
-### Get All Products
-Get all listed product that has been inputed by admin of the website
-URL : /products/all
-Method : GET 
-Request Body : NONE
-Success Status Code : 200
-Success Response : 
 ```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTYyNiwiZXhwIjoxNTYzNzU3MjI2fQ.bSrSYG5EzlN8yRU9rMgz8TV_cAFReRp7way2IyAHZV8",
+    "username": "filbert1"
+}
+```
+
+#### Login User
+
+```
+POST
+http://localhost:3000/users/login
+Body:
+{
+    username: "filbert1",
+    password: "filbert1"
+}
+```
+
+```
+{
+    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw",
+    "username": "filbert1"
+}
+```
+
+## Product Schema
+
+| Key | Type | Description |
+| --- | ---- | ----------- |
+|title|String| product's title |
+|description|String| product's description |
+|price|Number| product's price |
+|weaponType|String| product's type |
+|image|String| product's image url |
+|stock|Number| product's stock |
+
+
+#### Get all products
+```
+GET
+http://localhost:3000/products/all
+Body:
+{
+  [
+    {
+      _id: '5d3db1c327fb361d4c520551',
+      title: 'Product Title123',
+      description: 'Product Description',
+      price: 1000,
+      weaponType: 'Assault Rifle',
+      image: 'https://storage.googleapis.com/hacktivgun.fildabert.com/1564324290396mp-5.png',
+      stock: 20,
+      __v: 0
+    },
+    {
+      _id: '5d3db1ce27fb361d4c520554',
+      title: 'Product Title1322',
+      description: 'Product Description',
+      price: 1000,
+      weaponType: 'Assault Rifle',
+      image: 'https://storage.googleapis.com/hacktivgun.fildabert.com/1564324291883mp-5.png',
+      stock: 5,
+      __v: 0
+    }
+  ]
+}
+```
+
+#### Create a product(admin only)
+```
+POST
+http://localhost:3000/products/add
+headers:
+{
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
+}
+Body: 
+{
+  _id: '5d3db1c327fb361d4c520551',
+  title: 'Product Title123',
+  description: 'Product Description',
+  price: 1000,
+  weaponType: 'Assault Rifle',
+  image: 'https://storage.googleapis.com/hacktivgun.fildabert.com/1564324290396mp-5.png',
+  stock: 20,
+  __v: 0
+}
+```
+
+#### Edit a product(admin only)
+```
+PUT
+http://localhost:3000/products/edit/:id
+headers:
+{
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
+}
+Body:
+{
+  _id: '5d3db1c327fb361d4c520551',
+  title: 'Product Title123',
+  description: 'Product Description',
+  price: 1000,
+  weaponType: 'Assault Rifle',
+  image: 'https://storage.googleapis.com/hacktivgun.fildabert.com/1564324290396mp-5.png',
+  stock: 20,
+  __v: 0
+}
+```
+
+#### Delete all products(admin only)
+```
+DELETE
+http://localhost:3000/products/delete/:id
+headers:
+{
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
+}
+Body:
+{
+  deletedCount: 1
+}
+
+```
+
+#### Reduce stock of product
+```
+PATCH
+http://localhost:3000/products/decrement/:id
+{
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
+}
+Body:
+{
+  _id: '5d3db1c327fb361d4c520551',
+  title: 'Product Title123',
+  description: 'Product Description',
+  price: 1000,
+  weaponType: 'Assault Rifle',
+  image: 'https://storage.googleapis.com/hacktivgun.fildabert.com/1564324290396mp-5.png',
+  stock: 15,
+  __v: 0
+}
+```
+
+
+## Cart Schema
+
+| Key | Type | Description |
+| --- | ---- | ----------- |
+|status| String |cart's status(ordered, pending, sent, received)|
+|userId| ObjectId |cart's UserId|
+|product|ObjecetId |cart's product items|
+|quantity| Number |cart's product quantity|
+|checkoutDate| Date |cart's checkout date|
+
+router.get("/all", authenticate, cartController.findCart)
+router.post("/add", authenticate, cartController.create)
+router.put("/updatestatus", authenticate, cartController.updateCart)
+router.put("/updatequantity", authenticate, cartController.updateQuantity)
+router.delete("/delete", authenticate, cartController.deleteCart)
+router.get("/transactions/admin", authenticate, authorize, cartController.getAllPendingTransactions)
+router.patch("/transactions/admin", authenticate, authorize, cartController.updateTransactions)
+router.patch("/transactions/complete", authenticate, cartController.updateTransactions)
+router.get("/transactions/:status", authenticate, cartController.getTransactions)
+
+#### Get all ordered transactions
+```
+GET
+http://localhost:3000/cart/all
+headers:
+{
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
+},
+Body:
 [
     {
-        "_id": "5d17b95edbb0cc1558bc564a",
-        "title": "AK-47",
-        "description": "AK-47 Description",
-        "stock": 10,
-        "image": "https://storage.googleapis.com/imagelink",
-        "price": 3300,
-        "type": "Assault Rifle"
+    _id: '5d3dc95a98aa5a0c7e53b37a',
+    status: 'ordered',
+    userId: '5d3dc94f98aa5a0c7e53b378',
+    product: '5d3dc95a98aa5a0c7e53b379',
+    quantity: 2,
+    checkoutDate: null,
+    __v: 0
     },
-    {...}
+    {...Cart}
 ]
 ```
-Error Status Code : 400, 500
-Error Response :
-```
-{
-  message: 'Internal Server Error'
-}
-```
 
-
-
-### Create Product
-Create one new product to be listed on the website. This routing could be accessed only by admin user.
-URL : /products/add
-Method : POST
-Request Header : 
+#### Create a cart
 ```
+POST
+http://localhost:3000/cart/add
+headers:
 {
-  token: 'sd9f90a8f9e0fda0dfas0d9f8eew0f98sd90fa09f'
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
 }
-```
-Request Body :
-- title cannot be empty
-- description cannot be empty
-- image should be file
-- stock must be above 0
-- price must be above 0
-- type cannot be empty
-```
+Body:
 {
-  name: name of the product
-  description: description of the product,
-  stock: 10,
-  image: file,
-  price: 2000
-  type: product type
-}
-```
-Success Status Code : 200
-Success Response : 
-```
-{
-  "_id": "5d17b95edbb0cc1558bc564a",
-  "name": "AK 47",
-  "description": "AK 47 description",
-  "stock": 0,
-  "image": "https://storage.googleapis.com/",
-  "price": 250000,
-  "type" : "Assault Rifle"
-}
-```
-Error Status Code : 400, 500
-Stock should be above 
-Error Response :
-```
-{
-  message: 'Internal Server Error'
-}
-```
-
-### Update Product
-Update one existing product data, photo, and stock. This routing could be accessed only by admin user.
-URL : /products/edit
-Method : PUT
-Request Header : 
-```
-{
-  token: 'sd9f90a8f9e0fda0dfas0d9f8eew0f98sd90fa09f'
-}
-```
-Request Body :
-- title cannot be empty
-- description cannot be empty
-- image should be file
-- stock must be above 0
-- price must be above 0
-- type cannot be empty
-```
-{
-  name: name of the product
-  description: description of the product,
-  stock: 10,
-  image: file,
-  price: 2000
-  type: product type
-}
-```
-Success Status Code : 200
-Success Response : 
-```
-{
-  "_id": "5d17b95edbb0cc1558bc564a",
-  "name": "AK 47",
-  "description": "AK 47 description",
-  "stock": 0,
-  "image": "https://storage.googleapis.com/",
-  "price": 250000,
-  "type" : "Assault Rifle"
-}
-```
-Error Status Code : 400, 500 
-Error Response :
-```
-{
-  message: 'Internal Server Error'
-}
-```
-
-### Delete Product
-Deleting one product. This routing could be accessed only by admin user.
-URL : /products/delete
-Method : DELETE
-Request Header : 
-```
-{
-  token: 'sd9f90a8f9e0fda0dfas0d9f8eew0f98sd90fa09f'
-}
-```
-Request Body : NONE
-Success Status Code : 200
-```
-{
-  message: 'successfully delete product'
-}
-```
-Error Status Code : 400, 500 
-Error Response :
-```
-{
-  message: 'Internal Server Error'
-}
-```
-
-## Cart
-### Create or Add Product to Cart
-Adding an item into the cart.
-URL : /cart/add
-Method : POST
-Request Header : 
-```
-{
-  token: 'sd9f90a8f9e0fda0dfas0d9f8eew0f98sd90fa09f'
-}
-```
-Request Body :
-```
-{
-  userId: '231283920',
-  product: '51981389312',
+  _id: '5d3dc95a98aa5a0c7e53b37a',
+  status: 'ordered',
+  userId: '5d3dc94f98aa5a0c7e53b378',
+  product: '5d3dc95a98aa5a0c7e53b379',
   quantity: 2,
-  status: false,
-  checkoutDate: null
+  checkoutDate: null,
+  __v: 0
 }
 ```
-Success Status Code : 200
-Success Response : 
+
+#### Cart Checkout
 ```
+PUT
+http://localhost:3000/cart/updatestatus
+headers:
 {
-  userId: '231283920',
-  product: '51981389312',
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
+},
+Body: 
+{
+  _id: '5d3dc95a98aa5a0c7e53b37a',
+  status: 'pending',
+  userId: '5d3dc94f98aa5a0c7e53b378',
+  product: '5d3dc95a98aa5a0c7e53b379',
   quantity: 2,
-  status: false,
-  checkoutDate: null
-}
-
-```
-Error Status Code : 400, 500 
-Error Response :
-```
-{
-  message: 'Internal Server Error'
+  checkoutDate: 2021-10-12,
+  __v: 0
 }
 ```
 
-### Transaction History
-Get history of transaction by one user
-URL : /cart/transactions
-Method : GET
-Request Header : 
+#### Update quantity of items in a cart
 ```
+PUT
+http://localhost:3000/cart/updatequantity
+headers:
 {
-  token: 'sd9f90a8f9e0fda0dfas0d9f8eew0f98sd90fa09f'
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
+}
+Body:
+{
+  _id: '5d3dc95a98aa5a0c7e53b37a',
+  status: 'ordered',
+  userId: '5d3dc94f98aa5a0c7e53b378',
+  product: '5d3dc95a98aa5a0c7e53b379',
+  quantity: 10,
+  checkoutDate: null,
+  __v: 0
 }
 ```
-Request Params : ?id=userId
-Success Status Code : 200
-Success Response : 
+
+#### Delete a cart
 ```
+DELETE
+http://localhost:3000/cart/delete
+headers:
+{
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
+}
+Body: 
+{
+    deletedCount: 1
+}
+```
+
+#### Get all pending transactions (admin)
+```
+GET
+http://localhost:3000/cart/transactions/admin
+headers:
+{
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
+}
 [
-  {
-  userId: '231283920',
-  product: '51981389312',
-  quantity: 2,
-  status: false,
-  checkoutDate: null
-}
-  {...}
+    {
+    _id: '5d3dc95a98aa5a0c7e53b37a',
+    status: 'pending',
+    userId: '5d3dc94f98aa5a0c7e53b378',
+    product: '5d3dc95a98aa5a0c7e53b379',
+    quantity: 2,
+    checkoutDate: 2021-10-12,
+    __v: 0
+    },
+    {...Cart}
 ]
 ```
-Error Status Code : 400, 500 
-Error Response :
+
+#### Approve a transaction order pending -> sent (admin)
 ```
+PATCH
+http://localhost:3000/cart/transactions/admin
+headers:
 {
-  message: 'Internal Server Error'
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
+}
+Body:
+{
+  _id: '5d3dc95a98aa5a0c7e53b37a',
+  status: 'sent',
+  userId: '5d3dc94f98aa5a0c7e53b378',
+  product: '5d3dc95a98aa5a0c7e53b379',
+  quantity: 2,
+  checkoutDate: 2021-10-12,
+  __v: 0
 }
 ```
 
-
-### Update quantity in cart
-Update quantity of the product in the cart by customer.
-URL : /cart/updatequantity
-Method : PUT
-Request Header : 
+#### Update transaction status to complete
 ```
+PATCH
+http://localhost:3000/cart/transactions/complete
+headers:
 {
-  token: 'sd9f90a8f9e0fda0dfas0d9f8eew0f98sd90fa09f'
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
 }
-```
-Request body :
-```
+Body:
 {
-  _id: '1276387129831',
-  quantity: 2
-}
-```
-Success Status Code : 200
-Success Response : 
-```
-={
-    "message": "item updated"
-}
-```
-Error Status Code : 400, 500 
-Error Response :
-```
-{
-  message: 'Internal Server Error'
+  _id: '5d3dc95a98aa5a0c7e53b37a',
+  status: 'complete',
+  userId: '5d3dc94f98aa5a0c7e53b378',
+  product: '5d3dc95a98aa5a0c7e53b379',
+  quantity: 2,
+  checkoutDate: null,
+  __v: 0
 }
 ```
 
-### Delete one product in cart
-Delete the product in the cart by customer.
-URL : /transactions/?id=
-Method : DELETE
-Request Header : 
+#### Get transaction by status (admin)
 ```
+POST
+http://localhost:3000/cart/transactions/:status
+headers:
 {
-  token: 'sd9f90a8f9e0fda0dfas0d9f8eew0f98sd90fa09f'
+    token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZDM0YjY0YTZiM2UzZTIxNjZhMGE5ODYiLCJ1c2VybmFtZSI6ImZpbGJlcnQxIiwiZW1haWwiOiJmaWxiZXJ0MUBtYWlsLmNvbSIsImlhdCI6MTU2MzczNTk1MiwiZXhwIjoxNTYzNzU3NTUyfQ.tu0aOvkkU5z7z2XQMjQU3QLYMXAfY9APndUftGvQrSw
 }
+Body:
+[
+    {
+    _id: '5d3dc95a98aa5a0c7e53b37a',
+    status: 'complete',
+    userId: '5d3dc94f98aa5a0c7e53b378',
+    product: '5d3dc95a98aa5a0c7e53b379',
+    quantity: 2,
+    checkoutDate: null,
+    __v: 0
+    },
+    {...Cart}
+]
 ```
-Request body:
-- NONE
+
+## Error Cases
+
 ```
-NONE
-```
-Success Status Code : 200
-Success Response : 
-```
+400: BAD REQUEST
+Usually happens when user made a bad request. eg: failing to fill in all the required fields or filling an invalid input type 
 {
-  message: 'successfully delete transaction'
-}
-```
-Error Status Code : 400, 500 
-Error Response :
-```
-{
-  message: 'Internal Server Error'
+    code: 400,
+    message: (Error Message) 
 }
 ```
 
-### Checkout the cart
-Checkout the cart by customer.
-URL : /cart/updatestatus
-Method : POST
-Request Header : 
 ```
+401: UNAUTHORIZED
+Usually happens when user is not authorized to make an action. eg: Attempting to create an article without loggin in first
 {
-  token: 'sd9f90a8f9e0fda0dfas0d9f8eew0f98sd90fa09f'
+    code: 401,
+    message: (Error Message)
 }
 ```
-Request Body : 
-{
-    userId: '124353645234123',
-    checkoutDate: 'new date()'
-}
-Success Status Code : 200
-Success Response : 
+
 ```
-{ 
-  message: "cart updated"
+404: NOT FOUND
+Usually happens when user is making a request to a path that does not exist
+{
+    code: 404,
+    message: (Error Message)
 }
 ```
-Error Status Code : 400, 500 
-Error Response :
+
 ```
+500: INTERNAL SERVER ERROR
+Happens when there is an error on the backend side
 {
-  message: 'Internal Server Error'
+    code: 500,
+    message: Internal Server Error
 }
 ```

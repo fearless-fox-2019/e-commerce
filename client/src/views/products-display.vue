@@ -96,7 +96,9 @@ export default {
     this.$store
       .dispatch("GET_PRODUCTS")
       .then(products => {
-        this.loading = false
+        setTimeout(() =>{
+          this.loading = false
+        },1000)
         this.products = products;
       })
       .catch(err => {

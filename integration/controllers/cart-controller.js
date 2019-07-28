@@ -7,6 +7,12 @@ class CartController{
     static create(req, res, next) {
         Product.findOne({_id: req.body.product})
             .then(product =>{
+                if(!product) {
+                    throw({
+                        code: 404,
+                        message: "Product not found"
+                    })
+                }
                 if((product.stock - 1) < 0) {
                     throw({
                         code: 400,

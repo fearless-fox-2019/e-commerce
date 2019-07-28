@@ -71,7 +71,7 @@ describe("Cart CRUD", function() {
                     .field("description", "Product Description")
                     .field("price", '1000')
                     .field("weaponType", "Assault Rifle")
-                    .field("stock", '5')
+                    .field("stock", '20')
                   .then(res =>{
                     expect(res.body).to.be.an("object")
                     expect(res).to.have.status(201)
@@ -102,6 +102,7 @@ describe("Cart CRUD", function() {
                         quantity: 2              
                     })
                 .then(res =>{
+                    console.log(res.body)
                     cartId = res.body._id
                     expect(res).to.have.status(201)
                     expect(res.body).to.have.property("status")
@@ -110,6 +111,25 @@ describe("Cart CRUD", function() {
                     expect(res.body).to.have.property("product")
                     expect(res.body).to.have.property("quantity")
                     expect(res.body).to.have.property("checkoutDate")
+                    done()
+                })
+                .catch(err =>{
+                    console.log(err)
+                    done()
+                })
+            })
+
+            it("throw an error when trying to add a product that does not exist into the cart", function(done) {
+                chai.request(app)
+                    .post("/carts/add")
+                    .set("token", token)
+                    .send({
+                        product: "5d187b0cc7c927181835ba04",
+                        quantity: 2              
+                    })
+                .then(res =>{
+                    expect(res).to.have.status(404)
+                    expect(res.body).to.equal("Product not found")
                     done()
                 })
                 .catch(err =>{
@@ -127,6 +147,20 @@ describe("Cart CRUD", function() {
                 .then(res =>{
                     expect(res).to.have.status(200)
                     expect(res.body).to.be.an("array")
+                    done()
+                })
+                .catch(err =>{
+                    console.log(err)
+                    done()
+                })
+            })
+
+            it("should throw an error when user is not logged in", function(done) {
+                chai.request(app)
+                    .get("/carts/all")
+                .then(res =>{
+                    expect(res).to.have.status(401)
+                    expect(res.body).to.equal("Login First")
                     done()
                 })
                 .catch(err =>{
@@ -157,9 +191,102 @@ describe("Cart CRUD", function() {
                     done()
                 })
             })
+
+            it("should throw an error when product is out of stock", function(done) {
+                chai.request(app)
+                    .put("/carts/updatequantity")
+                    .set("token", token)
+                    .send({
+                        _id: cartId,
+                        quantity: 100
+                    })
+                .then(res =>{
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.equal("Product is out of stock")
+                    done()
+                })
+                .catch(err =>{
+                    console.log(err)
+                    done()
+                })
+            })
+
+            it("should throw an error when user is not logged in", function(done) {
+                chai.request(app)
+                    .put("/carts/updatequantity")
+                    // .set("token", token)
+                    .send({
+                        _id: cartId,
+                        quantity: 100
+                    })
+                .then(res =>{
+                    expect(res).to.have.status(401)
+                    expect(res.body).to.equal("Login First")
+                    done()
+                })
+                .catch(err =>{
+                    console.log(err)
+                    done()
+                })
+            })
         })
 
         describe("Cart Checkout", function() {
+            it("Dummy function to trigger an error during checkout when balance is not enough", function(done) {
+                chai.request(app)
+                    .put("/carts/updatequantity")
+                    .set("token", token)
+                    .send({
+                        _id: cartId,
+                        quantity: 10
+                    })
+                .then(res =>{
+                    expect(res).to.have.status(200)
+                    done()
+                })
+                .catch(err =>{
+                    console.log(err)
+                    done()
+                })
+            })
+
+            it("should throw an error when user's balance is not enough", function(done) {
+                chai.request(app)
+                    .put("/carts/updatestatus")
+                    .set("token", token)
+                    .send({
+                        
+                    })
+                .then(res =>{
+                    expect(res).to.have.status(400)
+                    expect(res.body).to.equal("Your balance is not enough, please top up to continue")
+                    done()
+                })
+                .catch(err =>{
+                    console.log(err)
+                    done()
+                })
+            })
+
+            it("Dummy function to return the quantity back to normal so that checkout will be successful", function(done) {
+                chai.request(app)
+                    .put("/carts/updatequantity")
+                    .set("token", token)
+                    .send({
+                        _id: cartId,
+                        quantity: 4
+                    })
+                .then(res =>{
+                    expect(res).to.have.status(200)
+                    done()
+                })
+                .catch(err =>{
+                    console.log(err)
+                    done()
+                })
+            })
+
+            
             it("should update the status of cart to pending", function(done) {
                 chai.request(app)
                     .put("/carts/updatestatus")

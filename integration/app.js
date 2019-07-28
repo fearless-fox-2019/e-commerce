@@ -7,7 +7,7 @@ const routes = require("./routes/index")
 
 
 mongoose.connect('mongodb://localhost:27017/e-commerce-' + process.env.NODE_ENV, {useNewUrlParser: true});
-
+console.log(process.env.NODE_ENV)
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json())

@@ -91,7 +91,9 @@ export default {
         var id = this.$route.query.id;
         var selected = this.$store.getters.GET_PRODUCT_BY_ID(id);
         this.selected = selected;
-        this.loading = false;
+        setTimeout(() =>{
+          this.loading = false;
+        }, 500)
       })
       .catch(err => {
         console.log(err);

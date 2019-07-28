@@ -4,6 +4,9 @@
       <v-progress-circular indeterminate color="primary" v-show="loading"></v-progress-circular>
     </div>
     <v-layout row wrap>
+
+
+
       <v-flex xs12>
         <v-layout row class="mb-2">
           <v-flex xs3>
@@ -11,6 +14,8 @@
           </v-flex>
         </v-layout>
       </v-flex>
+
+      
 
 
         <v-flex xs12 v-for="(transaction, i) in transactions" :key="transaction.cartId">
@@ -114,7 +119,14 @@ export default {
             loading: false,
             buttonloading: [],
             transactions: [],
-            dialog: false
+            dialog: false,
+            width: 2,
+            radius: 10,
+            padding: 8,
+            lineCap: "round",
+            gradient: ['#f72047', '#ffd200', '#1feaea'],
+            value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
+            gradientDirection: 'top',
         }
     },
     methods: {
