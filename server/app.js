@@ -1,13 +1,17 @@
-require('dotenv').config()
+if(process.env.NODE_ENV == 'development' || process.env.NODE_ENV == 'test') {
+  require('dotenv').config()
+  console.log('on development')
+}
 
+const cors = require('cors')
 const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-const NODE_ENV = process.env.NODE_ENV || 'development';
+
 const routes = require('./routes');
 const port = process.env.PORT || 3000
-const url = process.env.MONGODB_URL || `mongodb://localhost:27017/e-commerce2`
+const url = process.env.MONGODB_URL || `mongodb://localhost:27017/e-commerce2-${process.env.NODE_ENV}`
 const errorHandler = require('./middlewares/error-handler')
 mongoose.connect(url, {
   useNewUrlParser: true,
@@ -16,7 +20,7 @@ mongoose.connect(url, {
   if(err) console.log('mongo error')
   else console.log('mongoose connected')
 });
-
+app.use(cors())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -28,4 +32,3 @@ module.exports = app;
 
 
 app.listen(port, () => console.log(`listening on port`, port))
-

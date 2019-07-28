@@ -24,7 +24,6 @@ describe('register for /api/users/register', () => {
         .post('/api/users/register')
         .send(data);
       
-      expect(response).to.have.status(201);
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('_id')
       expect(response.body).to.have.property('username')
@@ -34,6 +33,7 @@ describe('register for /api/users/register', () => {
       expect(response.body.username).to.equal(data.username)
       expect(response.body.email).to.equal(data.email)
       expect(response.body.role).to.equal('user')
+      expect(response).to.have.status(201);
     })
   })
   describe('Successfully register as admin', function() {
@@ -49,7 +49,6 @@ describe('register for /api/users/register', () => {
         .post('/api/users/register')
         .send(data)
 
-      expect(response).to.have.status(201);
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('_id')
       expect(response.body).to.have.property('username')
@@ -59,6 +58,7 @@ describe('register for /api/users/register', () => {
       expect(response.body.username).to.equal(data.username)
       expect(response.body.email).to.equal(data.email)
       expect(response.body.role).to.equal(data.role)
+      expect(response).to.have.status(201);
     })
   })
   describe('error case', function () {
@@ -73,10 +73,10 @@ describe('register for /api/users/register', () => {
         .post('/api/users/register')
         .send(data)
       
-      expect(response).to.have.status(400);
       expect(response.body).to.be.an('object');
       expect(response.body).to.have.property('errors');
       expect(response.body.errors).to.include('username already used!');
+      expect(response).to.have.status(400);
     })
     
     it('should send error when input used email', async function () {

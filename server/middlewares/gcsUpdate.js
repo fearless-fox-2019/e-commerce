@@ -11,13 +11,12 @@ const { storage } = gcsHelpers;
  */
 exports.sendUploadToGCS = (req, res, next) => {
     if (!req.file) {
-        console.log('masuk')
         return next()
     }
 
-    const bucketName = 'mini-wp-jays-bucket';
+    const bucketName = 'e-commerce-jays-storage';
     const bucket = storage.bucket(bucketName);
-    const gcsFileName = `${Date.now()}-${req.file.originalname}`;
+    const gcsFileName = req.file.originalname;
     const file = bucket.file(gcsFileName);
 
     const stream = file.createWriteStream({

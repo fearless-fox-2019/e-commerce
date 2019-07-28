@@ -7,13 +7,14 @@
     "test": "test"
   },
   "scripts": {
-    "dev": "nodemon app.js",
-    "test": "set NODE_ENV=test& npx mocha --reporter nyan --exit"
+    "dev": "set NODE_ENV=development& nodemon app.js",
+    "test": "set NODE_ENV=test& npx mocha  --exit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@google-cloud/storage": "^3.0.3",
     "axios": "^0.19.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
