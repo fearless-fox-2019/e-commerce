@@ -1,51 +1,25 @@
 const mongoose = require("mongoose");
-const {Schema} = mongoose;
+const Schema = mongoose.Schema;
 
 const itemSchema = new Schema({
     name: {
         type: String,
-        required: [true, "Item's name is required"],
-        validate: [{
-            validator: function isValid(value){
-                if(value.length < 3){
-                    return false;
-                }else{
-                    return true;
-                }
-            }, message: "Item's name must be more than 2 characters"
-        }]
+        required: [true, "Name is required"]
     },
-    description: {
+    image: {
         type: String,
-        required: [true, "Item's description is required"]
+        required: [true, "Image is required"]
     },
     price: {
         type: Number,
-        required: [true, "Item's price is required"],
-        validate: {
-            validator: function isValid(value){
-                if(value < 0){
-                    return false;
-                }else{
-                    return true;
-                }
-            }
-        }
+        required: [true, "Price is required"]
     },
     stock: {
         type: Number,
-        required: [true, "Item's stock is required"],
-        validate: {
-            validator: function isValid(value){
-                if(value < 0){
-                    return false;
-                }else{
-                    return true;
-                }
-            }
-        }
+        required: [true, "Stock is required"]
     }
 });
+
 
 const Item = mongoose.model("item", itemSchema);
 

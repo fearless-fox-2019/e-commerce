@@ -1,13 +1,16 @@
 const router = require("express").Router();
-const authRoute = require("./auth");
+const userRoute = require("./user");
 const itemRoute = require("./item");
+const cartRoute = require("./cart");
 
 router.get("/", (req, res) => {
-    res.send("router is working");
+    res.send("ToKuMu server is OK");
 });
 
-router.use("/auth", authRoute);
+router.use("/auth", userRoute);
 router.use("/items", itemRoute);
+router.use("/carts", cartRoute);
+
 
 
 module.exports = router;

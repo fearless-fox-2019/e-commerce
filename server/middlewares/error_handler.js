@@ -1,10 +1,12 @@
-
-
 module.exports = function(err, req, res, next){
-    console.log(err);
-    
-    const errorCode = err.code || 500;
-    const errorMessage = err.message || "Internal server error";
+    const errCode = err.code || 500;
+    const errMessage = err.message || "Internal Server Error";
+    const errDetail = err || "";
 
-    req.status(errorCode).json({errorMessage});
+    console.log("\n\nERROR HANDLER");
+    console.log("========================");
+    console.log(errDetail);
+    console.log("========================\n\n");
+
+    res.status(errCode).json({code: errCode, message: errMessage});
 }
