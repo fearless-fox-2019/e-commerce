@@ -7,12 +7,18 @@
     >Infinity Game</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-flex xs12 sm6>
-      <v-text-field label="Search for a Game" prepend-icon="search" single-line solo style="margin-top: 10px;"></v-text-field>
+      <v-text-field
+        label="Search for a Game"
+        prepend-icon="search"
+        single-line
+        solo
+        style="margin-top: 10px;"
+      ></v-text-field>
     </v-flex>
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn flat @click="toCart">
-        <v-icon>mdi-cart-plus</v-icon>Cart
+        <v-icon>mdi-cart</v-icon>Cart
       </v-btn>
       <buttonLogin v-if="!$store.state.isLogin" @click="$store.commit('SET_MODAL_LOGIN', false)" />
       <buttonRegister v-if="!$store.state.isLogin" />
@@ -42,18 +48,30 @@ export default {
       this.$router.push("/");
     },
     logout: function() {
+      this.toHome()
       this.snackbar = true;
       this.status = "warning";
       this.alertMessage = "Successfully Logout..";
       setTimeout(() => {
         this.snackbar = false;
-      }, 2000);
+      }, 2500);
       localStorage.clear();
-      this.$store.commit("SET_LOGIN");
+      this.$store.commit("SET_LOGIN");      
     },
     toCart() {
       console.log("ashiap");
-      this.$router.push("/cart");
+      if (!this.$store.state.isLogin) {
+        this.dialog = false;
+        this.snackbar = true;
+        this.status = "error";
+        this.alertMessage = "You Have To Login First To Open Cart!";
+        setTimeout(() => {
+          this.snackbar = false;
+        }, 2300);
+      }
+      else {
+        this.$router.push("/cart");
+      }
     }
   }
 };

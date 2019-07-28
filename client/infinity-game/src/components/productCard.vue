@@ -15,30 +15,39 @@
       </v-card-title>
 
       <v-card-actions>
-        <v-btn flat @click="toCart">ADD To Cart</v-btn>
+        <dialogGlob :game="game" />
         <v-spacer></v-spacer>
         <div class="text-xs-center">
           <detailGame :detail="game" />
         </div>
-      </v-card-actions>
+      </v-card-actions>  
     </v-card>
   </div>
 </template>
 
 <script>
+import dialogGlob from '../components/dialogGlob'
 import ax from "../api/api";
 import detailGame from "./detailGame";
 export default {
   name: "product",
   props: ["game"],
   components: {
-    detailGame
+    detailGame,
+    dialogGlob
   },
-  data: () => ({
-    show: false
-  }),
+  data() {
+    return {
+      dialog: false
+      // gameId : this.game._id
+    };
+  },
   methods: {
-    toCart() {
+    getOneGame(){
+      this.$store.commit('SET_GAME_DATA', this.game)
+      this.$store.dialogGlob = true
+    },
+    toCart() {      
       this.$router.push("/cart");
     }
   },

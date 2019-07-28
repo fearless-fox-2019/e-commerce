@@ -28,8 +28,8 @@ const UserSchema = new Schema({
     },
     role : {
         type : String,        
-    }, 
-    GameId : [{type : Schema.Types.ObjectId, ref : 'Game'}]
+    },
+    isAdmin : Boolean
 });
 
 UserSchema.plugin(uniqueValidator, { message: 'Error, {PATH} has already taken by another user!' });

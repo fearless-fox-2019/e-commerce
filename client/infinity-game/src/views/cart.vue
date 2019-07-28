@@ -1,62 +1,59 @@
 <template>
   <v-content>
-    <v-container fluid id="cart" grey darken-2>
-      <v-layout align-center justify-center row fill-height>
-        <v-flex xs9>
-          <v-card width="700">
-            <v-layout py-4 pl-4>
-              <v-flex shrink>
-                <v-img
-                  height="200"
-                  width="200"
-                  src="https://cdn.vuetifyjs.com/images/cards/store.jpg"
-                ></v-img>
-              </v-flex>
-              <v-flex text-center>
-                <v-container grid-list-lg pa-0>
-                  <v-layout column>
-                    <v-flex>
-                      <v-btn icon>
-                        <v-icon>mdi-heart</v-icon>
-                      </v-btn>
-                    </v-flex>
-                    <v-flex>
-                      <v-btn icon>
-                        <v-icon>mdi-bookmark</v-icon>
-                      </v-btn>
-                    </v-flex>
-                    <v-flex>
-                      <v-btn icon>
-                        <v-icon>mdi-share-variant</v-icon>
-                      </v-btn>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-              </v-flex>
-            </v-layout>
-          </v-card>
-        </v-flex>
-        <v-flex xs3>
-          <v-card max-width="344" class="mx-auto">
-            <v-card-title>I'm a title</v-card-title>
-            <v-card-text>I'm card text</v-card-text>
-            <v-card-actions>
-              <v-btn text>Click</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
+    <v-container fluid id="cart">
+      <div id="cards">
+        <v-layout row wrap>
+          <v-flex id="payment">
+            <paymentSummary />
+          </v-flex>
+          <v-layout align-center column fill-height>
+            <v-flex class="pa-2" v-for="cart in $store.state.cartList" :key="cart._id">
+              <cartGames :cart="cart" style="margin-left : 25vh; " />
+            </v-flex>
+          </v-layout>
+        </v-layout>
+      </div>
     </v-container>
   </v-content>
 </template>
 
 <script>
-import { mapState } from "vuex";
-export default {};
+import cartGames from "../components/cart-games";
+import paymentSummary from "../components/paymentSummary";
+export default {
+  name: "cart",
+  components: {
+    paymentSummary,
+    cartGames
+  },
+  data() {
+    return {};
+  },
+  // watch: {
+  //   looking() {
+  //     this.$store.commit("SET_QUANTITY_PRICE");
+  //   }
+  // },
+  created() {
+    this.$store.commit("SET_LOGIN");
+    this.$store.dispatch("getCart");
+  }
+};
 </script>
 
 <style>
 #cart {
-  height: 95vh;
+  height: auto;
+}
+#cards {
+  margin-top: 90px;
+  display: flex;
+  justify-content: center;
+}
+#payment {
+  padding-right: 100px;
+}
+#plus-minus {
+  margin-top: 30px;
 }
 </style>

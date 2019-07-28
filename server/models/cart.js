@@ -12,18 +12,18 @@ let CartSchema = new Schema({
 
 /* middlewares/hooks */
 
-/* 
-ModelSchema.pre('save', function(next){
-    Model.findOne({ uniqueField : this.getUpdate().uniqueField })
-    .then(data => {
-        if(data){
-            next({status : 500, message : 'this uniqueField has been used!'})
-        }
-        else {
-            next()
-        }
-    })
-}) */
+
+// CartSchema.pre('save', function(next){
+//     User.findOne({ uniqueField : this.getUpdate().uniqueField })
+//     .then(data => {
+//         if(data){
+//             next({status : 500, message : 'this uniqueField has been used!'})
+//         }
+//         else {
+//             next()
+//         }
+//     })
+// })
 
 const Cart = mongoose.model('Cart', CartSchema)
 
