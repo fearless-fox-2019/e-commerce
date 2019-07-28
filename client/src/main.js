@@ -14,5 +14,6 @@ Vue.use(VueSweetalert2)
 new Vue({
   router,
   store,
+  // VueSweetalert2,
   render: h => h(App)
 }).$mount('#app')

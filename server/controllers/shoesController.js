@@ -1,4 +1,5 @@
 const Shoes = require('../models/shoes')
+const Cart = require('../models/cart')
 
 class ShoeController {
   static create(req,res,next) {
@@ -47,8 +48,14 @@ class ShoeController {
   static delete(req,res,next) {
     Shoes.findByIdAndDelete(req.params.id)
       .then((deleted) => {
-        console.log(deleted)
-        res.status(200).json(deleted)
+        // console.log(deleted)
+        if(deleted) {
+          return Cart.deleteOne({productId: req.params.id})
+          res.status(200).json(deleted)
+        }
+      })
+      .then((deleteShoeCart) => {
+        res.status(200).json(deleteShoeCart)
       })
       .catch(next)
   }

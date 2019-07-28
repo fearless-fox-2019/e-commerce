@@ -32,7 +32,7 @@ class CartController {
     }
     Cart.deleteOne(input)
       .then((deleted) => {
-        res.status(200).json(deleted)
+          res.status(200).json(deleted)
       })
       .catch(next)
   }
@@ -57,6 +57,17 @@ class CartController {
         res.status(200).json(cartFound)
       })
       .catch(next)
+  }
+
+  static checkOut(req,res,next) {
+    let input = {
+      userId: req.body.userId,
+      status: false
+    }
+    let updatedField = {
+      status: true
+    }
+    Cart.findOneAndUpdate(input,)
   }
 }
 

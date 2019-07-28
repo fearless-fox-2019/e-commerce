@@ -138,6 +138,7 @@ export default {
           this.shoe.description = ''
           this.shoe.quantity = ''
           this.shoe.image = ''
+          this.file = ''
           // console.log(data)
         })
         .catch((error) => {

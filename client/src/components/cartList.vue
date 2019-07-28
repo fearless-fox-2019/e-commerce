@@ -36,28 +36,42 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      totalPrice: 0
+      count: 0
     }
   },
   methods: {
     increment(id) {
+      this.count++;
       this.carts.forEach((cart) => {
         if(cart._id == id) {
           // console.log(cart.productId.quantity)
           if(cart.quantity < cart.productId.quantity) {
             cart.quantity++
           } else {
-            
+            this.$swal({
+              type:'error',
+              text: 'the amount you want to buy exceeded the stock that we currently have!',
+              showConfirmButton: false,
+              timer: 1000
+            })
           }
           // console.log(cart.quantity)
         }
       })
     },
     decrement(id) {
+      this.count++;
        this.carts.forEach((cart) => {
         if(cart._id == id) {
           if(cart.quantity > 0) {
             cart.quantity--
+          } else {
+            this.$swal({
+              type:'error',
+              text: 'amount cannot be lower than 0',
+              showConfirmButton:false,
+              timer: 1000
+            })
           }
           // console.log(cart.quantity)
         }
@@ -72,23 +86,24 @@ export default {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
+      })
+      .then((result) => {
         if (result.value) {
           axios.delete(`${baseUrl}/${id}`)
-            .then((dataDeleted) => {
-              this.deleteDataStore(id)
-              this.$swal({
-                type: 'success',
-                text: 'successfully deleted',
-                showConfirmButton: false,
-                timer: 1500
-              })
-          })
-            .catch(error => {
-              console.log(error)
+      .then((dataDeleted) => {
+        this.deleteDataStore(id)
+        this.$swal({
+          type: 'success',
+          text: 'successfully deleted',
+          showConfirmButton: false,
+          timer: 1500
             })
+         })
         }
       })
+        .catch(error => {
+          console.log(error)
+        })
     },
     deleteDataStore(id) {
       let index = this.carts.findIndex(cart => cart._id == id)
@@ -96,10 +111,23 @@ export default {
     }
   },
   computed: {
-    ...mapState(['carts'])
+    ...mapState(['carts']),
+    ...mapState(['totalPrice'])
   },
   created() {
 
+  },
+  watch: {
+    count: function() {
+      let price = 0
+      // console.log(this.carts)
+      this.carts.forEach((cart) => {
+        // console.log(cart)
+        price += cart.quantity * cart.productId.price
+      })
+      this.$store.commit('GET_TOTAL_PRICE',price)
+      // console.log(price)
+    }
   }
 }
 </script>
