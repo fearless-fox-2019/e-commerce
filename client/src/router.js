@@ -6,7 +6,7 @@ import Login from './views/Login.vue'
 import Cart from './views/Cart.vue'
 import Admin from './views/Admin.vue'
 import Checkout from './views/Checkout.vue'
-import Transaction from "./views/Transaction.vue";
+import Transaction from './views/Transaction.vue'
 import Delivered from './views/Transactions/Delivered.vue'
 import Shipping from './views/Transactions/Shipping.vue'
 Vue.use(Router)
@@ -36,9 +36,9 @@ export default new Router({
       component: Cart
     },
     {
-      path : '/admin',
+      path: '/admin',
       name: 'admin',
-      component: Admin 
+      component: Admin
     },
     {
       path: '/checkout',
@@ -53,7 +53,7 @@ export default new Router({
         path: 'shipping',
         name: 'shipping',
         component: Shipping
-      },{
+      }, {
         path: 'delivered',
         name: 'delivered',
         component: Delivered

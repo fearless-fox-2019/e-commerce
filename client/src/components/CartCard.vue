@@ -35,36 +35,36 @@
 <script>
 export default {
   props: ['product'],
-  data() {
+  data () {
     return {
 
     }
   },
-  methods : {
-    deletThis() {
+  methods: {
+    deletThis () {
       this.$store.dispatch('deleteItemInCart', this.product.product)
-      .then(() => {
-        this.$toast.open({ message: 'Item removed !', type: 'is-success'})
-        this.$store.dispatch('fetchCart')
-      })
-      .catch(err => {
-        console.log(err.response.data)
-      })
+        .then(() => {
+          this.$toast.open({ message: 'Item removed !', type: 'is-success' })
+          this.$store.dispatch('fetchCart')
+        })
+        .catch(err => {
+          console.log(err.response.data)
+        })
     }
   },
-  computed : {
-    price() {
-      let arr = this.product.totalPrice.toString().split("");
-      let start;
+  computed: {
+    price () {
+      let arr = this.product.totalPrice.toString().split('')
+      let start
       if (arr.length % 3 !== 0) {
-        start = arr.length % 3;
+        start = arr.length % 3
       }
 
       for (let i = start || 3; i < arr.length; i += 4) {
-        arr.splice(i, 0, ".");
+        arr.splice(i, 0, '.')
       }
 
-      return "Rp " + arr.join("");
+      return 'Rp ' + arr.join('')
     }
   }
 }
@@ -84,7 +84,7 @@ export default {
   }
   .title-cart {
     font-size: 20px;
-    
+
   }
   .price-cart {
     color: #E53935;

@@ -11,13 +11,13 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       tabs: ['Shipping', 'Delivered'],
       target: ['/transaction/shipping', '/transaction/delivered']
     }
   },
-  created() {
+  created () {
     this.$store.dispatch('fetchTransactions')
   }
 }
@@ -25,7 +25,7 @@ export default {
 
 <style scoped>
 #isi {
-  border: 1.5px solid #e53935;
+  /* border: 1.5px solid #e53935; */
   /* border-radius: 10px; */
   height: 100%;
   padding: 15px;
@@ -43,7 +43,7 @@ export default {
 }
 
 #isi::-webkit-scrollbar-thumb {
-  background: #e53935  ; 
+  background: #e53935  ;
 }
 #container {
   height: 100%;

@@ -23,7 +23,6 @@ class ControllerCart {
       })
       if(cart) {
         const check = checkDupes(cart.products, product)
-        console.log(check)
         if(check.dupes) {
           let i = check.index
           cart.products[i].total++

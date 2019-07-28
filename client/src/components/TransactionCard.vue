@@ -50,66 +50,63 @@
 export default {
   name: 'transaction-card',
   props: ['transaction', 'type'],
-  methods: {
-
-  },
   computed: {
-    date() {
+    date () {
       const result = new Date(this.transaction.createdAt).toLocaleString()
       return result
     },
-    products() {
+    products () {
       return this.transaction.cart.products
     },
-    totalPrice() {
-      let arr = this.transaction.totalPrice.toString().split("");
-      let start;
+    totalPrice () {
+      let arr = this.transaction.totalPrice.toString().split('')
+      let start
       if (arr.length % 3 !== 0) {
-        start = arr.length % 3;
+        start = arr.length % 3
       }
       for (let i = start || 3; i < arr.length; i += 4) {
-        arr.splice(i, 0, ".");
+        arr.splice(i, 0, '.')
       }
 
-      return "Rp " + arr.join("");
+      return 'Rp ' + arr.join('')
     },
-    resultTotal() {
+    resultTotal () {
       let result = 0
       this.transaction.cart.products.forEach(product => {
         result += product.total
-      });
+      })
       return result
     },
-    resultPrice() {
+    resultPrice () {
       let result = 0
       this.transaction.cart.products.forEach(product => {
         result += product.totalPrice
-      });
+      })
 
-      let arr = result.toString().split("");
-      let start;
+      let arr = result.toString().split('')
+      let start
       if (arr.length % 3 !== 0) {
-        start = arr.length % 3;
+        start = arr.length % 3
       }
 
       for (let i = start || 3; i < arr.length; i += 4) {
-        arr.splice(i, 0, ".");
+        arr.splice(i, 0, '.')
       }
 
-      return "Rp " + arr.join("");
-    },
+      return 'Rp ' + arr.join('')
+    }
   },
-  methods : {
-    deliverThis() {
+  methods: {
+    deliverThis () {
       this.$store.dispatch('deliver', this.transaction._id)
-      .then(({data}) => {
-        this.$toast.open({ message: 'Transaction updated ! Thanks for buying from B-Store :D', type: 'is-success', duration: 5000})
-        this.$store.dispatch('fetchTransactions')
-        this.$router.push('/transaction/delivered')
-      })
-      .catch(err => {
-        console.log(err.response.data)
-      })
+        .then(({ data }) => {
+          this.$toast.open({ message: 'Transaction updated ! Thanks for buying from B-Store :D', type: 'is-success', duration: 5000 })
+          this.$store.dispatch('fetchTransactions')
+          this.$router.push('/transaction/delivered')
+        })
+        .catch(err => {
+          console.log(err.response.data)
+        })
     }
   }
 }

@@ -28,46 +28,42 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState } from 'vuex'
 
 export default {
-  name: "App",
-  components: {
-    HelloWorld
-  },
-  data() {
-    return {};
+  name: 'App',
+  data () {
+    return {}
   },
   computed: {
-    ...mapState(["isLogin", "loggedUser", "isLoading", "cart"]),
-    getCart() {
-      if(this.cart.products != undefined ) {
+    ...mapState(['isLogin', 'loggedUser', 'isLoading', 'cart']),
+    getCart () {
+      if (this.cart.products !== undefined) {
         let result = 0
         this.cart.products.forEach(product => {
           result += product.total
-        });
+        })
         return result
       } else {
         return 0
       }
     }
   },
-  created() {
-    this.$store.dispatch("fetchProducts");
+  created () {
+    this.$store.dispatch('fetchProducts')
     this.$store.dispatch('fetchCart')
     this.$store.commit('CREATED')
   },
   methods: {
-    logout() {
+    logout () {
       this.$store.commit('LOGOUT')
-      this.$toast.open({ message: 'Logged Out !', type: 'is-success'})
+      this.$toast.open({ message: 'Logged Out !', type: 'is-success' })
     },
-    fetchTransactions() {
+    fetchTransactions () {
       this.$store.dispatch('fetchTransactions')
     }
   }
-};
+}
 </script>
 <style>
 @import url("https://fonts.googleapis.com/css?family=Lobster&display=swap");

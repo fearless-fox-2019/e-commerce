@@ -10,32 +10,31 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-import store from '../store'
+import { mapState } from 'vuex'
 import CartCard from '@/components/CartCard.vue'
 import CartTransaction from '@/components/CartTransaction.vue'
 export default {
-  data() {
+  data () {
     return {
       dialog: false
     }
   },
-  methods : {
-    openCheckout() {
+  methods: {
+    openCheckout () {
       this.dialog = true
     }
   },
-  computed : {
-    ...mapState(['loggedUser', 'cart', 'dialogCheckout'])
+  computed: {
+    ...mapState(['loggedUser', 'cart', 'dialogCheckout', 'isLogin'])
   },
-  components : {
+  components: {
     CartCard,
-    CartTransaction,
+    CartTransaction
   },
-  mounted() {
-    if(this.cart._id == undefined || this.cart.products.length == 0) {
+  mounted () {
+    if (!this.isLogin) {
       this.$router.push('/')
-      this.$toast.open({ message: 'Cart is empty :(', type: 'is-info'})
+      this.$toast.open({ message: 'You have to login first !', type: 'is-danger' })
     }
   }
 }
@@ -46,6 +45,5 @@ export default {
 #page {
   width: 100%;
 }
-
 
 </style>

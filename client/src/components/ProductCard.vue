@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card class="product-card" max-width="310" elevation="3">
+    <v-card class="product-card" width="310" elevation="3" min-height="630px">
       <div style="margin-bottom: 15px;">
         <v-img :src="book.image" contain height="200px"></v-img>
       </div>
@@ -17,7 +17,7 @@
             <template v-slot:activator="{ on }">
               <v-btn color="red white--text" elevation="6" v-on="on" @click="addToCart" :loading="loading">
                 <v-icon>mdi-plus</v-icon>
-              </v-btn>              
+              </v-btn>
             </template>
             <span>Add to Cart</span>
           </v-tooltip>
@@ -29,47 +29,46 @@
 
 <script>
 export default {
-  name: "productCard",
-  props: ["book"],
-  data() {
+  name: 'productCard',
+  props: ['book'],
+  data () {
     return {
       overlay: false,
       loading: false
-    };
+    }
   },
   computed: {
-    price() {
-      let arr = this.book.price.toString().split("");
-      let start;
+    price () {
+      let arr = this.book.price.toString().split('')
+      let start
       if (arr.length % 3 !== 0) {
-        start = arr.length % 3;
+        start = arr.length % 3
       }
       for (let i = start || 3; i < arr.length; i += 4) {
-        arr.splice(i, 0, ".");
+        arr.splice(i, 0, '.')
       }
 
-      return "Rp " + arr.join("");
+      return 'Rp ' + arr.join('')
     }
   },
   methods: {
-    addToCart() {
+    addToCart () {
       this.loading = true
       const data = {
-        product : this.book._id
+        product: this.book._id
       }
-      this.$store.dispatch('addToCart', {data})
-      .then(({data}) => {
-        console.log(data)
-        this.$toast.open({ message: 'Added to cart !', type: 'is-success'})
-        this.loading = false
-        this.$store.dispatch('fetchCart')
-      })
-      .catch(err => {
-        console.log(err.response.data.errors)
-      })
+      this.$store.dispatch('addToCart', { data })
+        .then(({ data }) => {
+          this.$toast.open({ message: 'Added to cart !', type: 'is-success' })
+          this.loading = false
+          this.$store.dispatch('fetchCart')
+        })
+        .catch(err => {
+          console.log(err.response.data.errors)
+        })
     }
   }
-};
+}
 </script>
 
 <style scoped>

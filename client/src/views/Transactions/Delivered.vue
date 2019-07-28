@@ -5,19 +5,18 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 import TransactionCard from '@/components/TransactionCard.vue'
 export default {
-  computed : {
+  computed: {
     ...mapState(['delivered'])
   },
-  components : {
+  components: {
     TransactionCard
   }
 }
 </script>
 
 <style scoped>
-
 
 </style>

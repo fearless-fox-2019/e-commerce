@@ -32,14 +32,13 @@
 
 <script>
 import CartTransaction from '@/components/CartTransaction.vue'
-import UserForm from '@/components/UserForm.vue'
 export default {
   components: {
     CartTransaction
   },
-  data() {
+  data () {
     return {
-      checkoutInput : {
+      checkoutInput: {
         address: '',
         courier: ''
       },
@@ -47,13 +46,12 @@ export default {
     }
   },
   methods: {
-    checkout() {
+    checkout () {
       this.$store.dispatch('checkout', this.checkoutInput)
-      .then(({data}) => {
-        console.log(data)
-        this.$store.dispatch('fetchCart')
-        this.$toast.open({ message: 'Purchase Success Now Shipping :)', type: 'is-success', duration: 5000})
-      })
+        .then(({ data }) => {
+          this.$store.dispatch('fetchCart')
+          this.$toast.open({ message: 'Thanks for the purchase ! Now Shipping :)', type: 'is-success', duration: 5000 })
+        })
     }
   }
 }

@@ -1,27 +1,54 @@
 <template>
-  <div id="product-container">
-    <ProductCard v-for="book in products" :key="book._id" :book="book"/>
+  <div>
+    <div id="search-bar">
+      <v-text-field
+        rounded
+        outlined
+        solo
+        clearable
+        v-model="searchInput"
+        prepend-inner-icon="mdi-magnify"
+        placeholder="Search books...."
+      ></v-text-field>
+    </div>
+    <div id="product-container">
+      <ProductCard v-for="book in filteredList" :key="book._id" :book="book"/>
+    </div>
   </div>
-  <!-- <v-layout wrap d-flex id="product-container">
-  </v-layout> -->
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from 'vuex'
 import ProductCard from '@/components/ProductCard.vue'
 export default {
   name: 'productList',
+  data () {
+    return {
+      searchInput: ''
+    }
+  },
   props: [],
   components: {
     ProductCard
   },
-  computed : {
-    ...mapState(['products'])
+  computed: {
+    ...mapState(['products']),
+    filteredList () {
+      return this.products.filter(product => {
+        return product.name.toLowerCase().includes(this.searchInput.toLowerCase())
+      })
+    }
   }
 }
 </script>
 
 <style>
+#search-bar {
+    width: 60%;
+    margin: 2em auto;
+    /* width: 10px; */
+    /* height: 1px; */
+  }
 #product-container {
   display: flex;
   flex-wrap: wrap;

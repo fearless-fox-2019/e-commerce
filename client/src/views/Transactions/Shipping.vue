@@ -5,13 +5,13 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 import TransactionCard from '@/components/TransactionCard.vue'
 export default {
-  computed : {
+  computed: {
     ...mapState(['shipping'])
   },
-  components : {
+  components: {
     TransactionCard
   }
 }

@@ -42,32 +42,32 @@
       </div>
     </v-form>
   </v-flex>
-  
+
 </template>
 
 <script>
 export default {
   props: ['type'],
-  data() {
+  data () {
     return {
       show1: false,
       userInput: {
-        email: "",
-        username: "",
-        password: ""
+        email: '',
+        username: '',
+        password: ''
       },
       rules: {
-        required: value => !!value || "Required.",
-        min: v => v.length >= 8 || "Min 8 characters",
-        username: v => v.length <= 15 || "Max 15 characters",
+        required: value => !!value || 'Required.',
+        min: v => v.length >= 8 || 'Min 8 characters',
+        username: v => v.length <= 15 || 'Max 15 characters',
         email: value => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return pattern.test(value) || "Invalid e-mail.";
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'Invalid e-mail.'
         }
       }
-    };
+    }
   },
-  methods : {
+  methods: {
     reset () {
       this.$refs.form.reset()
     },
@@ -75,31 +75,31 @@ export default {
       let payload = {
         type: this.type,
         data: this.userInput
-      } 
+      }
       this.$store.dispatch('registerLogin', payload)
-      .then(({data}) => {
-        this.$store.state.isLoading = false
-        if(this.type == 'register') {
-          this.$toast.open({ message: 'Account created !', type: 'is-success'})
-          this.$router.push('/login')
-        } else {
-          localStorage.setItem('token', data.token)
-          this.$toast.open({ message: 'You Logged In !', type: 'is-success'})
-          this.$store.commit('LOGIN', data)
-          this.$store.dispatch('fetchCart', data.token)
-          this.$router.push('/')
-        }
-        this.$refs.form.reset()
-      })
-      .catch(err => {
-        this.$store.state.isLoading = false
-        this.$refs.form.reset()
-        console.log(err.response)
-        this.$toast.open({ message: err.response.data.errors[0], type: 'is-danger'})
-      })
+        .then(({ data }) => {
+          this.$store.state.isLoading = false
+          if (this.type === 'register') {
+            this.$toast.open({ message: 'Account created !', type: 'is-success' })
+            this.$router.push('/login')
+          } else {
+            localStorage.setItem('token', data.token)
+            this.$toast.open({ message: 'You Logged In !', type: 'is-success' })
+            this.$store.commit('LOGIN', data)
+            this.$store.dispatch('fetchCart', data.token)
+            this.$router.push('/')
+          }
+          this.$refs.form.reset()
+        })
+        .catch(err => {
+          this.$store.state.isLoading = false
+          this.$refs.form.reset()
+          console.log(err.response)
+          this.$toast.open({ message: err.response.data.errors[0], type: 'is-danger' })
+        })
     }
   }
-};
+}
 </script>
 
 <style scoped>

@@ -2,7 +2,7 @@
   <v-card id="cart-transaction" elevation="8" width="470px" max-height="500px">
     <p id="title">Your Payment Summary</p>
     <v-divider></v-divider>
-    
+
       <div v-for="(product, index) in cart.products" :key="index" class="item">
         <v-layout row justify-center>
           <v-flex xs7 class="name">{{product.name}}</v-flex>
@@ -10,7 +10,7 @@
           <v-flex xs3 class="price">Rp {{product.totalPrice}}</v-flex>
         </v-layout>
       </div>
-    
+
     <div id="result" class="item">
       <v-layout row justify-center>
         <v-flex xs7 class="name" id="totalPrice">Total price :</v-flex>
@@ -25,44 +25,44 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 export default {
   props: ['type'],
-  name: "cartTransaction",
+  name: 'cartTransaction',
   computed: {
-    ...mapState(["cart"]),
-    resultPrice() {
+    ...mapState(['cart']),
+    resultPrice () {
       let result = 0
       this.cart.products.forEach(product => {
         result += product.totalPrice
-      });
+      })
 
-      let arr = result.toString().split("");
-      let start;
+      let arr = result.toString().split('')
+      let start
       if (arr.length % 3 !== 0) {
-        start = arr.length % 3;
+        start = arr.length % 3
       }
 
       for (let i = start || 3; i < arr.length; i += 4) {
-        arr.splice(i, 0, ".");
+        arr.splice(i, 0, '.')
       }
 
-      return "Rp " + arr.join("");
+      return 'Rp ' + arr.join('')
     },
-    resultTotal() {
+    resultTotal () {
       let result = 0
       this.cart.products.forEach(product => {
         result += product.total
-      });
+      })
       return result
     }
   },
   methods: {
-    openCheckout() {
+    openCheckout () {
       this.$store.commit('OPENCHECKOUT')
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -86,7 +86,7 @@ export default {
 }
 
 #cart-transaction::-webkit-scrollbar-thumb {
-  background: #e53935  ; 
+  background: #e53935  ;
 }
 
 #title {
