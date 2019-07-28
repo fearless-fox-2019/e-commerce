@@ -31,6 +31,8 @@ There are three available resources:
 
 
 ####  Shoes Routes 
+
+### ADMIN ONLY FOR CREATE,DELETE AND UPDATE
 | Routes | Method | Request Body | Response Success | Response Error | Description|
 |-----------------------------------|--------|----------------------------------|------------------|---------------------|------------------------------------------------------------------------------|
 | `/shoes/allShoes`| GET | -| `{ data }`| 500 (Internal Server Error) | 

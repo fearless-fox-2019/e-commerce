@@ -252,6 +252,7 @@ describe('Shoes CRUD', function() {
         .set('token',token)
         .send(input)
         .then(function(res) {
+          console.log(res.body,'=======')
           // console.log(productId);
           // console.log(res.body)
           // console.log('iniiii patch shoes')
@@ -265,7 +266,7 @@ describe('Shoes CRUD', function() {
           done()
         })
         .catch(error => {
-          // console.log(error)
+          console.log(error)
         })
     })
     it('it should send a status code of 400 and description is required', function(done) {
