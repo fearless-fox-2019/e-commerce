@@ -4,8 +4,8 @@
             <!-- Logo -->
             <div>
                 <router-link to="/">
-                    <a class="navbar-brand" style="color: gold">
-                        <img src="@/assets/clover.png" alt="Logo" style="height: 40px">
+                    <a class="navbar-brand" style="color: gold;font-family: 'Courgette', cursive; font-size: 24px">
+                        <img src="@/assets/clover.png" alt="Logo" style="height: 35px">
                         Claves Patisserie
                     </a>
                 </router-link>
@@ -16,7 +16,7 @@
                 <ul class="navbar-nav">
                      <li class="nav-item">
                          <router-link to="/cake/chocolate">
-                            <a class="nav-link" id="menu-txt">Chocolate Cake</a>
+                            <a class="nav-link" id="menu-txt">Chocolate</a>
                          </router-link>
                     </li>
                     <li class="nav-item">
@@ -31,7 +31,7 @@
                     </li>
                     <li class="nav-item">
                         <router-link to="/cake/nougat">
-                            <a class="nav-link" id="menu-txt">Nougat Cake</a>
+                            <a class="nav-link" id="menu-txt">Nougat</a>
                         </router-link>
                     </li>
                     <li class="nav-item">
@@ -50,10 +50,10 @@
             <!-- Login Register -->
 
             <div style="color: white">
-                <a data-toggle="modal" data-target="#modalLogin">
+                <a id="login-register-text" data-toggle="modal" data-target="#modalLogin">
                     Login /
                 </a>
-                <a data-toggle="modal" data-target="#modalRegister">
+                <a  id="login-register-text" data-toggle="modal" data-target="#modalRegister">
                     Register
                 </a>
             </div>
@@ -66,7 +66,7 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <h5>Login </h5>
+                    <h5 id="title">Login </h5><br>
                     <form @submit.prevent="login">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -101,7 +101,7 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <h5>Register</h5>
+                    <h5  id="title">Register</h5><br>
                     <form @submit.prevent="register">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -237,9 +237,26 @@ export default {
 
     }
 
-    li a{
-        color: lightsalmon
+    #menu-txt{
+        font-size: 13px;
+        font-weight: bold;
+        color: lightsalmon;
+        font-family: 'Comfortaa', cursive;
     }
+
+    #login-register-text{
+        font-size: 18px
+    }
+
+     #login-register-text:hover{
+         font-weight: bold
+     }
+
+     #title{
+         font-family: 'Bree Serif', serif;
+         font-size: 24px;
+         margin-top: 10px
+     }
 
 </style>
  

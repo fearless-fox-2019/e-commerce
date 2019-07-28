@@ -2,9 +2,9 @@
   <div>
       <navbarAdmin ></navbarAdmin>
 
-      <button id="btn-add" class="btn btn-sm">
+      <button id="btn-add" type="button" class="btn btn-warning btn-sm">
         <router-link to="/item/add">
-          Add new item
+          <i class="fas fa-plus"></i> New item
         </router-link>
       </button>
 
@@ -30,10 +30,8 @@ export default {
 
 <style scoped>
   #btn-add{
-    margin-bottom: 10px;
-    background-color: goldenrod;
-    color: black;
-    text-decoration: none;
+    margin-bottom: 20px;
+
     
   }
 </style>

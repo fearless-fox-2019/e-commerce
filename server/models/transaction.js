@@ -37,6 +37,10 @@ let transactionSchema= new Schema({
     shipping:{
         type: String,
         enum: ['Go-Send', 'Grab-Send']
+    },
+    paymentCode:{
+        type: String,
+        required: [true, 'payment code required']
     }
 },{timestamps: true})
 

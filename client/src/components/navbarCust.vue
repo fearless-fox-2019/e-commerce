@@ -3,8 +3,8 @@
         <nav class="navbar navbar-expand-sm bg-dark navbar-dark d-flex mb-3">
             <!-- Logo -->
             <div>
-                <a class="navbar-brand" style="color: gold">
-                    <img src="@/assets/clover.png" alt="Logo" style="height: 40px">
+                <a class="navbar-brand" style="color: gold;font-family: 'Courgette', cursive; font-size: 24px">
+                    <img src="@/assets/clover.png" alt="Logo" style="height: 35px">
                     Claves Patisserie
                 </a>
             </div>
@@ -58,7 +58,9 @@
                         <i class="fas fa-shopping-cart"></i>
                     </router-link>
                 </a>
-                <a @click="logout" class="btn btn-danger">Logout</a>
+                <a @click="logout" class="btn btn-outline-danger" style="color: yellow">
+                    <i class="fas fa-sign-out-alt"></i>Logout
+                </a>
             </div>
         </nav> 
     </div>
@@ -78,13 +80,11 @@ export default {
 </script>
 
 <style scoped>
-    #menu-txt {
-        color: lightsalmon
-    }
-
-    #menu-txt:hover{
-        text-decoration: none;
-        font-weight: bold
+    #menu-txt{
+        font-size: 13px;
+        font-weight: bold;
+        color: lightsalmon;
+        font-family: 'Comfortaa', cursive;
     }
 
 </style>

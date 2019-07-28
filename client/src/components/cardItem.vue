@@ -1,10 +1,10 @@
 <template>
-    <div id="card-item" class="card">
+    <div id="card-item" class="card" @click.prevent="toDetail">
         <img class="card-img-top" :src="item.image" alt="Image Cake" style="height:275px">
         <div class="card-body">
             <h5 class="card-title">{{item.name}}</h5>
              <div v-if="isLogin" class="d-flex justify-content-around">
-                <button id="btn-buy" class="btn btn-primary btn-sm" @click.prevent="toDetail">
+                <button id="btn-buy" class="btn btn-primary btn-sm">
                     Buy Now
                 </button>
             </div>
@@ -47,6 +47,9 @@ export default {
     }
     #card-item:hover{
         box-shadow: 2px 2px 4px #000000;
+    }
+    #card-item h5{
+        font-family: 'Bree Serif', serif;
     }
     #btn-buy:hover{
         opacity: 0.8;

@@ -1,14 +1,16 @@
 <template>
     <div>
         <navbarCust></navbarCust>
-        <div class="row">
+
+        <div class="row" style="margin-top: 30px">
+            <h3 v-if="myCart.length === 0" id="no-item-txt">No Item in Your Cart</h3>
             <div class="col-sm-8 offset-sm-2">
                 <cardCart v-for="data in myCart" :key="data._id" :cart="data"></cardCart>
             </div>
         </div>
 
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#checkout">
+        <button id="checkout-btn" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#checkout">
             Checkout
         </button>
 
@@ -17,8 +19,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-body">
-                <h5>Please Fill Form to Checkout</h5><br>
-                <form>
+                <h5 id="title">Please Fill Form to Checkout</h5><br>
+                <form style="font-family: 'Comfortaa', cursive;">
                     <div class="form-group row">
                         <label for="address" class="col-sm-2 col-form-label">Address</label>
                         <div class="col-sm-10">
@@ -37,8 +39,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button @click="addTransaction" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
             </div>
         </div>
@@ -73,7 +75,7 @@ export default {
                 Swal.fire({
                     position: 'center',
                     type: 'error',
-                    text: 'No Cart. Please add some item!',
+                    text: 'No Item. Please add some item!',
                     showConfirmButton: false,
                     timer: 1500
                 })
@@ -109,6 +111,17 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    #no-item-txt{
+        margin-left: 40%;
+        font-family: 'Bree Serif', serif;
+    }
+    #checkout-btn{
+        margin-top: 20px
+    }
+    #title{
+        font-family: 'Bree Serif', serif;
+        font-size: 24px;
+        margin-top: 10px
+    }
 </style>

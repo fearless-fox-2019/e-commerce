@@ -1,22 +1,22 @@
 <template>
     <div>
         <navbarCust></navbarCust>
-        <div class="row container">
+        <div class="row container" style="margin-top: 5%">
             <div class="col-sm-6">
-                <img :src="currentItem.image" alt="Image Cake" style="height: 300px">
+                <img :src="currentItem.image" alt="Image Cake" style="height: 400px">
             </div>
-            <div class="col-sm-6">
-                <h3>{{currentItem.name.toUpperCase()}}</h3>
-                <h6>{{currentItem.description}}</h6>
-                <h5>Price: {{currentItem.price}}</h5>
-                <h6>Stock: {{currentItem.stock}}</h6>
-                <div class="form-group row">
-                    <label for="inputQty" class="col-sm-2 col-form-label">Quantity: </label>
+            <div class="col-sm-6 text-left" style="margin-top: 3%; line-height: 2">
+                <h4 id="name">{{currentItem.name.toUpperCase()}}</h4>
+                <h6 id="description">{{currentItem.description}}</h6>
+                <h6 id="price">Price: {{currentItem.price}}</h6>
+                <h6 id="stock">Stock: {{currentItem.stock}}</h6>
+                <div id="input" class="form-group row" style="margin-left: -1px; font-family: 'Comfortaa', cursive;" >
+                    <label for="inputQty" class="col-sm-2 col-form-label" >Quantity: </label>
                     <div class="col-sm-10">
-                    <input v-model="quantity" type="number" class="form-control" placeholder=1 min="1" :max="currentItem.stock">
+                    <input v-model="quantity" type="number" class="form-control" placeholder=1 min="1" :max="currentItem.stock" style="width: 75px">
                     </div>
                 </div>
-                <button type="button" class="btn btn-success" @click="addCart">Add To Cart</button>
+                <button id="add-btn" type="button" class="btn btn-success" @click="addCart">Add To Cart</button>
             </div>
         </div>
 
@@ -78,6 +78,34 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    #name{
+        font-family: 'Bree Serif', serif;
+        color: brown;
+        font-size: 26px;
+        font-weight: bold;
+        margin-bottom: 20px
 
+    }
+    #description{
+        font-family: 'Comfortaa', cursive;
+        margin-left: 10px;
+        margin-bottom: 10px
+    }
+    #price{
+        font-family: 'Comfortaa', cursive;
+        margin-left: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px
+    }
+    #stock{
+        font-family: 'Comfortaa', cursive;
+        margin-left: 10px;
+        font-size: 16px;
+    }
+    #add-btn{
+        margin-top: 5%;
+        margin-left: 30%
+    }
 </style>

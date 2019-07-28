@@ -5,13 +5,13 @@
                 <div class="col-sm-3">
                     <img :src="cart.itemId.image" alt="Image Cake" style="height:80px">
                 </div>
-                <div class="col-sm-3 text-left">
-                    <p>{{cart.name}}</p>
+                <div class="col-sm-3 text-left" id="data-txt">
+                    <p style="font-weight: bold">{{cart.name}}</p>
                     <p>Price: Rp. {{cart.price}}</p>
                     <p>Quantity: {{cart.quantity}}</p>
                     <p>Total Price: Rp. {{totalPrice}}</p>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-3" style="margin-top: 25px">
                      <div class="form-group row">
                         <div class="col-sm-3">
                             <button @click="updateInc" type="button" class="btn btn-primary">+</button>
@@ -25,8 +25,8 @@
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <a @click="removeCart">
-                        <i class="fas fa-times"></i>
+                    <a  @click="removeCart">
+                        <i class="fas fa-times" id="remove-btn"></i>
                     </a>
                 </div>
             </div>
@@ -146,6 +146,14 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    #data-txt{
+        line-height: 0.75;
+        font-size: 14px;
+        margin-bottom: -10px
+    }
+    #remove-btn{
+        margin-top: 20%;
+        font-size: 24px
+    }
 </style>

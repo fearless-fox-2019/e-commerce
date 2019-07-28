@@ -1,25 +1,29 @@
-const jwt= require('jsonwebtoken')
 const User= require('../models/user')
+const {verify}= require('../helpers/jwt')
 
 function authentication(req, res, next){
-    if(req.headers.hasOwnProperty('token')){
-        // console.log(req.headers)
-        let decode= jwt.verify(req.headers.token, process.env.SECRET_KEY_TOKEN)
-        req.decode= decode
+    try {
+        if(req.headers.hasOwnProperty('token')){
+            let decode= verify(req.headers.token)
+            req.decode= decode
+    
+            User.findOne({ email:req.decode.email})
+            .then(user=>{
+                if(user){
+                    next()
+                }else{
+                    res.status(404).json('Not Found')
+                }
+            })
+    
+        }else{
+            res.status(401).json('Please provide token!')
+        }
 
-        User.findOne({ email:req.decode.email})
-        .then(user=>{
-            if(user){
-                console.log('sukses authenticate')
-                next()
-            }else{
-                res.status(404).json('User Not Found')
-            }
-        })
+     } catch (error) {
+         res.status(401).json('Please provide token!')
+     }
 
-    }else{
-        res.status(403).json('Not Authenticated')
-    }
     
 }
 

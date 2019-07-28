@@ -51,7 +51,7 @@
                     <td>
                         <p v-if="data.status != 'paid'">-</p>
                         <div v-if="data.status == 'paid'">
-                            <button @click="updateSend(data._id)" type="button" class="btn btn-warning btn-sm">Send Item</button>
+                            <button @click="updateSend(data._id)" type="button" class="btn btn-primary btn-sm">Send Item</button>
                         </div>
                     </td>
                 </tr>
@@ -106,7 +106,7 @@ export default {
                 return this.allTransaction
             }else if(this.filter === 'unpaid'){
                 return this.unpaidTransaction
-            }else if(this.filter === 'paid '){
+            }else if(this.filter === 'paid'){
                 return this.paidTransaction
             }else if(this.filter === 'send'){
                 return this.sendTransaction

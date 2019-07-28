@@ -1,22 +1,23 @@
 <template>
-        <div class="col-sm-10 offset-1">
-            <h3>Add New Item</h3>
-            <form @submit.prevent="addNewItem">
+        <div class="col-sm-9 offset-2" style="margin-top: 20px">
+            <h3 id="title" >Add New Item</h3>
+            <br>
+            <form @submit.prevent="addNewItem" style="width: 850px">
                 <div class="form-group row">
-                    <label for="name" class="col-sm-2 col-form-label">Name</label>
+                    <label for="name" class="col-sm-2 col-form-label">Name :</label>
                     <div class="col-sm-10">
                     <input type="text" v-model="newItem.name" class="form-control" id="inputPassword" placeholder="Name">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="featuredImage">Featured Image</label>
-                    <div class="col-sm-9 offset-1">
+                    <label class="col-sm-2 col-form-label" for="featuredImage">Featured Image :</label>
+                    <div class="col-sm-10">
                         <input type="file" class="form-control-file" id="image" @change="setImage">
                     </div>
                 </div>
                 <div class="form-group row">
-                     <label for="name" class="col-sm-2 col-form-label">Category</label>
-                     <div class="col-">
+                     <label for="name" class="col-sm-2 col-form-label">Category :</label>
+                     <div class="col-sm-10">
                         <select v-model="newItem.category" class="custom-select my-1 mr-sm-2" id="category">
                             <option value="choco" selected>Choco Cake</option>
                             <option value="cheese">Cheesecake</option>
@@ -28,24 +29,24 @@
                      </div>
                 </div>
                 <div class="form-group row">
-                    <label for="desc" class="col-sm-2 col-form-label">Description</label>
+                    <label for="desc" class="col-sm-2 col-form-label">Description :</label>
                     <div class="col-sm-10">
                     <input type="text" v-model="newItem.description" class="form-control" id="description" placeholder="Description">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="desc" class="col-sm-2 col-form-label">Price</label>
+                    <label for="desc" class="col-sm-2 col-form-label">Price :</label>
                     <div class="col-sm-10">
                     <input type="number" v-model="newItem.price" class="form-control" id="price" placeholder="0" min="0">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="desc" class="col-sm-2 col-form-label">Stock</label>
+                    <label for="desc" class="col-sm-2 col-form-label">Stock :</label>
                     <div class="col-sm-10">
                     <input type="number" v-model="newItem.stock" class="form-control" id="price" placeholder="0" min="0">
                     </div>
-                </div>
-                <input type="submit" value="Save">
+                </div><br>
+                <input id="btn" type="submit" value="Save">
             </form>
         </div>
 
@@ -106,6 +107,22 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    #title{
+        font-family: 'Bree Serif', serif;
+        margin-left: -3%
+    }
+    label{
+        font-family: 'Bree Serif', serif;
+        text-align: left
+    }
+    #btn{
+        margin-left: 80%;
+        background-color: burlywood;
+        padding: 5px 15px;
+        border-radius: 10px 10px
+    }
+    #btn:hover{
+        opacity: 0.8
+    }
 </style>

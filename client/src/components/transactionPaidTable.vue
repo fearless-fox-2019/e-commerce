@@ -1,5 +1,5 @@
 <template>
-    <div id= "table-alltransaction" class="col-10 offset-1">
+    <div id= "table-alltransaction" class="col-10 offset-1" style="margin-top: 20px">
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -15,7 +15,7 @@
                 </tr>
             </thead>
             <tbody id="table-body">
-                <tr v-for="(data, index) in filterTransactions" :key="data._id">
+                <tr v-for="(data, index) in paidTransaction" :key="data._id">
                     <th scope="row">{{index+1}}</th>
                     <td>{{new Date(data.createdAt).toLocaleDateString('en-US',
                         { year: 'numeric', month: 'long', day: 'numeric' })}}
@@ -36,7 +36,7 @@
                         
                     </td>
                     <td>
-                        <button @click="updateSend(data._id)" type="button" class="btn btn-warning btn-sm">
+                        <button @click="updateSend(data._id)" type="button" class="btn btn-primary btn-sm">
                             Send Item
                         </button>
                     </td>

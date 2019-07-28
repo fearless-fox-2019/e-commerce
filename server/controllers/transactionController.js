@@ -1,6 +1,9 @@
 const Transaction= require('../models/transaction')
 const Item= require('../models/item')
 const Cart= require('../models/cart')
+const User= require('../models/user')
+const sendEmail= require('../helpers/nodemailer')
+const {generateCode}= require('../helpers/generateCode')
 
 class transactionController{
 
@@ -9,7 +12,7 @@ class transactionController{
         let cartItem=req.body.items
         let allPromise=[]
         let totalPrice=0
-        
+        let paymentCode= generateCode()
         cartItem.forEach(el => {
             console.log(el)
             let qty= Number(el.quantity)
@@ -24,7 +27,8 @@ class transactionController{
             items: req.body.items,
             totalPrice: totalPrice,
             address: req.body.address,
-            shipping: req.body.shipping
+            shipping: req.body.shipping,
+            paymentCode: paymentCode
         })
 
         allPromise.push(newTransaction.save())
@@ -33,8 +37,31 @@ class transactionController{
 
         Promise.all(allPromise)
         .then(transactions=>{
+            let transaction= transactions[transactions.length-2]
+            console.log(transaction, 'ini transaction')
+            User.findById(transaction.customerId)
+            .then(user =>{
+                console.log(user, 'ini usernya')
+                let textToSend = `
+                    <h1> Hello ${user.name} </h1>
+                    <h3> Thank you for choosing our cakes on Claves Patiserrie</h3>
+                    <p> We really exited to serve premium cake for you.</p>
+                    <p> This is your payment code: <span style="font-weight: bold">${paymentCode}</span></p>
+                    <p> Please input that code when you confirm your paymen on our website.</p>
+                    <br>
+                    <br><hr>
+                    <h4>Sincerely, </h4>
+                    <h4>Claves Patisserie Team</h4>`
+            
+                sendEmail(user.email, textToSend)
+            })
+            .catch(err =>{
+                console.log('error search user')
+                console.log(err)
+            })
+            
 
-            res.status(201).json(transactions[transactions.length-2])
+            res.status(201).json(transaction)
         })  
         .catch(next)
     }

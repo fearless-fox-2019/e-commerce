@@ -1,5 +1,5 @@
 <template>
-    <div id= "table-alltransaction" class="col-10 offset-1">
+    <div id= "table-alltransaction" class="col-10 offset-1" style="margin-top: 20px">
         <table class="table">
             <thead class="thead-dark">
                 <tr>

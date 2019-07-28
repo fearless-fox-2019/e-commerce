@@ -1,7 +1,7 @@
 <template>
   <div>
     <navbarLanding></navbarLanding>
-    <div class="row">
+    <div class="row" style="margin-top: 20px">
       <div class="col-sm-6">
           <div id="demo" class="carousel slide" data-ride="carousel" style="margin-top: 4%">
 
@@ -38,8 +38,9 @@
             </a>
           </div>
         </div>
-        <div class="col-sm-5 text-center" style="margin-left:5%">
-            <br /><h3 class="text-success">Clave Pattiserie</h3><hr>
+        <div class="col-sm-5 text-center" style="margin-left:5%; margin-top: 20px">
+            <br /><h3 class="text-success">Clave Pattiserie</h3>
+            <hr style="background-color: brown; height: 2px">
             <h5 style="color: darkgreen">Special and Premium Cakes</h5><br />
             <div class="card" style="border: transparent">
                 <div class="card-body">

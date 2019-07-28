@@ -7,6 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     isLogin: false,
+    userCustomer:[],
+    userAdmin:[],
     currentItem: {},
     allCakes:[],
     chocoCake:[],
@@ -22,12 +24,17 @@ export default new Vuex.Store({
     paidTransaction:[],
     sendTransaction:[],
     completeTransaction:[],
-    isLogin: false
     
   },
   mutations: {
     Set_isLogin(state, payload){
       this.state.isLogin= payload
+    },
+    Set_userCustomer(state, payload){
+      this.state.userCustomer= payload
+    },
+    Set_userAdmin(state, payload){
+      this.state.userAdmin= payload
     },
     Set_currentItem(state, payload){
       this.state.currentItem= payload
@@ -105,6 +112,32 @@ export default new Vuex.Store({
       })
       .catch(err => {
         console.log('error get all cake')
+        console.log(err)
+      })
+    },
+    getAllUsers({commit}){
+      axios({
+        url: '/users',
+        method: 'get',
+        headers:{
+          'token' : localStorage.token
+        }
+      })
+      .then(({data}) => {
+        let admin=[]
+        let customer=[]
+
+        data.forEach(el => {
+          if(el.role === 'admin') admin.push(el)
+          else if(el.role === 'customer') customer.push(el)
+        })
+
+        commit('Set_userAdmin', admin)
+        commit('Set_userCustomer', customer)
+
+      })
+      .catch(err =>{
+        console.log('error get data user')
         console.log(err)
       })
     },

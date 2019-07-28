@@ -1,22 +1,23 @@
 <template>
-        <div class="col-sm-10 offset-1">
-            <h3>Edit Item</h3>
-            <form @submit.prevent="saveEdit(currentItem._id)">
+        <div class="col-sm-9 offset-2" style="margin-top: 20px">
+            <h3 id="title">Edit Item</h3>
+            <br>
+            <form @submit.prevent="saveEdit(currentItem._id)" style="width: 850px">
                 <div class="form-group row">
-                    <label for="name" class="col-sm-2 col-form-label">Name</label>
+                    <label for="name" class="col-sm-2 col-form-label">Name :</label>
                     <div class="col-sm-10">
                     <input type="text" v-model="currentItem.name" class="form-control" id="inputPassword" placeholder="Name">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="featuredImage">Featured Image</label>
-                    <div class="col-sm-9 offset-1">
+                    <label class="col-sm-2 col-form-label" for="featuredImage">Featured Image :</label>
+                    <div class="col-sm-10">
                         <input type="file" class="form-control-file" id="image" @change="setImage">
                     </div>
                 </div>
                 <div class="form-group row">
-                     <label for="name" class="col-sm-2 col-form-label">Category</label>
-                     <div class="col-">
+                     <label for="name" class="col-sm-2 col-form-label">Category :</label>
+                     <div class="col-sm-10">
                         <select v-model="currentItem.category" class="custom-select my-1 mr-sm-2" id="category">
                             <option value="choco">Choco Cake</option>
                             <option value="cheese">Cheesecake</option>
@@ -28,28 +29,29 @@
                      </div>
                 </div>
                 <div class="form-group row">
-                    <label for="desc" class="col-sm-2 col-form-label">Description</label>
+                    <label for="desc" class="col-sm-2 col-form-label">Description :</label>
                     <div class="col-sm-10">
                     <input type="text" v-model="currentItem.description" class="form-control" id="description" placeholder="Description">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="desc" class="col-sm-2 col-form-label">Price</label>
+                    <label for="desc" class="col-sm-2 col-form-label">Price :</label>
                     <div class="col-sm-10">
                     <input type="number" v-model="currentItem.price" class="form-control" id="price" placeholder="0" min="0">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label for="desc" class="col-sm-2 col-form-label">Stock</label>
+                    <label for="desc" class="col-sm-2 col-form-label">Stock :</label>
                     <div class="col-sm-10">
                     <input type="number" v-model="currentItem.stock" class="form-control" id="price" placeholder="0" min="0">
                     </div>
-                </div>
-                <input type="submit" value="Save">
+                </div><br>
+                <input id="btn" type="submit" value="Save">
+                <button id="btn-cancel">
+                    <router-link to="/home"> Cancel </router-link>
+                </button>
             </form>
-            <button>
-                <router-link to="/home"> Cancel </router-link>
-            </button>
+            
         </div>
 
 </template>
@@ -73,8 +75,7 @@ export default {
         },
         saveEdit(id){
             console.log('masuk save')
-            console.log(this.currentItem.name, '======')
-
+           
             let formData = new FormData()
                  formData.append('name', this.currentItem.name)
                  formData.append('image', this.currentItem.image)
@@ -106,6 +107,34 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+ #title{
+        font-family: 'Bree Serif', serif;
+        margin-left: -3%
+    }
+    label{
+        font-family: 'Bree Serif', serif;
+        text-align: left
+    }
+    #btn{
+        margin-left: 70%;
+        background-color: burlywood;
+        padding: 5px 15px;
+        border-radius: 10px 10px;
+        margin-right: 20px
+    }
+    #btn:hover{
+        opacity: 0.8
+    }
+    #btn-cancel{
+        background-color: #ff1a1a;
+        color: black;
+        padding: 5px 15px;
+        border-radius: 10px 10px;
+        margin-right: 20px;
+        text-decoration-style: none
+    }
+    #btn-cance:hover{
+        opacity: 0.8;
+    }
 </style>
