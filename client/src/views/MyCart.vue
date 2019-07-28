@@ -24,7 +24,7 @@
                   <div class="content">
                     <div style="float:right;">
                       amount :
-                      <br>
+                      <br />
                       <b-input
                         class="is-small"
                         type="number"
@@ -34,7 +34,11 @@
                         style="max-width:20%"
                         required
                       ></b-input>
-                      <button @click="deleteCart(props.row._id)" class="button is-small is-danger" style="float:right; margin:5px">delete</button>
+                      <button
+                        @click="deleteCart(props.row._id)"
+                        class="button is-small is-danger"
+                        style="float:right; margin:5px"
+                      >delete</button>
                       <br />
                     </div>
                     <p>
@@ -43,7 +47,8 @@
                       <small>Rp. {{ props.row.productId.price }}</small>)
                       <br />
                       "{{props.row.productId.description}}"
-                    </p>stock: {{props.row.productId.stock}}
+                    </p>
+                    stock: {{props.row.productId.stock}}
                   </div>
                 </div>
               </article>
@@ -54,17 +59,17 @@
             </template>
           </b-table>
           <div id="navigation">
-          <p>
-            <b>Total : Rp.</b>
-            {{total}}
-            <br />
-            <br />
-            <button @click="createTrans" class="button is-success">PAY NOW</button>
-            <input type="text" v-model="form.emailTo" placeholder="email">
-            <input type="text" v-model="form.phoneTo" placeholder="phone">
-            <input type="text" v-model="form.deliveryTo" placeholder="delivery">
-          </p>
-        </div>
+            <p>
+              <b>Total : Rp.</b>
+              {{total}}
+              <br />
+              <br />
+              <button @click="createTrans" class="button is-success">PAY NOW</button>
+              <input type="text" v-model="form.emailTo" placeholder="email" />
+              <input type="text" v-model="form.phoneTo" placeholder="phone" />
+              <input type="text" v-model="form.deliveryTo" placeholder="delivery" />
+            </p>
+          </div>
         </b-tab-item>
         <b-tab-item label="My Transaction">
           <transaction></transaction>
@@ -87,14 +92,14 @@ export default {
   },
   created() {
     this.$store.dispatch("getMyCart", localStorage.getItem("userId"));
-    this.$store.dispatch("getMyTransaction")
+    this.$store.dispatch("getMyTransaction");
   },
   data() {
     return {
-      form : {
-        deliveryTo: '',
-        phoneTo: '',
-        emailTo: ''
+      form: {
+        deliveryTo: "",
+        phoneTo: "",
+        emailTo: ""
       },
       total: 0,
       defaultOpenedDetails: [],
@@ -126,39 +131,45 @@ export default {
     };
   },
   methods: {
-    createTrans(){
+    createTrans() {
       console.log(this.checkedRows.length);
-      if(this.checkedRows.length !== 0){
-        this.$store.dispatch('createTransaction', [this.checkedRows, this.form])
+      if (this.checkedRows.length !== 0) {
+        this.$store
+          .dispatch("createTransaction", [this.checkedRows, this.form])
           .then(() => {
-
+            this.form = {
+              deliveryTo: "",
+              phoneTo: "",
+              emailTo: ""
+            };
+            this.total = 0;
+            this.defaultOpenedDetails = [];
           })
-          .catch(err => {
-
-          })
+          .catch(err => {});
       } else {
-        this.$toast.open('please "select" minimum 1 item')
+        this.$toast.open('please "select" minimum 1 item');
       }
     },
-    deleteCart(id){
-      this.$store.dispatch('deleteCart', id)
+    deleteCart(id) {
+      this.$store
+        .dispatch("deleteCart", id)
         .then(() => {
-          this.$toast.open('cart deleted')
+          this.$toast.open("cart deleted");
         })
         .catch(err => {
-          this.$toast.open(err)
-        })
+          this.$toast.open(err);
+        });
     }
   },
   watch: {
-    checkedRows(value){
-      console.log('value: ', value);
-      this.total = 0
+    checkedRows(value) {
+      console.log("value: ", value);
+      this.total = 0;
       value.forEach(el => {
-          el.subTotal = el.amount*el.productId.price
-          this.total += el.subTotal
-      })
-    },    
+        el.subTotal = el.amount * el.productId.price;
+        this.total += el.subTotal;
+      });
+    }
   }
 };
 </script>

@@ -12,34 +12,33 @@ class TransactionController{
         })
             .then((data) => {
                 result = data
-                return Cart.findOneAndDelete({
+                return Cart.deleteMany({
                     _id : {
                         $in : cartIds
                     },
                     
                 })
             })
-            // .then(data => {
-            //     products.forEach(el => {
-            //         productIds.push(el._id)
-            //     });
-            //     let docUpdate = []
-            //     products.forEach(el => {
-            //         docUpdate.push(el.amount)
-            //     })
-            //     return Product.updateMany({
-            //         _id: {
-            //             $in : productIds
-            //         }
-            //     }, {
-            //         stock: {
-            //             $in: docUpdate
-            //         }
-            //     })
-            // })
+            .then(data => {
+                products.forEach(el => {
+                    productIds.push(el._id)
+                });
+
+                let docUpdate = []
+                products.forEach(el => {
+                    docUpdate.push(el.stock-el.amount)
+                })
+                let arrayOfPromises = []
+                productIds.forEach((el, i) => {
+                    arrayOfPromises.push(Product.findByIdAndUpdate(el, {stock : docUpdate[i]}))
+                })
+                
+
+                return Promise.all(arrayOfPromises)
+            })
             .then(data => {
                 console.log('success Update');
-                console.log('data: ', data);
+                console.log('data: after create trans, delete cart, after promise all ', data);
                 console.log('result: ', result);
                 res.status(201).json(result)
             })

@@ -52,14 +52,16 @@
       <modal
         @isAddProduct="isComponentModalActive = $event"
         @isLoggedIn="isComponentModalActive = $event"
+        @edited="isComponentModalActive = $event"
         :isFormProducts="isFormProducts"
         :isFormSignIn="isFormSignIn"
         :isFormSignUp="isFormSignUp"
+        :product="{data: editProduct, onEdit: true}"
       >
-        <p style="color:red">{{isError}}</p>
+        <p v-if="isError" style="color:red">{{isError}}</p>
       </modal>
     </b-modal>
-    <router-view v-if="isLogin" :search="search" :isComponentModalActive="isComponentModalActive"/>
+    <router-view @onEdit="onEdit" v-if="isLogin" :search="search" :isComponentModalActive="isComponentModalActive"/>
   </div>
 </template>
 
@@ -83,6 +85,7 @@ export default {
   },
   data() {
     return {
+      editProduct: {},
       search: '',
       form: {
         username: "",
@@ -97,7 +100,16 @@ export default {
   },
 
   methods: {
+    onEdit(value){
+      this.editProduct = value
+      this.$store.commit("getError", "");
+      this.isFormSignIn = false;
+      this.isFormSignUp = false;
+      this.isFormProducts = false
+      this.isComponentModalActive = true;
+    },
     goSignIn() {
+      console.log('sigin');
       this.$store.commit("getError", "");
       this.isComponentModalActive = true;
       this.isFormSignIn = true;
@@ -105,6 +117,7 @@ export default {
       this.isFormProducts = false
     },
     goSignUp() {
+      console.log('sigup');
       this.$store.commit("getError", "");
       this.isError = "";
       this.isComponentModalActive = true;

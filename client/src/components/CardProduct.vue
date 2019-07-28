@@ -19,10 +19,9 @@
         {{product.description | truncate(40)}}
         <br />
         <small>stock: {{product.stock}}</small>
-        <!-- <a v-for="(cat, i) in product.category" :key="i">{{cat}}</a> -->
       </div>
       <div style="display:flex; justify-content:space-between">
-        <a v-if="isAdmin" class="button is-small is-warning" style="float:right"><i class="fas fa-edit"></i></a>
+        <a v-if="isAdmin" @click="editProduct" class="button is-small is-warning" style="float:right"><i class="fas fa-edit"></i></a>
         <a v-if="isAdmin" @click="deleteProduct" class="button is-small is-danger" style="float:right"><i class="fas fa-trash-alt"></i></a>
         <b-input
           v-if="!isAdmin"
@@ -57,6 +56,9 @@ export default {
     ...mapState(["isAdmin"])
   },
   methods: {
+    editProduct(){
+      this.$emit('onEdit', this.product)
+    },
     deleteProduct(){
       this.$store.dispatch('deleteProduct', this.product._id)
         .then(() => {

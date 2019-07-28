@@ -2,18 +2,20 @@
   <div class="home">
     <div v-if="search" style="display:flex; justify-content: center">
       <card-product
+        @onEdit="onEdit"
         class="cardP"
         :product="product"
-        v-for="product in allProducts.products"
+        v-for="product in filtered"
         :key="product._id"
       ></card-product>
-      <div v-if="!allProducts.products.length">
+      <div v-if="!filtered.length">
         <p>not found</p>
       </div>
     </div>
     <b-tabs type="is-boxed" style="background-color:white" v-if="!search">
       <b-tab-item class="productItem" label="All Products">
         <card-product
+          @onEdit="onEdit"
           :isComponentModalActive="isComponentModalActive"
           class="cardP"
           :product="product"
@@ -28,6 +30,7 @@
         :key="i"
       >
         <card-product
+          @onEdit="onEdit"
           class="cardP"
           :product="product"
           v-for="product in allProducts[category]"
@@ -71,35 +74,61 @@ export default {
     cardProduct
   },
   watch: {
-    search(value) {
-      if (value) {
-        console.log("value: ", value);
-        let arr = [];
-        console.log("this.allProducts.products: ", this.allProducts.products);
-        this.allProducts.products.forEach(el => {
-          if (el.itemName.includes(value)) {
-            arr.push(el);
-          }
-        });
-        this.temp = this.allProducts.products;
-        this.allProducts.products = arr;
-        console.log("arr", arr);
-        // return this.allProducts
-      } else {
-        this.$store
-          .dispatch("getProducts", "")
-          .then(() => {
-            this.isLoading = false;
-            console.log("get data of allProducts");
-          })
-          .catch(err => console.log(err));
-        // return this.allProducts
-      }
+    // search(value) {
+      // if (value) {
+      //   console.log("value: ", value);
+      //   let arr = [];
+      //   console.log("this.allProducts.products: ", this.allProducts.products);
+      //   this.allProducts.products.forEach(el => {
+      //     if (el.itemName.includes(value)) {
+      //       arr.push(el);
+      //     }
+      //   });
+      //   this.temp = this.allProducts.products;
+      //   this.allProducts.products = arr;
+      //   console.log("arr", arr);
+      //   // return this.allProducts
+      // } else {
+      //   this.$store
+      //     .dispatch("getProducts", "")
+      //     .then(() => {
+      //       this.isLoading = false;
+      //       console.log("get data of allProducts");
+      //     })
+      //     .catch(err => console.log(err));
+      //   // return this.allProducts
+      // }
+
+
+
+
+      // let arrayFilter = this.allProducts.products.filter(el => {
+      //   if(el.itemName.toLowerCase().includes(value.toLowerCase())){
+      //     return el
+      //   }
+      // })
+      // if(arrayFilter.length === 0){
+      //   return this.allProducts.products
+      // } else {
+      //   return arrayFilter
+      // }
+    // }
+  },
+  methods: {
+    onEdit(value){
+      this.$emit('onEdit', value)
     }
   },
-  methods: {},
   computed: {
-    ...mapState(["allProducts", "myCart"])
+    ...mapState(["allProducts", "myCart"]),
+    filtered(){
+      let arrayFilter = this.allProducts.products.filter(el => {
+        if(el.itemName.toLowerCase().includes(this.search.toLowerCase())){
+          return el
+        }
+      })
+      return arrayFilter
+    }
   },
   created() {
     this.isLoading = true;

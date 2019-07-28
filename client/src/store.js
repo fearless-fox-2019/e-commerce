@@ -330,6 +330,29 @@ export default new Vuex.Store({
           reject(err.response.data.message)
         })
       })
+    },
+    editProduct(context, payload){
+      return new Promise ((resolve, reject) => {
+        axios({
+          url: `/products/${payload._id}`,
+          method: 'put',
+          data: payload,
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+        })
+        .then(({data}) => {
+          console.log('data: ', data);
+          context.dispatch('getProducts', '')
+          resolve(true)
+        })
+        .catch(err => {
+          console.log('err: ', err);
+          console.log('err.response.data.message: ', err.response);
+          context.commit('getError', err.response.data.message)
+          reject(err.response.data.message)
+        })
+      })
     }
   }
 })
