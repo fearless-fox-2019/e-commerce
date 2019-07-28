@@ -83,7 +83,9 @@
         <div class="row">
             <div class="col-12" style="border: solid 1px black;">
                 <h2 style="margin-left: 1%">Transaction List</h2> 
-                <cart/>
+                <div v-for="(cart, index) in $store.state.allTrx" :key="index"> 
+                    <card :data="cart" />
+                </div>
             </div>
         </div>
     </div>
@@ -92,7 +94,7 @@
 <script>
 import axios from 'axios'
 import cartAdmin from "../components/CardAdmin"
-import cart from "../components/Cart"
+import card from "../components/TrxCart"
 export default {
     name: 'Admin',
     data() {
@@ -111,10 +113,11 @@ export default {
     },
     components: {
       cartAdmin,
-      cart
+      card
     },
     created() {
         this.$store.dispatch('retrieveProduct')
+        this.$store.dispatch('getAllTrx')
     },
     methods: {
         gotoAdd() {

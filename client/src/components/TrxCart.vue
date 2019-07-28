@@ -12,7 +12,7 @@
               <h4> Total Price : </h4>
               <h5 style="margin-top: 2%;">{{data.totalPayment}} </h5>
             </div>
-            <h5 class="col-2 pointer" style="margin-top: 2.5%; color: #5A9CD9; margin-top: 1.5%;" v-if="data.status == 'Paid'" @click="receive(data._id)"> Confirmation Receive </h5>
+            <h5 class="col-2 pointer" style="margin-top: 2.5%; color: #5A9CD9; margin-top: 1.5%;" v-if="data.status == 'Paid' && !$store.state.isAdmin" @click="receive(data._id)"> Confirmation Receive </h5>
         </div>
     </div>
 </template>

@@ -12,7 +12,8 @@ export default new Vuex.Store({
     isAdmin: false,
     cart: {},
     transaction: [],
-    received: []
+    received: [],
+    allTrx: []
   },
   mutations: {
     retrieveProduct (state, products) {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     },
     retrieveReceived (state, rcv) {
       state.received.push(rcv)
+    },
+    retrieveAllTrx(state, data) {
+      state.allTrx.push(data)
     },
   },
   actions: {
@@ -112,6 +116,25 @@ export default new Vuex.Store({
         for (let i = 0; i < data.length; i++) {
           if (data[i].status === 'Received') {
             commit('retrieveReceived', data[i])
+          }
+        }
+      })
+      .catch(({ response }) => {
+        console.log(response.data.message)
+      })
+    },
+    getAllTrx ({ commit }) {
+      axios({
+        method: 'GET',
+        url: `http://localhost:3000/transactions/all`,
+        headers: {
+          'access_token': localStorage.getItem('access_token')
+        }
+      })
+      .then(({ data }) => {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].status != "Cart") {
+            commit('retrieveAllTrx', data[i])
           }
         }
       })
