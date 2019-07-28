@@ -39,12 +39,12 @@
       <!-- <modal></modal> -->
       <section class="hero is-fullheight-with-navbar" v-if="!isLogin">
         <div class="hero-body">
-          <hooper class="carousel">
+          <!-- <hooper class="carousel">
             <slide id="slide1"></slide>
             <slide id="slide2"></slide>
             <slide id="slide3"></slide>
             <slide id="slide4"></slide>
-          </hooper>
+          </hooper> -->
         </div>
       </section>
     </div>
@@ -180,6 +180,9 @@ export default {
 #app .hero-body {
   padding: 0;
   margin: 0;
+  background-image: url("https://i.pinimg.com/originals/ec/af/f1/ecaff1f358fe2988c17a6c5b3acb5989.jpg");
+  background-position-y: 70%;
+  background-size: cover;
   /* border: 1px green solid; */
 }
 #app .hero {
