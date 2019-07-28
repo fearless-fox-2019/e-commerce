@@ -210,7 +210,7 @@ export default {
                     this.$router.push('/home')
                 }else{
                     this.$store.commit('Set_isLogin', true)
-                    this.$router.push('/cake/chocolate')
+                    this.$router.push('/catalog/chocolate-cake')
                 }
             })
             .catch(err =>{
@@ -249,7 +249,8 @@ export default {
     }
 
      #login-register-text:hover{
-         font-weight: bold
+         font-weight: bold;
+         cursor: pointer
      }
 
      #title{

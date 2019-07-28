@@ -118,7 +118,7 @@
                                 <p class="card-text">Name: {{user.name}}</p>
                                 <p class="card-text">Email: {{user.email}}</p>
                             </div>
-                            <button class="btn btn-outline-success btn-sm" @click="inviteAdmin(user._id)">
+                            <button id="btn-logout" class="btn btn-outline-success btn-sm" @click="inviteAdmin(user._id)">
                                 Invite
                             </button>
                         </div>
@@ -213,5 +213,9 @@ export default {
 #menu-head{
     color: coral
 }
+
+#btn-logout:hover{
+        cursor: pointer
+    }
 
 </style>

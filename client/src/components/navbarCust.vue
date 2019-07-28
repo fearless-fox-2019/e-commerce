@@ -55,10 +55,10 @@
             <div class="ml-auto" style="color: white">
                 <a style="margin-right: 20px;">
                     <router-link to="/mycart">
-                        <i class="fas fa-shopping-cart"></i>
+                        <i class="fas fa-shopping-cart" style="font-size: 22px"></i>
                     </router-link>
                 </a>
-                <a @click="logout" class="btn btn-outline-danger" style="color: yellow">
+                <a id="btn-logout" @click="logout" class="btn btn-outline-danger" style="color: yellow;">
                     <i class="fas fa-sign-out-alt"></i>Logout
                 </a>
             </div>
@@ -85,6 +85,9 @@ export default {
         font-weight: bold;
         color: lightsalmon;
         font-family: 'Comfortaa', cursive;
+    }
+    #btn-logout:hover{
+        cursor: pointer
     }
 
 </style>

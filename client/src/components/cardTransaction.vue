@@ -37,7 +37,7 @@
                         <form @submit.prevent="updatePayment">
                             <input v-model="code" type="text" class="form-control" placeholder="ex: vg7hj"><br>
                             <div class="d-flex justify-content-center">
-                                <input type="submit" class="btn btn-primary" data-dismiss="modal" style="margin-right: 10px">
+                                <input type="submit" class="btn btn-primary" value="Submit" data-dismiss="modal" style="margin-right: 10px">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                         </form>

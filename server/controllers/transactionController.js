@@ -47,7 +47,7 @@ class transactionController{
                     <h3> Thank you for choosing our cakes on Claves Patiserrie</h3>
                     <p> We really exited to serve premium cake for you.</p>
                     <p> This is your payment code: <span style="font-weight: bold">${paymentCode}</span></p>
-                    <p> Please input that code when you confirm your paymen on our website.</p>
+                    <p> Please input that code when you confirm your payment on our website.</p>
                     <br>
                     <br><hr>
                     <h4>Sincerely, </h4>
