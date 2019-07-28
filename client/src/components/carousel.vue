@@ -1,0 +1,53 @@
+<template>
+  <div class="carousel-landing-page">
+      <b-carousel
+    id="carousel-fade"
+    style="text-shadow: 0px 0px 2px #000"
+    fade
+    indicators
+    img-width="1024"
+    img-height="480"
+  >
+    <b-carousel-slide
+      caption="First slide"
+      img-src="https://i.imgur.com/oSaz4PE.png"
+    ></b-carousel-slide>
+    <b-carousel-slide
+      caption="Second Slide"
+      img-src="https://i.imgur.com/BjurSrm.png"
+    ></b-carousel-slide>
+    <b-carousel-slide
+      caption="Third Slide"
+      img-src="https://i.imgur.com/EPsWuFT.jpg"
+    ></b-carousel-slide>
+  </b-carousel>
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      slide: 0,
+      sliding: null
+    }
+  },
+  methods: {
+    onSlideStart (slide) {
+      this.sliding = true
+    },
+    onSlideEnd (slide) {
+      this.sliding = false
+    }
+  }
+}
+</script>
+<style scoped>
+.carousel-landing-page{
+    width : 70%;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    width : 70%;
+}
+</style>
