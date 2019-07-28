@@ -17,7 +17,8 @@ export default new Vuex.Store({
       status: "",
       alertMessage: ""
     },
-    cartList:[]
+    cartList:[],
+    transactionList : []
   },
   getters : {
     getToken(state){
@@ -80,6 +81,9 @@ export default new Vuex.Store({
     },
     SET_EMPTY_CART(state){
       state.cartList = []
+    },
+    SET_TRANSACTION(state, payload){
+      state.transactionList = payload
     }
   },
   actions: {
@@ -123,8 +127,17 @@ export default new Vuex.Store({
       })
       .catch(({response}) => {console.log(response)})
     },
-    updateQuantity(context){
-      
+    getTransaction(context) {
+      ax({
+        method : "get",
+        url : '/transactions',
+        headers : { token : localStorage.token }        
+      })
+      .then(({data}) => {
+        console.log(data)
+        context.commit('SET_TRANSACTION', data)
+      })
+      .catch(({response}) => {console.log(response)})
     }
   }
 })

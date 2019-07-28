@@ -21,9 +21,7 @@
       <v-flex class="heading" style="padding-right : 5px;">Rp.{{ $store.getters.getTotalPrice }}</v-flex>
     </v-layout>
     <v-card-actions style="margin-top : 6px;">
-      <v-btn @click="checkout" text>Check out</v-btn>
-      <v-spacer></v-spacer>
-      <v-btn :to="{path: '/cart/history'}" @click="viewHistory" text>History</v-btn>
+      <v-btn @click="checkout" text>Check out</v-btn>            
     </v-card-actions>
   </v-card>
 </template>
@@ -41,9 +39,6 @@ export default {
     };
   },
   watch: {
-    // newPrice : function(){
-    //   console.log(this.newPrice)
-    // }
   },
   methods: {
     checkout() {

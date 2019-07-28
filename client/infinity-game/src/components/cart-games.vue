@@ -9,8 +9,8 @@
           <v-card-title>
             <h1 style="font-size : 27px">{{ cart.GameId.name }}</h1>
           </v-card-title>
-
           <v-card-text>Rp. {{ cart.GameId.price }}</v-card-text>
+         <v-btn>DETAIL</v-btn>         
           <v-divider style="width: 550px; margin-left: 15px;"></v-divider>
           <div id="plus-minus">
             <v-layout row>
@@ -46,6 +46,7 @@ export default {
   props: ["cart"],
   data() {
     return {
+      link : `cart/${cart.GameId._id}`,
       snackbar: false,
       status: "",
       alertMessage: "",

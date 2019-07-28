@@ -13,6 +13,14 @@ class TransactionController {
     })
     .catch(next)
   }
+
+  static findTransaction(req, res, next){
+    Transaction.find({UserId : req.decoded._id})
+    .then(data => {
+      res.status(200).json(data)
+    })
+    .catch(next)
+  }
    
 }
 
