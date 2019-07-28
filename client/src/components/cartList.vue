@@ -28,30 +28,30 @@
       Checkout
     </b-button>
   </div>
-  
+
 </template>
 
 <script>
 import { mapState } from 'vuex'
-const baseUrl = `http://localhost:3000/api/carts`
 import axios from 'axios'
+const baseUrl = `http://localhost:3000/api/carts`
 export default {
-  data() {
+  data () {
     return {
       count: 0
     }
   },
   methods: {
-    increment(id) {
-      this.count++;
+    increment (id) {
+      this.count++
       this.carts.forEach((cart) => {
-        if(cart._id == id) {
+        if (cart._id == id) {
           // console.log(cart.productId.quantity)
-          if(cart.quantity < cart.productId.quantity) {
+          if (cart.quantity < cart.productId.quantity) {
             cart.quantity++
           } else {
             this.$swal({
-              type:'error',
+              type: 'error',
               text: 'the amount you want to buy exceeded the stock that we currently have!',
               showConfirmButton: false,
               timer: 1000
@@ -61,17 +61,17 @@ export default {
         }
       })
     },
-    decrement(id) {
-      this.count++;
-       this.carts.forEach((cart) => {
-        if(cart._id == id) {
-          if(cart.quantity > 0) {
+    decrement (id) {
+      this.count++
+      this.carts.forEach((cart) => {
+        if (cart._id == id) {
+          if (cart.quantity > 0) {
             cart.quantity--
           } else {
             this.$swal({
-              type:'error',
+              type: 'error',
               text: 'amount cannot be lower than 0',
-              showConfirmButton:false,
+              showConfirmButton: false,
               timer: 1000
             })
           }
@@ -79,7 +79,7 @@ export default {
         }
       })
     },
-    removeItem(id) {
+    removeItem (id) {
       this.$swal({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -89,34 +89,34 @@ export default {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Yes, delete it!'
       })
-      .then((result) => {
-        if (result.value) {
-          axios.delete(`${baseUrl}/${id}`,
-          {
-            headers: {
-              'token':  localStorage.getItem('token')
-            }
-          })
-      .then((dataDeleted) => {
-        this.deleteDataStore(id)
-        this.$swal({
-          type: 'success',
-          text: 'successfully deleted',
-          showConfirmButton: false,
-          timer: 1500
-            })
-         })
-        }
-      })
+        .then((result) => {
+          if (result.value) {
+            axios.delete(`${baseUrl}/${id}`,
+              {
+                headers: {
+                  'token': localStorage.getItem('token')
+                }
+              })
+              .then((dataDeleted) => {
+                this.deleteDataStore(id)
+                this.$swal({
+                  type: 'success',
+                  text: 'successfully deleted',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+              })
+          }
+        })
         .catch(error => {
           console.log(error)
         })
     },
-    deleteDataStore(id) {
+    deleteDataStore (id) {
       let index = this.carts.findIndex(cart => cart._id == id)
-      this.carts.splice(index,1)
+      this.carts.splice(index, 1)
     },
-    checkout() {
+    checkout () {
       this.$store.dispatch('checkoutCart')
     }
   },
@@ -124,18 +124,18 @@ export default {
     ...mapState(['carts']),
     ...mapState(['totalPrice'])
   },
-  created() {
+  created () {
 
   },
   watch: {
-    count: function() {
+    count: function () {
       let price = 0
       // console.log(this.carts)
       this.carts.forEach((cart) => {
         // console.log(cart)
         price += cart.quantity * cart.productId.price
       })
-      this.$store.commit('GET_TOTAL_PRICE',price)
+      this.$store.commit('GET_TOTAL_PRICE', price)
       // console.log(price)
     }
   }
@@ -157,6 +157,5 @@ img {
   width: 200px;
   height: 150px;
 }
-
 
 </style>

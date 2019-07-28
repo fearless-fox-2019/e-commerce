@@ -33,7 +33,7 @@
                 <td >
                   <!-- {{productId.name}} -->
                   <p v-for="product in transaction.products" :key="product._id">{{product.productId.name}}</p>
-                  
+
                 </td>
                 <td>
                   <p v-for="product in transaction.products" :key="product._id">{{product.quantity}}</p>
@@ -45,28 +45,28 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 import moment from 'moment'
 export default {
-  data() {
+  data () {
     return {
       productId: []
     }
   },
-  computed:  {
+  computed: {
     ...mapState(['transactions'])
   },
   methods: {
-    getTransactions() {
+    getTransactions () {
       this.$store.dispatch('transactionByUser')
     },
-    moment() {
+    moment () {
       return moment()
     }
   },
-  created() {
+  created () {
     this.getTransactions()
-    console.log(this.transactions);
+    console.log(this.transactions)
     // console.log(this.transactions)
     // console.log(this.transactions)
   }

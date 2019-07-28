@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="registerForm" title="Register Form" ref="this-modal">
+  <b-modal id="registerForm" title="Register Form" ref="this-modal" hide-footer>
     <b-form @submit="registerUser">
       <b-form-group
         id="input-group-1"

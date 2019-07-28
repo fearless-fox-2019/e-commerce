@@ -9,10 +9,10 @@
 
 <script>
 import axios from 'axios'
-const baseUrl = `http://localhost:3000/api/users`
 import NavBar from './components/NavBar'
 import LoginForm from '@/components/LoginForm.vue'
 import RegisterForm from '@/components/RegisterForm.vue'
+const baseUrl = `http://localhost:3000/api/users`
 export default {
   components: {
     NavBar,
@@ -34,19 +34,19 @@ export default {
     }
   },
   methods: {
-    getUser() {
+    getUser () {
       let userId = localStorage.getItem('id')
       axios.get(`${baseUrl}/${userId}`)
-        .then(({data}) => {
+        .then(({ data }) => {
           // console.log(dataFound)
-          this.$store.commit('SET_ROLE',data.role)
+          this.$store.commit('SET_ROLE', data.role)
           // console.log(this.$store.state)
         })
         .catch(error => {
           console.log(error)
         })
     }
-  },
+  }
 }
 </script>
 

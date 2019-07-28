@@ -15,33 +15,33 @@
           </b-card>
         </b-card-group>
         </div>
-  
+
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
       count: 0,
-      total:0
+      total: 0
     }
   },
   computed: {
     ...mapState(['carts', 'totalPrice'])
   },
   methods: {
-    getTotalPrice() {
+    getTotalPrice () {
       this.$store.dispatch('getTotal')
     }
   },
   watch: {
 
   },
-  created() {
+  created () {
     this.getTotalPrice()
     // console.log('asd')
-   this.$store.commit('GET_TOTAL_PRICE',this.total)
+    this.$store.commit('GET_TOTAL_PRICE', this.total)
   }
 }
 </script>

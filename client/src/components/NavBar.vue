@@ -84,20 +84,20 @@ export default {
       })
       this.$store.commit('SET_LOGIN', false)
       this.$store.commit('SET_ROLE', null)
-      this.$store.commit('ADD_TO_CART',null)
+      this.$store.commit('ADD_TO_CART', null)
       this.$router.push('/')
     },
-    toCart() {
-        if(this.$store.state.isLogin) {
-            this.$router.push('/cart')
-        } else {
-            this.$swal({
-                type: 'error',
-                text: 'you must login first to view cart',
-                showConfirmButton: false,
-                timer: 1500
-            })
-        }
+    toCart () {
+      if (this.$store.state.isLogin) {
+        this.$router.push('/cart')
+      } else {
+        this.$swal({
+          type: 'error',
+          text: 'you must login first to view cart',
+          showConfirmButton: false,
+          timer: 1500
+        })
+      }
     }
   },
   data () {

@@ -39,7 +39,6 @@ export default {
           this.allShoes = data
           console.log(this.allShoes)
           console.log(this.$store.state)
-          
         })
     },
     getProductDetail (id) {

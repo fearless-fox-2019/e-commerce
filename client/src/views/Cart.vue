@@ -21,28 +21,28 @@
 <script>
 import cartList from '../components/cartList'
 export default {
-    data() {
-      return {
+  data () {
+    return {
 
-      }
-    },
-    components: {
-      cartList
-    },
-    methods: {
-      cartByUser() {
-        this.$store.dispatch('cartUser')
-        // console.log(this.$store.state.carts.data)
-      },
-      getTotalPrice() {
-        this.$store.dispatch('getTotal')
-      }
-
-    },
-    created() {
-      this.cartByUser()
-      this.getTotalPrice()
     }
+  },
+  components: {
+    cartList
+  },
+  methods: {
+    cartByUser () {
+      this.$store.dispatch('cartUser')
+      // console.log(this.$store.state.carts.data)
+    },
+    getTotalPrice () {
+      this.$store.dispatch('getTotal')
+    }
+
+  },
+  created () {
+    this.cartByUser()
+    this.getTotalPrice()
+  }
 }
 </script>
 

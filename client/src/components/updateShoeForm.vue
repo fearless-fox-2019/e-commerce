@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="updateShoeForm" title="Update Stock and Price" ref="my-modals">
+  <b-modal id="updateShoeForm" title="Update Stock and Price" ref="my-modals" hide-footer>
     <b-form @submit.prevent="updatePrice">
       <b-form-group id="input-group-3" label="Price:" label-for="input-3">
           <b-form-input
@@ -22,13 +22,13 @@
       <b-button type="submit" class="right" variant="primary" >Submit</b-button>
     </b-form>
   </b-modal>
-  
+
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 export default {
-  data() {
+  data () {
     return {
       shoeData: {
         price: 0,
@@ -37,13 +37,13 @@ export default {
     }
   },
   methods: {
-    updatePrice() {
+    updatePrice () {
       this.$store.dispatch('updateForm', this.shoeData)
       this.hideModal()
     },
-    hideModal() {
+    hideModal () {
       this.$refs['my-modals'].hide()
-    },
+    }
   }
 }
 </script>

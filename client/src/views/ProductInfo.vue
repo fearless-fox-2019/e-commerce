@@ -31,7 +31,7 @@
 <script>
 import axios from 'axios'
 import addShoeForm from '../components/addShoeForm'
-import updateShoeForm from  '../components/updateShoeForm'
+import updateShoeForm from '../components/updateShoeForm'
 const baseUrl = `http://localhost:3000/api/shoes`
 export default {
   data () {
@@ -57,13 +57,13 @@ export default {
           console.log(error)
         })
     },
-    updateProduct(id) {
+    updateProduct (id) {
       this.$store.commit('GET_SHOE_ID', id)
       // this.getProductDetail()
     },
     addToCart () {
-      if(this.$store.state.isLogin) {
-        this.$store.dispatch('addToCart',this.shoe)
+      if (this.$store.state.isLogin) {
+        this.$store.dispatch('addToCart', this.shoe)
       } else {
         this.$swal({
           type: 'error',
@@ -73,7 +73,7 @@ export default {
         })
       }
     },
-    deleteProduct(id) {
+    deleteProduct (id) {
       this.$store.dispatch('deleteShoe', id)
     }
   }

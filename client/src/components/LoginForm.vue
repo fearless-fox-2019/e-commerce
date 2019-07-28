@@ -1,5 +1,5 @@
 <template>
- <b-modal id="loginForm" title="Login" ref="this-modal">
+ <b-modal id="loginForm" title="Login" ref="this-modal" hide-footer>
     <b-form @submit.prevent="loginUser">
       <b-form-group
         id="input-group-1"
@@ -57,7 +57,7 @@ export default {
           localStorage.setItem('token', data.token)
           localStorage.setItem('username', data.username)
           localStorage.setItem('email', data.email)
-          localStorage.setItem('id',data.id)
+          localStorage.setItem('id', data.id)
           console.log(data)
           this.hideModal()
           this.$store.commit('SET_LOGIN', true)
