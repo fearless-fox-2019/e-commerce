@@ -4,6 +4,7 @@ const { multer, sendUploadToGCS } = require('../helpers/image');
 const { authentication, productAuthorization } = require('../middlewares/auth');
 
 route.get('/', ProductController.listProduct);
+route.get('/:id', ProductController.detailProduct);
 
 route.use(authentication);
 

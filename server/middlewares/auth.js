@@ -5,6 +5,7 @@ const { verifyJWT } = require('../helpers/helper');
 
 module.exports = {
     authentication: function (req, res, next) {
+        console.log('auth')
         try {
             const token = req.headers.accesstoken
             if (token) {

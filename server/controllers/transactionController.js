@@ -49,6 +49,7 @@ class TransactionController {
     }
          
     static create(req, res, next) {
+        console.log('controller')
         User
             .findById(req.authenticatedUser._id, {
                 password: 0
@@ -62,16 +63,21 @@ class TransactionController {
                             message: 'Cart empty'
                         })
                 } else {
-                    let total_price = 0
+                    let cart = req.body.cart
+                    console.log(JSON.stringify((user.cart), null, 2))
+                    console.log(JSON.stringify((req.body.cart), null, 2))
+                    let total_price = req.body.total
                     let products = []
                     let productsId = []
                     
-                    user.cart.forEach(product => {
-                        total_price += product.price
+                    cart.forEach(product => {
                         products.push({
                             product: product._id
                         })
-                        productsId.push(product._id)
+                        productsId.push({
+                            id: product._id,
+                            quantity: Number(product.quantity)
+                        })
                     })
 
                     const promiseArr = [ 
@@ -90,15 +96,17 @@ class TransactionController {
                             }),
                         Product
                             .updateMany({
-                                _id: { $in: productsId }
+                                _id: { $in: productsId._id }
                             }, {
-                                $inc: { stock: -1 }
+                                $inc: { stock: -productsId.quantity },
+                                // $set: { quantity: productsId.quantity } 
                             })
                     ]
                     return Promise.all(promiseArr)
                 }
             })
             .then(([newTransaction, updatedUser, productUpdated]) => {
+                console.log(JSON.stringify((productUpdated), null, 2), '=====')
                 res
                     .status(201)
                     .json(newTransaction)

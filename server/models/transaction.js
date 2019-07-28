@@ -11,16 +11,17 @@ const TransactionSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Product'  
         },
+        status: {
+            type: String,
+            enum: [ 'Pending', 'Transit', 'Delivered' ],
+            default: 'Pending'
+        },
     }],
     total_price: {
         type: Number,
         min: [ 0, 'Invalid input' ]
     },
-    status: {
-        type: String,
-        enum: [ 'Pending', 'Transit', 'Delivered' ],
-        default: 'Pending'
-    },  
+      
 }, {
     timestamps: {
         createdAt: 'created_at',

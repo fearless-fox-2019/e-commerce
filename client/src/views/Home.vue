@@ -1,18 +1,29 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div class="ui container three stackable cards" style="margin-top: 2rem;">
+        <ProductCard
+        v-for="product in products"
+        :key="product.id"
+        :product="product"
+        :cart="cart"
+        @add-to-cart="$emit('add-to-cart', $event)"
+        />
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import ProductCard from '@/components/ProductCard'
 
 export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
+    components: {
+        ProductCard: ProductCard
+    },
+    props: {
+        products: Array,
+        cart: Array
+    }
 }
 </script>
+
+<style>
+
+</style>

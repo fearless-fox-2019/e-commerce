@@ -18,6 +18,11 @@ const productSchema = new Schema({
     },
     image: String,
     description: String,
+    quantity: {
+        type: Number,
+        default: 1,
+        required: [true, 'Quantity cannot be zero']
+    }
 })
 
 const Product = mongoose.model('Product', productSchema);

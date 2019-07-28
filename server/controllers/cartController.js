@@ -21,16 +21,16 @@ class CartContoller {
     } 
 
     static addProduct(req, res, next) {
-        let arr = [
-            User.updateOne(
-                { _id: req.authenticatedUser._id },
-                { $addToSet: { cart: ObjectId(req.params.productId) } }
-            ),
-            Product.updateOne(
-                { _id: req.params.productId },
-                { $inc: { stock: -1 } }
-            )
-        ]
+        // let arr = [
+        //     User.updateOne(
+        //         { _id: req.authenticatedUser._id },
+        //         { $addToSet: { cart: ObjectId(req.params.productId) } }
+        //     ),
+        //     Product.updateOne(
+        //         { _id: req.params.productId },
+        //         { $inc: { stock: -1 } }
+        //     )
+        // ]
         User
             .updateOne(
                 { _id: req.authenticatedUser._id },

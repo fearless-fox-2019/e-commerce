@@ -3,10 +3,12 @@ const { ObjectId } = require('mongoose').Types;
 
 class ProductController {
     static addProduct(req, res, next) {
+        console.log('masuk')
         let obj = {
             name: req.body.name,
             price: req.body.price,
-            stock: req.body.stock
+            stock: req.body.stock,
+            description: req.body.description
         }
 
         if (req.file) {
@@ -28,6 +30,7 @@ class ProductController {
                             message: err.message
                         })
                 } else {
+                    console.log(err)
                     next(err)
                 }
             });
