@@ -56,6 +56,7 @@ import { mapState } from 'vuex'
 
         },
         methods:{
+            // sama sampe sini
             deleteProduct(id){
                 this.$store.dispatch('deleteCart', id)
                 this.$router.push('/cart')

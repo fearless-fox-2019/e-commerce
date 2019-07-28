@@ -44,6 +44,7 @@ export default {
     },
     methods:{
         addtoCart(productId){
+            // sampe sini
             if(localStorage.token){
                 console.log('apa masih sampe sini? --addCart store')
                 console.log(productId, 'ini apa ..')
