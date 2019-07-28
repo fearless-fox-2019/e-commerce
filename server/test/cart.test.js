@@ -40,9 +40,6 @@ describe('Carts', function(){
                         expect(result.body).to.have.property('_id')
                         expect(result.body).to.have.property('userId')
                         expect(result.body).to.have.property('productId')
-                        expect(result.body).to.have.property('deliveryStatus')
-                        expect(result.body).to.have.property('paymentStatus')
-                        expect(result.body).to.have.property('paymentDate')
                         done()
                     })
                     .catch(err => {

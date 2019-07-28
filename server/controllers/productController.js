@@ -8,7 +8,8 @@ class ProductController {
             stock : req.body.stock,
             price : req.body.price,
             img : req.body.img || req.file.cloudStoragePublicUrl,
-            description : req.body.description
+            description : req.body.description,
+            category : req.body.category
         })
             .then(product => {
                 // console.log('berhasil', product)

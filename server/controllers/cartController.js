@@ -19,9 +19,32 @@ class CartController {
     static findByUser(req, res){
         Cart.find({
             userId : req.params.userId
-        }).populate('userId').populate('productId')
+        })
+            .populate('userId')
+            .populate('productId')
             .then(data => {
-                res.json(data)
+                let amountProduct = {}
+                let uniqueProductOnCart = []
+                data.forEach(el => {
+                    if(!amountProduct[el.productId._id]){
+                        amountProduct[el.productId._id] = el.amount
+                        uniqueProductOnCart.push(el)
+                    } else {
+                        amountProduct[el.productId._id] += el.amount
+                    }
+                })
+
+                let keysAmountProduct = Object.keys(amountProduct)
+                uniqueProductOnCart.forEach(cart => {
+                    keysAmountProduct.forEach(product => {
+                        if(cart.productId._id == product){
+                            cart.amount = amountProduct[product]
+                        }
+                    })
+                })
+                console.log('uniqueProductOnCart: ', uniqueProductOnCart.length);
+                
+                res.json(uniqueProductOnCart)
             })
             .catch(err => {
                 console.log(err)
@@ -43,6 +66,8 @@ class CartController {
     static update(req, res){
         Cart.findByIdAndUpdate(req.params.id, {
             amount : req.body.amount
+        }, {
+            productId : req.body.productId
         })
             .then(data => {
                 res.json({msg : 'updated'})

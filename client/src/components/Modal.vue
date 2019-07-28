@@ -45,7 +45,7 @@
               required
             ></b-input>
           </b-field>
-
+          <hr />
           <b-field label="Stock">
             <b-input
               type="number"
@@ -55,44 +55,53 @@
               required
             ></b-input>
           </b-field>
-
+          <hr />
           <b-field label="Price">
-            <b-input
-              type="number"
-              v-model="formProducts.price"
-              placeholder="Products price"
-              min="0"
-              required
-            ></b-input>
+            <b-field label="Rp." style="display:flex;justify-content:center;">
+              <b-input
+                type="number"
+                v-model="formProducts.price"
+                placeholder="Products price"
+                min="0"
+                style="margin-left:15px"
+                required
+              ></b-input>
+            </b-field>
           </b-field>
-
-          <b-field label="Category">
-            <b-input
-              type="name"
+          <hr />
+          <div class="block">
+            <strong>Category</strong>
+            <br />
+            <br />
+            <b-checkbox
               v-model="formProducts.category"
-              placeholder="Products category"
-              required
-            ></b-input>
-          </b-field>
-
+              v-for="(cat,i) in categories"
+              :key="i"
+              :native-value="cat"
+            >{{cat}}</b-checkbox>
+          </div>
+          <hr />
           <b-field label="Description">
             <b-input
-              type="name"
+              type="textarea"
               v-model="formProducts.description"
               placeholder="Products description"
               required
             ></b-input>
           </b-field>
-          
+          <hr />
           <b-field label="Image">
-            <b-input
-              type="file"
-              v-model="formProducts.img"
-              placeholder="Products img"
-              required
-            ></b-input>
+            <!-- <b-input type="file" v-model="formProducts.img" placeholder="Products img"   required></b-input> -->
+            <b-field class="file" style="display:flex;justify-content:center;">
+              <b-upload v-model="formProducts.img">
+                <a class="button is-primary">
+                  <p><i class="fas fa-upload"></i></p> 
+                  <span> Click to upload</span>
+                </a>
+              </b-upload>
+              <span class="file-name" v-if="formProducts.img" style="color:black">{{ formProducts.img.name }}</span>
+            </b-field>
           </b-field>
-
           <br />
           <slot></slot>
         </section>
@@ -111,6 +120,14 @@ export default {
   components: {},
   data() {
     return {
+      categories: [
+        "invitation card",
+        "souvenir",
+        "hampers",
+        "bridesmaid",
+        "groomsman",
+        "party planner"
+      ],
       form: {
         username: "",
         email: "",
@@ -121,7 +138,7 @@ export default {
         stock: 0,
         price: 0,
         img: "",
-        category: "",
+        category: [],
         description: ""
       }
     };
@@ -129,7 +146,13 @@ export default {
   methods: {
     submit() {
       if (this.isFormProducts) {
-
+        this.$store
+          .dispatch("addProduct", this.formProducts)
+          .then(data => {
+            console.log("data: ", data);
+            this.$emit("isAddProduct", false);
+          })
+          .catch(err => {});
       } else if (this.isFormSignIn) {
         this.$store
           .dispatch("signIn", this.form)
@@ -148,6 +171,9 @@ export default {
           .catch(err => {});
       }
     }
+  },
+  mounted(){
+    
   }
 };
 </script>

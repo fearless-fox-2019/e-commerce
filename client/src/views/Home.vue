@@ -1,17 +1,45 @@
 <template>
   <div class="home">
-    <b-tabs type="is-boxed">
-      <b-tab-item @click="console.log('trigger')" label="All Products">
-        
+    <div v-if="search" style="display:flex; justify-content: center">
+      <card-product
+        class="cardP"
+        :product="product"
+        v-for="product in allProducts.products"
+        :key="product._id"
+      ></card-product>
+      <div v-if="!allProducts.products.length">
+        <p>not found</p>
+      </div>
+    </div>
+    <b-tabs type="is-boxed" style="background-color:white" v-if="!search">
+      <b-tab-item class="productItem" label="All Products">
+        <card-product
+          :isComponentModalActive="isComponentModalActive"
+          class="cardP"
+          :product="product"
+          v-for="product in allProducts.products"
+          :key="product._id"
+        ></card-product>
       </b-tab-item>
-      <b-tab-item @click="changeTab('invitationCard')" label="Invitation Card"></b-tab-item>
-      <b-tab-item @click="changeTab('souvenir')" label="Souvenir"></b-tab-item>
-      <b-tab-item @click="changeTab('hampers')" label="Hampers"></b-tab-item>
-      <b-tab-item @click="changeTab('bridesmaid')" label="Bridesmaid">a</b-tab-item>
-      <b-tab-item @click="changeTab('groomsman')" label="Groomsman"></b-tab-item>
-      <b-tab-item @click="changeTab('partyPlanner')" label="Party Planner"></b-tab-item>
+      <b-tab-item
+        class="productItem"
+        :label="category.toLowerCase()"
+        v-for="(category, i) in categories"
+        :key="i"
+      >
+        <card-product
+          class="cardP"
+          :product="product"
+          v-for="product in allProducts[category]"
+          :key="product._id"
+        ></card-product>
+      </b-tab-item>
       <div>
-        <div v-if="isLoading" class="lds-facebook"><div></div><div></div><div></div></div>
+        <div v-if="isLoading" class="lds-facebook">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
       </div>
     </b-tabs>
   </div>
@@ -19,44 +47,76 @@
 
 <script>
 // @ is an alias to /src
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
+import cardProduct from "../components/CardProduct.vue";
 export default {
-  name: 'home',
-  data(){
+  name: "home",
+  props: ["isComponentModalActive", "search"],
+  data() {
     return {
-      activeTab : '',
-      isLoading : true
-    }
+      temp: [],
+      activeTab: "",
+      isLoading: true,
+      categories: [
+        "invitation card",
+        "souvenir",
+        "hampers",
+        "bridesmaid",
+        "groomsman",
+        "party planner"
+      ]
+    };
   },
   components: {
-
+    cardProduct
   },
-  methods : {
-    changeTab(tabName){
-      this.isLoading = true
-      this.activeTab = tabName
-      console.log('trigger tab ', tabName);
-      this.$store.dispatch('getProducts', tabName)
+  watch: {
+    search(value) {
+      if (value) {
+        console.log("value: ", value);
+        let arr = [];
+        console.log("this.allProducts.products: ", this.allProducts.products);
+        this.allProducts.products.forEach(el => {
+          if (el.itemName.includes(value)) {
+            arr.push(el);
+          }
+        });
+        this.temp = this.allProducts.products;
+        this.allProducts.products = arr;
+        console.log("arr", arr);
+        // return this.allProducts
+      } else {
+        this.$store
+          .dispatch("getProducts", "")
+          .then(() => {
+            this.isLoading = false;
+            console.log("get data of allProducts");
+          })
+          .catch(err => console.log(err));
+        // return this.allProducts
+      }
+    }
+  },
+  methods: {},
+  computed: {
+    ...mapState(["allProducts", "myCart"])
+  },
+  created() {
+    this.isLoading = true;
+    this.$store
+      .dispatch("getProducts", "")
       .then(() => {
-        this.isLoading = false
-        console.log('get data of ', tabName);
+        this.isLoading = false;
+        console.log("get data of allProducts");
       })
-      .catch(err => console.log(err))
-    },
-  },
-  computed : {
-    ...mapState(['allProducts'])
-  },
-  created(){
-    this.isLoading = true
-    this.$store.dispatch('getProducts', '')
-    .then(() => {
-        this.isLoading = false
-        console.log('get data of allProducts');
-      })
-    .catch(err => console.log(err))
+      .catch(err => console.log(err));
+    this.$store
+      .dispatch("getMyCart", localStorage.getItem("userId"))
+      .then(() => {
+        this.$emit("myCart", this.myCart);
+      });
   }
-}
+};
 </script>
 
 <style>
@@ -71,7 +131,7 @@ export default {
   position: absolute;
   left: 6px;
   width: 13px;
-  background: #FF2B56;
+  background: #ff2b56;
   animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
 }
 .lds-facebook div:nth-child(1) {
@@ -91,10 +151,32 @@ export default {
     top: 6px;
     height: 51px;
   }
-  50%, 100% {
+  50%,
+  100% {
     top: 19px;
     height: 26px;
   }
 }
-
+.productItem {
+  /* position: relative; */
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  /* z-index: inherit; */
+  /* top: 0; */
+  /* background-color: white; */
+}
+.cardP {
+  /* position: relative; */
+  margin-bottom: 20px;
+  padding: 0;
+  /* z-index: 1; */
+  /* max-height: 50%; */
+  height: auto;
+}
+.is-boxed {
+  position: sticky;
+  left: 0;
+  top: 0;
+}
 </style>

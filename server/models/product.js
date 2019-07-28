@@ -6,7 +6,7 @@ let productSchema = new Schema ({
     stock : Number,
     price : Number,
     img : String,
-    category: String,
+    category: Array,
     description : String
 })
 

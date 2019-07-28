@@ -14,20 +14,6 @@ let cartSchema = new Schema({
         type: Number,
         required: true
     },
-    paymentStatus : {
-        type: Boolean,
-        default: false,
-        // required: true        
-    },
-    paymentDate: {
-        type: Date,
-        default: null
-    },
-    deliveryStatus: {
-        type: Boolean,
-        default: false,
-        // required: true
-    }
 })
 
 let Cart = mongoose.model('Cart', cartSchema)

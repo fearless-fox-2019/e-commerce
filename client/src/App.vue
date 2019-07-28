@@ -3,7 +3,7 @@
     <div>
       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-          <a class="navbar-item">
+          <a @click="$router.push('/')" class="navbar-item">
             <img
               src="https://clipground.com/images/wedding-logo-clipart-4.jpg"
               width="50"
@@ -25,8 +25,10 @@
             <div class="navbar-item" v-if="isLogin">
               <div class="buttons">
                 <b-field>
-                  <b-input placeholder="Search..." type="search" icon-pack="fas" icon="search" style="margin-right:30px; margin-bottom:-4px;"></b-input>
+                  <b-input v-model="search" placeholder="Search Products..." type="search" icon-pack="fas" icon="search" style="margin-right:30px; margin-bottom:-4px;" rounded></b-input>
+                
                 </b-field>
+                <button v-if="!isAdmin" class="button has-badge-primary has-badge-rounded" @click="getCart" :data-badge="myCart.length"><i class="fas fa-shopping-cart"></i></button>
                 <a v-if="isAdmin" class="button is-light" @click="addProducts"><strong>+Product</strong></a>
                 <a class="button is-danger" @click.prevent="$store.dispatch('logout')"><strong>Log Out</strong></a>
               </div>
@@ -48,6 +50,7 @@
     </div>
     <b-modal :active.sync="isComponentModalActive" has-modal-card>
       <modal
+        @isAddProduct="isComponentModalActive = $event"
         @isLoggedIn="isComponentModalActive = $event"
         :isFormProducts="isFormProducts"
         :isFormSignIn="isFormSignIn"
@@ -56,7 +59,7 @@
         <p style="color:red">{{isError}}</p>
       </modal>
     </b-modal>
-    <router-view v-if="isLogin" />
+    <router-view v-if="isLogin" :search="search" :isComponentModalActive="isComponentModalActive"/>
   </div>
 </template>
 
@@ -72,12 +75,15 @@ export default {
     Slide,
     modal
   },
+  created(){
+
+  },
   computed: {
-    ...mapState(["isLogin", "isAdmin", "isError"])
+    ...mapState(["isLogin", "isAdmin", "isError", "myCart"])
   },
   data() {
     return {
-      
+      search: '',
       form: {
         username: "",
         email: "",
@@ -113,6 +119,9 @@ export default {
       this.isFormSignIn = false;
       this.isFormSignUp = false;
       this.isFormProducts = true
+    },
+    getCart(){
+      this.$router.push('/myCart')
     }
   }
 };
@@ -135,6 +144,8 @@ export default {
   color: #2c3e50;
 }
 #nav {
+  width: 100vw;
+  margin-top:5px;
   padding: 30px;
 }
 
