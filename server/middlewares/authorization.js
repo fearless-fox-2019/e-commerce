@@ -1,17 +1,17 @@
 const {verifyToken} = require('../helpers/jwt')
-const Todo = require('../models/todos')
+const Shoes = require('../models/shoes')
 
 function authorization(req,res,next) {
-    Todo.findById(req.params.id)
-        .then((todo => {
-            if(todo) {
-                if(todo.userId == req.decoded._id) {
+    Shoes.findById(req.params.id)
+        .then((Shoes => {
+            if(Shoes) {
+                if(req.decoded.role == 'admin') {
                     next()
                 } else {
                     throw {status:403, message:'Unauthorized'}
                 }
             } else {
-                throw {status:404, message: 'Todo not found'}
+                throw {status:404, message: 'Shoes not found'}
             }
         }))
         .catch(next)

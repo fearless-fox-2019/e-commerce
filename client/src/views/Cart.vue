@@ -4,28 +4,7 @@
     </b-card>
     <b-row>
       <b-col cols="8">
-        <b-card img-src="../../public/images/shoes/Air Jordan 1.jpg" img-alt="Card image" img-left class="mb-3">
-          <b-card-text>
-           Air Jordan 1
-           <br>
-           $150.00
-          </b-card-text>
-        </b-card>
-         <b-card>
-          <h1>halo</h1>
-        </b-card>
-         <b-card>
-          <h1>halo</h1>
-        </b-card>
-         <b-card>
-          <h1>halo</h1>
-        </b-card>
-         <b-card>
-          <h1>halo</h1>
-        </b-card>
-         <b-card>
-          <h1>halo</h1>
-        </b-card>
+      <cartList></cartList>
       </b-col>
       <b-col cols="4">
         <div class="sum">
@@ -53,34 +32,36 @@
 </template>
 
 <script>
+import cartList from '../components/cartList'
 export default {
+    data() {
+      return {
 
+      }
+    },
+    components: {
+      cartList
+    },
+    methods: {
+      cartByUser() {
+        this.$store.dispatch('cartUser')
+        // console.log(this.$store.state.carts.data)
+      }
+
+    },
+    created() {
+      this.cartByUser()
+    }
 }
 </script>
 
 <style scoped>
-.card {
-  text-align: left;
-  margin-bottom: 10px;
-  transition: 0.3s;
-}
-
-.card:hover {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-}
-
-img {
-  width: 200px;
-  height: 150px;
-}
-
 .list-group-item {
   background-color: #343a40;
 }
 
 .sum {
   min-height: 400px;
-  /* height: 400px; */
   border: black solid 2px;
 }
 

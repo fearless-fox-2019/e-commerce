@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken')
 let payload
 
 class UserController {
-    static findAll() {
+    static findAll(req,res,next) {
         User.findAll()
             .then((datas) => {
                 res.status(200).json(datas)
@@ -18,13 +18,22 @@ class UserController {
             .catch(next)
     }
 
+    static findUser(req,res,next) {
+        User.findOne({_id:req.params.id})
+            .then(dataFound => {
+                res.status(200).json(dataFound)
+            })
+            .catch(next)
+    }
+
     static create(req,res,next) {
-        const {username,password,email}=req.body
-        const input = {username,password,email}
+        const {username,password,email,role}=req.body
+        const input = {username,password,email,role}
         console.log('halo')
         // console.log(input);
         User.create(input)
             .then((dataCreated) => {
+                // console.log(dataCreated)
                 res.status(201).json(dataCreated)
             })
             .catch(next)
@@ -58,8 +67,8 @@ class UserController {
                 if(userFound) {
                     if(comparePassword(password,userFound.password)) {
                         // console.log(userFound)
-                        let tokenJWT = createToken({username: userFound.username, email: userFound.email,_id: userFound._id}, process.env.JWT_SECRET)
-                        res.status(200).json({token: tokenJWT, username: userFound.username, email: userFound.email})
+                        let tokenJWT = createToken({username: userFound.username, email: userFound.email,_id: userFound._id,role: userFound.role}, process.env.JWT_SECRET)
+                        res.status(200).json({token: tokenJWT, username: userFound.username, email: userFound.email,role:userFound.role,id: userFound._id})
                     } else {
                         throw {status:404, message: 'username/password salah'}
                     }

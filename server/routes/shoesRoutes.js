@@ -1,4 +1,12 @@
 const router = require('express').Router()
 const ShoeController = require('../controllers/shoesController')
-router.post('/addShoe',ShoeController.create)
+const authentication = require('../middlewares/authentication')
+const authorization = require('../middlewares/authorization')
+router.get('/allShoes',ShoeController.findAll)
+router.get('/:id',ShoeController.shoeDetail)
+router.use(authentication)
+router.post('/',ShoeController.create)
+router.patch('/:id',ShoeController.update)
+router.delete('/:id',ShoeController.delete)
+
 module.exports = router

@@ -15,7 +15,7 @@
                     <router-link to="/" class="nav-link">Home</router-link>
                 </li>
                 <li class="nav-item">
-                  <div class="dropdown">
+                  <!-- <div class="dropdown">
                     <a data-toggle ="dropdown" href="#" class="nav-link dropdown-toggle">Brand</a>
                     <div class="dropdown-menu text-clipped">
                         <a href="/shoes/Nike" class="dropdown-item">Nike</a>
@@ -23,19 +23,19 @@
                         <a href="/shoes/Air Jordan" class="dropdown-item">Air Jordan</a>
                         <a href="/shoes/Converse" class="dropdown-item">Converse</a>
                     </div>
-                  </div>
+                  </div> -->
                   </li>
                   <li class="nav-item">
                       <router-link to="/shoes" class="nav-link">Shoes</router-link>
                   </li>
                   <li class="nav-item">
-                      <a href="#" class="nav-link" v-if="!loggedInTrue" v-b-modal.loginForm>Login</a>
+                      <a href="#" class="nav-link" v-if="!$store.state.isLogin" v-b-modal.loginForm>Login</a>
                       </li>
                   <li class="nav-item">
-                      <a href="#" class="nav-link" v-if="!loggedInTrue" v-b-modal.registerForm>Register</a>
+                      <a href="#" class="nav-link" v-if="!$store.state.isLogin" v-b-modal.registerForm>Register</a>
                   </li>
                   <li class="nav-item">
-                      <a href="#" class="nav-link" v-if="loggedInTrue" @click.prevent="onSignOut" > Sign Out</a>
+                      <a href="#" class="nav-link" v-if="$store.state.isLogin" @click.prevent="onSignOut" > Sign Out</a>
                   </li>
              </ul>
          </nav>
@@ -48,16 +48,13 @@
               </a>
           </div>
           <div class="nav-icons ">
-            <a class="text-clipped" href="/cart">
-                <i class="fal fa-shopping-bag  bag-item-count text-clipped">
-                </i>
-                <span>2</span>
+            <a class="text-clipped" @click="toCart">
+                <i class="fal fa-shopping-bag  bag-item-count text-clipped" ></i>
             </a>
           </div>
           <div class="nav-icons">
               <a class="text-clipped" href="">
                   <i class="fal fa-bars open-menu-icon text-clipped">
-                      a
                   </i>
               </a>
           </div>
@@ -68,16 +65,29 @@
 
 <script>
 export default {
-  props: ['loggedInTrue'],
   methods: {
     onSignOut () {
-      this.loggedInTrue = false
       localStorage.clear()
       this.$swal({
         type: 'success',
         text: 'successfully logged out'
       })
-      console.log('coba')
+      this.$store.commit('SET_LOGIN', false)
+      this.$store.commit('SET_ROLE', null)
+      this.$store.commit('ADD_TO_CART',null)
+      this.$router.push('/')
+    },
+    toCart() {
+        if(this.$store.state.isLogin) {
+            this.$router.push('/cart')
+        } else {
+            this.$swal({
+                type: 'error',
+                text: 'you must login first to view cart',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        }
     }
   },
   data () {

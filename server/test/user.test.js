@@ -136,22 +136,6 @@ describe('User Login/Register', function(){
         console.log(err)
       })
     })
-    it('should return role is required', function(done) {
-      chai
-      .request(app)
-      .post('/api/users/register')
-      .send({email: 'tommy@mail.com', username: 'asdasds' , password: '123123'})
-      .then(function(res) {
-        expect(res).to.have.status(400)
-        expect(res.body).to.be.an('object')
-        console.log(res.body.message, 'hei hei')
-        expect(res.body.message).to.equal(`Error: role is required`)
-        done()
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-    })
     it('should role must be either admin or user', function(done) {
       chai
       .request(app)

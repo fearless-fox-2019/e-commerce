@@ -17,6 +17,7 @@
     "mdbvue": "git+https://oauth2:@git.mdbootstrap.com/mdb/vue/vu-pro.git",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
+    "vue-swal": "^1.0.0",
     "vue-sweetalert2": "^2.1.1",
     "vuex": "^3.0.1"
   },

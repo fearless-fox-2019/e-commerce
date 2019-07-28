@@ -1,9 +1,9 @@
 <template>
   <b-row class="allProductsRow">
-    <b-col cols="4" class="productsCard">
+    <b-col cols="4" class="productsCard" v-for="allShoe in allShoes" :key="allShoe._id">
         <b-card
-          title="Card Title"
-          img-src="../../public/images/shoes/Adidas Ultraboost.jpg"
+          :title="allShoe.name"
+          :img-src="allShoe.image"
           img-alt="Image"
           img-top
           tag="article"
@@ -11,69 +11,44 @@
           class="mb-2"
         >
           <b-card-text>
-            Some quick example text to build on the card title and make up the bulk of the card's content.
+
           </b-card-text>
 
-          <b-button href="#" variant="primary">Go somewhere</b-button>
-        </b-card>
-      </b-col>
-      <b-col cols="4">
-            <b-card
-          title="Card Title"
-          img-src="../../public/images/shoes/Converse Classic.jpg"
-          img-alt="Image"
-          img-top
-          tag="article"
-          style="max-width: 20rem;"
-          class="mb-2"
-        >
-          <b-card-text>
-            Some quick example text to build on the card title and make up the bulk of the card's content.
-          </b-card-text>
-
-          <b-button href="#" variant="primary">Go somewhere</b-button>
-        </b-card>
-      </b-col>
-        <b-col cols="4">
-            <b-card
-            title="Card Title"
-            img-src="../../public/images/shoes/NMD R1.jpg"
-            img-alt="Image"
-            img-top
-            tag="article"
-            style="max-width: 20rem;"
-            class="mb-2"
-          >
-            <b-card-text>
-              Some quick example text to build on the card title and make up the bulk of the card's content.
-            </b-card-text>
-
-            <b-button href="#" variant="primary">Go somewhere</b-button>
-          </b-card>
-        </b-col>
-        <b-col cols="4">
-            <b-card
-          title="Card Title"
-          img-src="../../public/images/shoes/Yeezy.jpg"
-          img-alt="Image"
-          img-top
-          tag="article"
-          style="max-width: 20rem;"
-          class="mb-2"
-        >
-          <b-card-text>
-            Some quick example text to build on the card title and make up the bulk of the card's content.
-          </b-card-text>
-
-          <b-button href="#" variant="primary">Go somewhere</b-button>
+          <b-button href="#" @click="getProductDetail(allShoe._id)" variant="primary">Product Details</b-button>
         </b-card>
       </b-col>
   </b-row>
 </template>
 
 <script>
+import axios from 'axios'
+const baseUrl = `http://localhost:3000/api/shoes`
 export default {
-
+  data () {
+    return {
+      allShoes: []
+    }
+  },
+  created () {
+    this.getAllShoes()
+  },
+  methods: {
+    getAllShoes () {
+      axios.get(`${baseUrl}/allShoes`)
+        .then(({ data }) => {
+          this.allShoes = data
+          console.log(this.allShoes)
+          console.log(this.$store.state)
+          
+        })
+    },
+    getProductDetail (id) {
+      axios.get(`${baseUrl}/${id}`)
+        .then(({ data }) => {
+          this.$router.push({ path: `/shoes/${id}` })
+        })
+    }
+  }
 }
 </script>
 
@@ -89,7 +64,5 @@ export default {
 .card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
-
-
 
 </style>

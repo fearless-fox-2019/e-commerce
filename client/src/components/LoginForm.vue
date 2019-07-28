@@ -50,7 +50,6 @@ export default {
       })
         .then(({ data }) => {
           console.log(data)
-
           this.$swal({
             type: 'success',
             text: 'Successfully logged in'
@@ -58,8 +57,11 @@ export default {
           localStorage.setItem('token', data.token)
           localStorage.setItem('username', data.username)
           localStorage.setItem('email', data.email)
-          this.$emit('loggedIn', true)
+          localStorage.setItem('id',data.id)
+          console.log(data)
           this.hideModal()
+          this.$store.commit('SET_LOGIN', true)
+          this.$store.commit('SET_ROLE', data.role)
         })
         .catch((error) => {
           this.$swal({

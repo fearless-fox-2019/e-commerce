@@ -1,6 +1,9 @@
 if(process.env.NODE_ENV == 'development') {
   require('dotenv').config()
 }
+if(process.env.NODE_ENV== 'test') {
+  require('dotenv').config()
+}
 
 const mongoose = require('mongoose');
 const express = require('express')
@@ -17,6 +20,7 @@ mongoose.connect('mongodb://localhost/ecommerce-' + process.env.NODE_ENV, {useNe
 
 const userRoutes = require('./routes/usersRoutes')
 const shoesRoutes = require('./routes/shoesRoutes')
+const cartRoutes = require('./routes/cartRoutes')
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     console.log('masuk')
@@ -25,6 +29,7 @@ db.once('open', function() {
 
 app.use('/api/users',userRoutes)
 app.use('/api/shoes',shoesRoutes)
+app.use('/api/carts', cartRoutes)
 
 
 

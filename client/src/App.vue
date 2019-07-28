@@ -1,13 +1,15 @@
 <template>
   <div id="app">
-      <NavBar :loggedInTrue="isLogin"></NavBar>
-      <LoginForm @loggedIn="logInTrue"></LoginForm>
+      <NavBar></NavBar>
+      <LoginForm ></LoginForm>
       <RegisterForm></RegisterForm>
     <router-view/>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+const baseUrl = `http://localhost:3000/api/users`
 import NavBar from './components/NavBar'
 import LoginForm from '@/components/LoginForm.vue'
 import RegisterForm from '@/components/RegisterForm.vue'
@@ -18,10 +20,12 @@ export default {
     RegisterForm
   },
   created () {
+    this.getUser()
     if (localStorage.getItem('token')) {
-      this.isLogin = true
+      this.$store.commit('SET_LOGIN', true)
+      // this.$store.commit('')
     } else {
-      this.isLogin = false
+      this.$store.commit('SET_LOGIN', false)
     }
   },
   data () {
@@ -30,16 +34,19 @@ export default {
     }
   },
   methods: {
-    logInTrue () {
-      this.isLogin = true
+    getUser() {
+      let userId = localStorage.getItem('id')
+      axios.get(`${baseUrl}/${userId}`)
+        .then(({data}) => {
+          // console.log(dataFound)
+          this.$store.commit('SET_ROLE',data.role)
+          // console.log(this.$store.state)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
-  watch: {
-    isLogin: function () {
-
-    }
-  }
-
 }
 </script>
 

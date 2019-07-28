@@ -5,17 +5,11 @@ const uniqueValidator = require('mongoose-unique-validator');
 const shoeSchema = new Schema ({
   name: {
     type: String,
-    required: [true, 'name is required'],
-    unique: true
+    required: [true, 'name is required']
   },
   price: {
     type: Number,
     required: [true, 'price is required']
-  },
-  brand: {
-    type: String,
-    required: [true, 'brand is required'],
-    unique: true
   },
   quantity: {
     type: Number,
