@@ -1,16 +1,18 @@
 <template>
   <div>
-    <v-card v-for="tr in shipping" :key="tr._id" class="tr-item">
-      <p>{{tr.address}}</p>
-    </v-card>
+    <TransactionCard v-for="tr in shipping" :transaction="tr" :key="tr._id" type="shipping"/>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-export default {  
+import TransactionCard from '@/components/TransactionCard.vue'
+export default {
   computed : {
     ...mapState(['shipping'])
+  },
+  components : {
+    TransactionCard
   }
 }
 </script>

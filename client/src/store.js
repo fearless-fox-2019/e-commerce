@@ -160,6 +160,15 @@ export default new Vuex.Store({
         console.log('transaction fetched')
       })
       .catch(err => { console.log(err.response.data)})
+    },
+    deliver({state, commit, dispatch}, payload) {
+      return ax({
+        url: `/transactions/delivered/${payload}`,
+        method: 'PATCH',
+        headers : {
+          token: localStorage.getItem('token')
+        }
+      })
     }
   }
 })
