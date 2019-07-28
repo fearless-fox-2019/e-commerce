@@ -6,6 +6,7 @@ import router from './router';
 import Swal from 'sweetalert2'
 const baseUrlShoes = `http://localhost:3000/api/shoes/`
 const baseUrlCart = `http://localhost:3000/api/carts/`
+const baseUrlTransaction= `http://localhost:3000/api/transactions/`
 Vue.use(Vuex)
 // Vue.use(Swal)
 
@@ -14,7 +15,9 @@ export default new Vuex.Store({
     isLogin: false,
     role: '',
     carts: [],
-    totalPrice: 0
+    totalPrice: 0,
+    transactions: [],
+    shoe: ''
   },
   mutations: {
     SET_LOGIN(state, payload) {
@@ -28,6 +31,18 @@ export default new Vuex.Store({
     },
     GET_TOTAL_PRICE(state,payload) {
       state.totalPrice = payload
+    },
+    CLEAR_CART(state,payload) {
+      state.carts = []
+    },
+    TRANSACTION_LIST(state,payload) {
+      state.transactions = payload
+    },
+    CLEAR_TOTAL_PRICE(state,payload) {
+      state.totalPrice = 0
+    },
+    GET_SHOE_ID(state,payload)  {
+      state.shoe = payload
     }
   },
   actions: {
@@ -65,37 +80,51 @@ export default new Vuex.Store({
         }
       })
     },
-    updateShoe(context,payload) {
-
-    },
     addToCart(context,payload) {
-      console.log(payload)
+      console.log(payload, 'ini add to cart')
       // userId: req.body.userId,
       // productId: req.body.productId,
       // quantity: req.body.quantity,
       // checkoutDate: null
-      axios.post(`${baseUrlCart}`, {
-        userId: localStorage.getItem('id'),
-        productId: payload._id,
-        quantity: 1
-      })
-        .then((cartCreated) => {
-          Swal.fire({
-            type: 'success',
-            text: 'Product added to cart',
-            showConfirmButton: false,
-            timer: 1500
+      if(payload.quantity > 0) {
+        axios.post(`${baseUrlCart}`, {
+          userId: localStorage.getItem('id'),
+          productId: payload._id,
+          quantity: 1
+        },{
+          headers: {
+            'token':  localStorage.getItem('token')
+          }
+        })
+          .then((cartCreated) => {
+            Swal.fire({
+              type: 'success',
+              text: 'Product added to cart',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            // router.push('/cart')
+            console.log(cartCreated)
           })
-          // router.push('/cart')
-          console.log(cartCreated)
+          .catch((error) => {
+            console.log(error)
+          })
+      } else {
+        Swal.fire({
+          type: 'error',
+          text: 'out of stock',
+          showConfirmButton: false,
+          timer: 1000
         })
-        .catch((error) => {
-          console.log(error)
-        })
+      }
     },
     cartUser(context,payload) {
       let userId = localStorage.getItem('id')
-      axios.get(`${baseUrlCart}/${userId}`)
+      axios.get(`${baseUrlCart}/${userId}`,{
+        headers: {
+          'token':  localStorage.getItem('token')
+        }
+      })
         .then((dataFound) => {
           context.commit('ADD_TO_CART',dataFound.data)
         })
@@ -106,7 +135,11 @@ export default new Vuex.Store({
     getTotal(context,payload) {
       let price = 0
       let userId = localStorage.getItem('id')
-      axios.get(`${baseUrlCart}/${userId}`)
+      axios.get(`${baseUrlCart}/${userId}`,{
+        headers: {
+          'token':  localStorage.getItem('token')
+        }
+      })
         .then(({data}) =>{
           data.forEach((cart) => {
             price += cart.quantity * cart.productId.price
@@ -117,9 +150,75 @@ export default new Vuex.Store({
         .catch(error=> {
           console.log(error)
         })
+    },
+    checkoutCart(context,payload) {
+      axios.patch(`${baseUrlCart}/checkout`, {
+        userId: localStorage.getItem('id')
+      },{
+        headers: {
+          'token':  localStorage.getItem('token')
+        }
+      })
+        .then(({data}) => {
+          console.log(data);
+          context.dispatch('createTransaction')
+          // context.commit('CLEAR_CART')
+          // console.log('checked out');
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    createTransaction(context,payload) {
+      axios.post(`${baseUrlTransaction}`, {
+        products: context.state.carts,
+        totalPrice: context.state.totalPrice
+      },{
+        headers: {
+          'token':  localStorage.getItem('token')
+        }
+      })
+        .then(({data}) => {
+          context.commit('CLEAR_CART')
+          context.commit('CLEAR_TOTAL_PRICE')
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    transactionByUser(context,payload) {
+      axios.get(`${baseUrlTransaction}`, {
+        headers: {
+          'token': localStorage.getItem('token')
+        }
+      })
+        .then(({data}) => {
+          context.commit('TRANSACTION_LIST',data)
+          // console.log(data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    updateForm(context,payload) {
+      // console.log('asd')
+      // console.log(baseUrlShoes)
+      // console.log(context.state.shoe)
+      axios.patch(`http://localhost:3000/api/shoes/updateData/${context.state.shoe}`,{
+        quantity: payload.quantity,
+        price: payload.price,  
+      },{
+        headers: {
+          'token':  localStorage.getItem('token ')
+        }
+      })
+        .then((updatedData) => {
+          router.push('/shoes')
+          console.log(updatedData)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
-    
-
-
   }
 })

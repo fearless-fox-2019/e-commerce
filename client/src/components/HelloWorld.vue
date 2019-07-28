@@ -107,7 +107,7 @@
                         <div class="new-arrival-img mb-3">
                             <img src="images/shoes/shoe2.jpg" alt="">
                         </div>
-                        <a href="#">
+                        <a >
                             <span class="text-uppercase font-weight-bold">Nike Air Max</span>
                             <br>
                             <span>Shop Now</span>
@@ -117,7 +117,7 @@
                             <div class="new-arrival-img mb-3">
                                 <img src="images/shoes/shoe3.jpg" alt="">
                             </div>
-                            <a href="#">
+                            <a >
                                 <span class="text-uppercase font-weight-bold">Nike Air Max</span>
                                 <br>
                                 <span>Shop Now</span>
@@ -127,7 +127,7 @@
                                 <div class="new-arrival-img mb-3">
                                     <img src="images/shoes/shoe4.jpg" alt="">
                                 </div>
-                                <a href="#">
+                                <a>
                                     <span class="text-uppercase font-weight-bold">Nike Air Max</span>
                                     <br>
                                     <span>Shop Now</span>
@@ -137,7 +137,7 @@
                                     <div class="new-arrival-img mb-3">
                                         <img src="images/shoes/shoe5.jpg" alt="">
                                     </div>
-                                    <a href="#">
+                                    <a >
                                         <span class="text-uppercase font-weight-bold">Nike Air Max</span>
                                         <br>
                                         <span>Shop Now</span>

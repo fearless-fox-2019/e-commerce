@@ -65,9 +65,19 @@ class CartController {
       status: false
     }
     let updatedField = {
-      status: true
+      status: true,
+      checkoutDate: new Date()
     }
-    Cart.findOneAndUpdate(input,)
+    Cart.find(input)
+      .then((dataFound) =>  {
+        if(dataFound) {
+          return Cart.updateMany(input,updatedField)
+        }
+      })
+      .then(checkedOut => {
+        res.status(200).json(checkedOut)
+      })
+      .catch(next)
   }
 }
 

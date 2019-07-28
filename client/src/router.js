@@ -5,6 +5,7 @@ import Shoes from './views/Shoes.vue'
 import ProductInfo from './views/ProductInfo.vue'
 import Cart from './views/Cart.vue'
 import PaymentSummary from './components/paymentSummary.vue'
+import Transactions from './views/Transactions.vue'
 
 Vue.use(Router)
 
@@ -46,6 +47,11 @@ export default new Router({
           component: PaymentSummary
         }
       ]
+    },
+    {
+      path: '/transactions',
+      name: 'transaction',
+      component: Transactions
     }
   ]
 })

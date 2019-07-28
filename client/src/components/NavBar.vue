@@ -35,6 +35,13 @@
                       <a href="#" class="nav-link" v-if="!$store.state.isLogin" v-b-modal.registerForm>Register</a>
                   </li>
                   <li class="nav-item">
+                      <a href="#" class="nav-link" v-if="$store.state.isLogin">
+                          <router-link to="/transactions">
+                            Transactions
+                          </router-link>
+                          </a>
+                  </li>
+                  <li class="nav-item">
                       <a href="#" class="nav-link" v-if="$store.state.isLogin" @click.prevent="onSignOut" > Sign Out</a>
                   </li>
              </ul>
@@ -42,9 +49,12 @@
       </div>
       <div class="nav-icons-container d-flex justify-content-between">
           <div class="nav-icons">
-              <a class="" href="/shoes">
+              <a class="">
+                  <router-link to="/shoes">
+
                   <i class="fal fa-search text-clipped">
                   </i>
+                  </router-link>
               </a>
           </div>
           <div class="nav-icons ">
@@ -53,7 +63,7 @@
             </a>
           </div>
           <div class="nav-icons">
-              <a class="text-clipped" href="">
+              <a class="text-clipped">
                   <i class="fal fa-bars open-menu-icon text-clipped">
                   </i>
               </a>

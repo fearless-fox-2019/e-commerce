@@ -21,6 +21,7 @@ mongoose.connect('mongodb://localhost/ecommerce-' + process.env.NODE_ENV, {useNe
 const userRoutes = require('./routes/usersRoutes')
 const shoesRoutes = require('./routes/shoesRoutes')
 const cartRoutes = require('./routes/cartRoutes')
+const transactionRoutes = require('./routes/transactionRoutes')
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     console.log('masuk')
@@ -30,6 +31,7 @@ db.once('open', function() {
 app.use('/api/users',userRoutes)
 app.use('/api/shoes',shoesRoutes)
 app.use('/api/carts', cartRoutes)
+app.use('/api/transactions',transactionRoutes)
 
 
 

@@ -60,7 +60,17 @@ class ShoeController {
       .catch(next)
   }
 
-  
+  static updateShoe(req,res,next) {
+    let input = {
+      quantity: req.body.quantity,
+      price: req.body.price
+    }
+    Shoes.findByIdAndUpdate(req.params.id, input)
+      .then((data) => {
+        res.status(200).json(data)
+      })
+      .catch(next)
+  }
 }
 
 module.exports = ShoeController

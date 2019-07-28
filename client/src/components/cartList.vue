@@ -23,8 +23,10 @@
           </b-button>
         </div>
         </b-card-text>
-       
     </b-card>
+    <b-button class="float-right" @click="checkout">
+      Checkout
+    </b-button>
   </div>
   
 </template>
@@ -89,7 +91,12 @@ export default {
       })
       .then((result) => {
         if (result.value) {
-          axios.delete(`${baseUrl}/${id}`)
+          axios.delete(`${baseUrl}/${id}`,
+          {
+            headers: {
+              'token':  localStorage.getItem('token')
+            }
+          })
       .then((dataDeleted) => {
         this.deleteDataStore(id)
         this.$swal({
@@ -108,6 +115,9 @@ export default {
     deleteDataStore(id) {
       let index = this.carts.findIndex(cart => cart._id == id)
       this.carts.splice(index,1)
+    },
+    checkout() {
+      this.$store.dispatch('checkoutCart')
     }
   },
   computed: {

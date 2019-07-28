@@ -9,6 +9,8 @@
       </b-card-text>
       <b-card-text>
         Quantity: {{shoe.quantity}}
+        <br>
+        Price: ${{shoe.price}}.00
       </b-card-text>
       <b-card-footer class="d-flex" style="justify-content: space-between">
         <b-button variant="danger" v-if="$store.state.role == 'admin'">
@@ -18,7 +20,8 @@
           <i class="fas fa-shopping-cart" @click="addToCart">Add To Cart</i>
         </b-button>
          <b-button variant="primary" v-if="$store.state.role == 'admin'">
-          <i class="fas fa-shopping-cart" >Update</i>
+          <i class="fas fa-shopping-cart" @click="updateProduct(shoe._id)" v-b-modal.updateShoeForm >Update</i>
+          <updateShoeForm></updateShoeForm>
         </b-button>
       </b-card-footer>
     </b-card>
@@ -28,6 +31,7 @@
 <script>
 import axios from 'axios'
 import addShoeForm from '../components/addShoeForm'
+import updateShoeForm from  '../components/updateShoeForm'
 const baseUrl = `http://localhost:3000/api/shoes`
 export default {
   data () {
@@ -36,7 +40,8 @@ export default {
     }
   },
   components: {
-    addShoeForm
+    addShoeForm,
+    updateShoeForm
   },
   created () {
     this.getProductDetail()
@@ -51,6 +56,10 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    updateProduct(id) {
+      this.$store.commit('GET_SHOE_ID', id)
+      // this.getProductDetail()
     },
     addToCart () {
       if(this.$store.state.isLogin) {

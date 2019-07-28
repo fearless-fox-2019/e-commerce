@@ -33,11 +33,15 @@ export default {
       cartByUser() {
         this.$store.dispatch('cartUser')
         // console.log(this.$store.state.carts.data)
+      },
+      getTotalPrice() {
+        this.$store.dispatch('getTotal')
       }
 
     },
     created() {
       this.cartByUser()
+      this.getTotalPrice()
     }
 }
 </script>
