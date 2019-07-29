@@ -1,5 +1,7 @@
 const User = require('../models/user')
 const Helper = require('../helpers/helper')
+const {OAuth2Client} = require('google-auth-library')
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
 
 class UserController {
     static login(req, res){
@@ -133,7 +135,15 @@ class UserController {
                     id: newUser._id
                 });
 
-                res.status(200).json({access_token, userId : newUser._id, email: newUser.email, username: newUser.username})
+                res.status(200).json({ 
+                    access_token : access_token, 
+                    user : {
+                        _id : newUser._id,
+                        username : newUser.username,
+                        email : newUser.email,
+                        role : newUser.role
+                    }
+                })
             })
             .catch(next)
     }

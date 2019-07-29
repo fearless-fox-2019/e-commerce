@@ -8,9 +8,7 @@ const userSchema = new Schema({
         required: true,
         validate : {
             validator(value){
-                if(value.includes(' ')){
-                    throw "username can't contain space"
-                } else if(/[!@#$%^&*(),.?":{}|<>]/.test(value)){
+                if(/[!@#$%^&*(),.?":{}|<>]/.test(value)){
                     throw "username can't contain special characters"
                 }
             }

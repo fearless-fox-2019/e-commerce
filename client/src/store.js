@@ -50,6 +50,31 @@ export default new Vuex.Store({
 
   },
   actions: {
+    signInGoogle(context, payload){
+      return new Promise ((resolve, reject) => {
+        console.log('payload signin : ', payload);
+        axios({
+          method: 'POST',
+          url: '/user/googleLogin',
+          headers: {
+            access_token : payload
+          }
+        })
+          .then(({data}) => {
+            localStorage.setItem('access_token', data.access_token)
+            localStorage.setItem('role', data.user.role)
+            localStorage.setItem('userId', data.user._id)
+            localStorage.setItem('email', data.user.email)
+            context.commit('changeIsLogin', true)
+            resolve('welcome ', data.username)
+          })
+          .catch((err) => {
+            console.log('err: ini errornya', err.response.data.message);
+            context.commit('getError', err.response.data.message)
+            reject(err.response.data.message)
+          })
+      })
+    },
     signIn(context, payload){
       return new Promise ((resolve, reject) => {
         console.log('payload signin : ', payload);

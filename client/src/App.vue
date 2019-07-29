@@ -15,6 +15,14 @@
         <div id="navbarBasicExample" class="navbar navbar-end">
           <div class="navbar-end">
             <div class="navbar-item" v-if="!isLogin">
+              <!-- gsign in -->
+              <g-signin-button
+                :params="googleSignInParams"
+                @success="onSignInSuccess"
+                @error="onSignInError"
+              ><img src="https://image.flaticon.com/icons/svg/281/281781.svg" alt="" style="height:30px">
+              </g-signin-button>
+              <!-- gsign in -->
               <div class="buttons">
                 <a class="button is-danger" @click="goSignUp">
                   <strong>Sign up</strong>
@@ -25,12 +33,30 @@
             <div class="navbar-item" v-if="isLogin">
               <div class="buttons">
                 <b-field>
-                  <b-input v-model="search" placeholder="Search Products..." type="search" icon-pack="fas" icon="search" style="margin-right:30px; margin-bottom:-4px;" rounded></b-input>
-                
+                  <b-input
+                    v-model="search"
+                    placeholder="Search Products..."
+                    type="search"
+                    icon-pack="fas"
+                    icon="search"
+                    style="margin-right:30px; margin-bottom:-4px;"
+                    rounded
+                  ></b-input>
                 </b-field>
-                <button v-if="!isAdmin" class="button has-badge-primary has-badge-rounded" @click="getCart" :data-badge="myCart.length"><i class="fas fa-shopping-cart"></i></button>
-                <a v-if="isAdmin" class="button is-light" @click="addProducts"><strong>+Product</strong></a>
-                <a class="button is-danger" @click.prevent="$store.dispatch('logout')"><strong>Log Out</strong></a>
+                <button
+                  v-if="!isAdmin"
+                  class="button has-badge-primary has-badge-rounded"
+                  @click="getCart"
+                  :data-badge="myCart.length"
+                >
+                  <i class="fas fa-shopping-cart"></i>
+                </button>
+                <a v-if="isAdmin" class="button is-light" @click="addProducts">
+                  <strong>+Product</strong>
+                </a>
+                <a class="button is-danger" @click.prevent="$store.dispatch('logout')">
+                  <strong>Log Out</strong>
+                </a>
               </div>
             </div>
           </div>
@@ -44,7 +70,7 @@
             <slide id="slide2"></slide>
             <slide id="slide3"></slide>
             <slide id="slide4"></slide>
-          </hooper> -->
+          </hooper>-->
         </div>
       </section>
     </div>
@@ -61,7 +87,12 @@
         <p v-if="isError" style="color:red">{{isError}}</p>
       </modal>
     </b-modal>
-    <router-view @onEdit="onEdit" v-if="isLogin" :search="search" :isComponentModalActive="isComponentModalActive"/>
+    <router-view
+      @onEdit="onEdit"
+      v-if="isLogin"
+      :search="search"
+      :isComponentModalActive="isComponentModalActive"
+    />
   </div>
 </template>
 
@@ -77,16 +108,17 @@ export default {
     Slide,
     modal
   },
-  created(){
-
-  },
+  created() {},
   computed: {
     ...mapState(["isLogin", "isAdmin", "isError", "myCart"])
   },
   data() {
     return {
+      googleSignInParams: {
+        client_id: '379982264831-felr8s22ploj5a6ggprv9v2gh6edf7p0.apps.googleusercontent.com'
+      },
       editProduct: {},
-      search: '',
+      search: "",
       form: {
         username: "",
         email: "",
@@ -100,41 +132,59 @@ export default {
   },
 
   methods: {
-    onEdit(value){
-      this.editProduct = value
+     onSignInSuccess (googleUser) {
+      // `googleUser` is the GoogleUser object that represents the just-signed-in user.
+      // See https://developers.google.com/identity/sign-in/web/reference#users
+      console.log('triggered');
+      const profile = googleUser.getBasicProfile() // etc etc
+      var id_token = googleUser.getAuthResponse().id_token;
+      this.$store.dispatch('signInGoogle', id_token)
+        .then(data => {
+          console.log("data: ", data);
+          this.$toast.open('success login')
+        })
+        .catch(err => {});
+
+    },
+    onSignInError (error) {
+      // `error` contains any error occurred.
+      console.log('OH NOES', error)
+    },
+    onEdit(value) {
+      this.editProduct = value;
       this.$store.commit("getError", "");
       this.isFormSignIn = false;
       this.isFormSignUp = false;
-      this.isFormProducts = false
+      this.isFormProducts = false;
       this.isComponentModalActive = true;
     },
     goSignIn() {
-      console.log('sigin');
+      console.log("sigin");
       this.$store.commit("getError", "");
       this.isComponentModalActive = true;
       this.isFormSignIn = true;
       this.isFormSignUp = false;
-      this.isFormProducts = false
+      this.isFormProducts = false;
     },
     goSignUp() {
-      console.log('sigup');
+      console.log("sigup");
       this.$store.commit("getError", "");
       this.isError = "";
       this.isComponentModalActive = true;
       this.isFormSignIn = false;
       this.isFormSignUp = true;
-      this.isFormProducts = false
+      this.isFormProducts = false;
     },
-    addProducts(){
+    addProducts() {
       this.$store.commit("getError", "");
       this.isError = "";
       this.isComponentModalActive = true;
       this.isFormSignIn = false;
       this.isFormSignUp = false;
-      this.isFormProducts = true
+      this.isFormProducts = true;
     },
-    getCart(){
-      this.$router.push('/myCart')
+    getCart() {
+      this.$router.push("/myCart");
     }
   }
 };
@@ -158,7 +208,7 @@ export default {
 }
 #nav {
   width: 100vw;
-  margin-top:5px;
+  margin-top: 5px;
   padding: 30px;
 }
 
@@ -194,24 +244,17 @@ export default {
   /* border:1px black solid;  */
   height: 100%;
 }
-#slide2 {
-  background-image: url("https://www.starweddings.gr/wp-content/uploads/2018/11/slider04.jpg");
-  background-position-y: 70%;
-  background-size: cover;
-}
-#slide1 {
-  background-image: url("https://i.pinimg.com/originals/ec/af/f1/ecaff1f358fe2988c17a6c5b3acb5989.jpg");
-  background-position-y: 70%;
-  background-size: cover;
-}
-#slide3 {
-  background-image: url("https://d2v9y0dukr6mq2.cloudfront.net/video/thumbnail/H-WsQJsXiovachyc/wedding-shoes-and-wedding-bouquet-wedding-attributes_rvustsch__F0000.png");
-  background-position-y: 30%;
-  background-size: cover;
-}
-#slide4 {
-  background-image: url("https://www.pamperhampergifts.com.au/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/p/a/pamper_hamper_gifts_beverly_hills_spa_pamper_hamper.jpg");
-  background-position: 50%;
-  background-repeat: no-repeat;
+.g-signin-button {
+  /* This is where you control how the button looks. Be creative! */
+  display: flex;
+  /* padding: 4px 8px; */
+  padding: 2px;;
+  border-radius: 3px;
+  background-color: #353941;
+  color: #fff;
+  box-shadow: 0 3px 0 #2f3541;
+  margin-right: 8px;
+  margin-top: -3px;
+  cursor: pointer;
 }
 </style>
