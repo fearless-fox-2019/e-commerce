@@ -71,7 +71,7 @@ export default {
         .then(({ data }) => {
           console.log(data);
           this.$store.commit("SET_EMPTY_CART");
-          this.$router.push("/");
+          this.$router.push("/cart");
         })
         .catch(({ response }) => {
           console.log(response);
