@@ -16,7 +16,7 @@
                 <span style="margin-left: 10px">{{ scope.$index+1 }}</span>
               </template>
             </el-table-column>
-            <el-table-column prop="it.image" label="Image" width="120">
+            <el-table-column prop="it.image" label="Image" width="100">
               <template slot-scope="scope">
                 <img class="rowImage" :src="scope.row.image" alt />
               </template>

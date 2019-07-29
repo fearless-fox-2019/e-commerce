@@ -17,7 +17,7 @@ export default {
 
 <style>
 html{
-  background-color: yellowgreen;
+  background-color: #FFFCF2;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

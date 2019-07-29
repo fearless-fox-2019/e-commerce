@@ -27,14 +27,22 @@ export default {
   methods: {
     addToCard() {
       this.$store.dispatch("addToCart", this.forCard._id);
-          this.$store.dispatch("fetchItem");
+      this.$message({
+        message: "Added to cart",
+        type: "success"
+      });
+      this.$store.dispatch("fetchItem");
     },
     addToWishlist() {
       this.$store.dispatch("addToWishlist", this.forCard._id);
-          this.$store.dispatch("fetchItem");
+      this.$message({
+        message: "Added to wishlist",
+        type: "success"
+      });
+      this.$store.dispatch("fetchItem");
     },
-    detailItem(){
-      this.$router.push(`/product/${this.forCard._id}`)
+    detailItem() {
+      this.$router.push(`/product/${this.forCard._id}`);
     }
   }
 };

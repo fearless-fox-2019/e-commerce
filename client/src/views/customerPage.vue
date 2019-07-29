@@ -12,7 +12,7 @@
           <div class="data">
             <p>{{this.$store.state.logedUser.username}}</p>
             <p>{{this.$store.state.logedUser.email}}</p>
-            <p>{{this.$store.state.logedUser.createdAt}}</p>
+            <p>{{this.$store.state.logedUser.createdAt  | moment("MMMM Do YYYY") }}</p>
           </div>
         </div>
       </el-col>
@@ -21,7 +21,6 @@
           <el-row>
             <el-col :span="24" class="righttop">
               <div class="grid-content bg-purple">
-                <!-- 2.1.1 -->
                 <el-link class="righttopmenu" type="primary" @click="changeTab('wishlist')">Wishlist</el-link>
                 <el-link class="righttopmenu" type="primary" @click="changeTab('cart')">Cart</el-link>
                 <el-link

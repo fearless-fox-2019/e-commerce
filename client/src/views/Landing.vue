@@ -1,6 +1,6 @@
 <template>
   <el-container class="landing">
-    <el-header height="50px">
+    <el-header height="80px">
       <navbar />
     </el-header>
     <el-main>
@@ -101,9 +101,9 @@ export default {
   align-items: center;
   margin: 10px 10px 30px 13px;
 }
-.el-header {
+/* .el-header {
   margin-bottom: 5px;
-}
+} */
 .categorytitle {
   cursor: pointer;
 }

@@ -147,7 +147,7 @@ export default new Vuex.Store({
             url: '/users/signin',
             method: 'POST',
             data: {
-              email: payload.email,
+              ue: payload.email,
               password: payload.password
             }
           })
@@ -155,7 +155,7 @@ export default new Vuex.Store({
         .then(({data}) => {
           console.log(data, 'eh berhasil login')
           localStorage.setItem('token', data)
-          commit(changeStatus, true)
+          commit('changeStatus', true)
         })
         .catch(err => {
           console.log(err, 'ini errornya')
@@ -354,6 +354,7 @@ export default new Vuex.Store({
       })
       .then(({data})=> {
         console.log(data,'berhasil dihilangkan')
+        this.fetchItem()
       }).catch(err => console.log(err, 'ini errornya'))
     },
     checkoutItem({commit,state},payload){

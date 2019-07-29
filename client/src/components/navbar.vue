@@ -29,7 +29,7 @@
               <span style="margin-left: 10px">{{ scope.$index+1 }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="Image" width="80px">
+          <el-table-column label="Image" width="70px">
             <template slot-scope="scope">
               <img class="rowImage" :src="scope.row.image" alt />
             </template>
@@ -121,14 +121,16 @@ export default {
 @import url("https://fonts.googleapis.com/css?family=Viga&display=swap");
 
 .rowImage {
-  max-width: 20px;
+  max-width: 35px;
   height: auto;
 }
 .navbar {
+  /* background-color: #403D39; */
+  color: #403D39;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 10px auto;
+  /* padding: 10px auto; */
 }
 .login-register-button {
   display: flex;
