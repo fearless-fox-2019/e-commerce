@@ -132,6 +132,13 @@ export default {
   },
   created() {
     this.isLoading = true;
+    if(localStorage.getItem('role') === 'customer'){
+      this.$store
+        .dispatch("getMyCart", localStorage.getItem("userId"))
+        .then(() => {
+          this.$emit("myCart", this.myCart);
+        });
+    }
     this.$store
       .dispatch("getProducts", "")
       .then(() => {
@@ -139,11 +146,6 @@ export default {
         console.log("get data of allProducts");
       })
       .catch(err => console.log(err));
-    this.$store
-      .dispatch("getMyCart", localStorage.getItem("userId"))
-      .then(() => {
-        this.$emit("myCart", this.myCart);
-      });
   }
 };
 </script>

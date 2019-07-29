@@ -64,12 +64,25 @@
               {{total}}
               <br />
               <br />
-              <button @click="createTrans" class="button is-success">PAY NOW</button>
-              <input type="text" v-model="form.emailTo" placeholder="email" />
-              <input type="text" v-model="form.phoneTo" placeholder="phone" />
-              <input type="text" v-model="form.deliveryTo" placeholder="delivery" />
+              <!-- <button @click="createTrans" class="button is-success">PAY NOW</button> -->
             </p>
           </div>
+          <hr>
+          <h3 style="float:left; font-size:30px"><b>Payment Form </b><small style="font-size:15px; color:red">required</small></h3>
+            <div id="formPayment">
+              <form>
+                <b-field label="Email">
+                  <b-input type="email" v-model="form.emailTo" placeholder="email" validate required></b-input>
+                </b-field>
+                <b-field label="Phone Number">
+                  <b-input type="text" v-model="form.phoneTo" placeholder="phone" required></b-input>
+                </b-field>
+                <b-field label="Delivery To">
+                  <b-input type="text" v-model="form.deliveryTo" placeholder="delivery" required></b-input>
+                </b-field>
+                <button type="submit" class="button is-success">PAY NOW</button>
+              </form>
+            </div>
         </b-tab-item>
         <b-tab-item label="My Transaction">
           <transaction></transaction>
@@ -170,9 +183,21 @@ export default {
         this.total += el.subTotal;
       });
     }
+  },
+  created(){
+    if(localStorage.getItem('email')) this.form.emailTo = localStorage.getItem('email')
+    if(localStorage.getItem('role') === 'admin') this.$router.push('/')
   }
 };
 </script>
 
 <style>
+#formPayment{
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+}
+#formPayment .submit{
+  background-color: goldenrod;
+}
 </style>

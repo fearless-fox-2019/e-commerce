@@ -225,9 +225,11 @@ export default {
   methods: {
     submit() {
       if (this.isFormProducts) {
+        console.log('loading create product');
         this.$store
           .dispatch("addProduct", this.formProducts)
           .then(data => {
+            console.log('success create product');
             console.log("data: ", data);
             this.$toast.open('success add product')
             this.$emit("isAddProduct", false);
