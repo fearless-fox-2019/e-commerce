@@ -4,13 +4,13 @@
       <h1 id="logo">Abang Toys</h1>
     </div>
     <router-link to="/" class="item">Shop</router-link>
-    <router-link to="/add-product" class="item" v-show="role">Add Product</router-link>
+    <router-link to="/add-product" class="item" v-if="role">Add Product</router-link>
     <div class="right item">
-      <router-link to="/cart" class="ui icon item" v-show="!role">
+      <router-link to="/cart" class="ui icon item" v-if="!role">
         <i class="shopping bag icon"></i>
         <div class="right floating ui olive circular label" v-show="totalItems">{{ totalItems }}</div>
       </router-link>
-      <router-link to="/transactions" class="ui icon item" v-show="role">
+      <router-link to="/transactions" class="ui icon item" v-if="role">
         <i class="cash register icon"></i>
       </router-link>
       <router-link to="/login" class="item" v-show="!isLogin">Login</router-link>
@@ -24,13 +24,9 @@ export default {
   name: "Navbar",
   props: {
     isLogin: Boolean,
-    totalItems: Number
+    totalItems: Number,
+    role: Boolean
   },
-  computed: {
-    role() {
-      return localStorage.getItem('email') == 'admin@mail.com'
-    }
-  }
 };
 </script>
 

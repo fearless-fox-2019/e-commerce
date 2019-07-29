@@ -2,6 +2,7 @@
   <div id="app">
     <Navbar
         :is-login="isLogin"
+        :role="role"
         :total-items="totalItems"
         @logout="logout"
         />
@@ -46,6 +47,7 @@ export default {
             email: '',
             password: '',
             errMsg: '',
+            role: localStorage.getItem('email', 'admin@mail.com') ? true : false,
         }
     },
     computed: {
@@ -133,6 +135,7 @@ export default {
                 this.cart = []
                 this.transactions = []
                 this.$router.push('/')
+                this.role= false
                 swal("See You Later!", {
                   icon: "success",
                 });
@@ -155,6 +158,9 @@ export default {
                     this.$router.push('/')
                     localStorage.setItem('accesstoken', data.accesstoken)
                     localStorage.setItem('email', this.email)
+                    if(localStorage.getItem('email', 'admin@mail.com')){
+                        this.role = true
+                    }
                     this.clearForm()
                     this.fetchProducts();
                     this.fetchCart();
