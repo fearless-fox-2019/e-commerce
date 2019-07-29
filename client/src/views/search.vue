@@ -1,0 +1,33 @@
+<template>
+  <div>
+    <h3>search result by '{{this.$store.state.searchquery}}'</h3>
+    <!-- {{this.$store.state.searchitem}} -->
+    <div class="card-loop">
+      <card v-for="(item,i) in $store.state.searchitem" :forCard="item" :key="i" />
+    </div>
+  </div>
+</template>
+
+<script>
+import card from "@/components/card.vue";
+export default {
+  components: {
+    card
+  },
+  created() {
+    // this.$store.dispatch("fetchItem");
+    // this.$store.dispatch("whoami");
+  }
+};
+</script>
+
+<style scoped>
+.card-loop {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: center;
+  align-items: center;
+  margin: 10px 10px 30px 13px;
+}
+</style>
