@@ -40,7 +40,8 @@ export default {
     name: 'TransactionTable',
     data() {
         return {
-            transactions: []
+            transactions: [],
+            totalPrice: '',
         }
     },
     created() {
@@ -64,6 +65,7 @@ export default {
                     }
                 })
                 .then(({ data }) => {
+                    console.log(data)
                     let arr = []
                     this.transactions = data
                 })
