@@ -45,7 +45,6 @@ export default {
   props: ["cart"],
   data() {
     return {
-      link : `cart/${cart.GameId._id}`,
       snackbar: false,
       status: "",
       alertMessage: "",

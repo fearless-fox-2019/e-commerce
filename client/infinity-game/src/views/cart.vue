@@ -4,13 +4,13 @@
       <div id="cards">
         <v-layout row wrap>
           <v-flex id="payment">
-            <paymentSummary />
+            <v-btn to="/cart/payment" flat>PAYMENT SUMMARY</v-btn>
+            <router-view></router-view>
           </v-flex>
           <v-layout align-center column fill-height>
             <v-flex class="pa-2" v-for="cart in $store.state.cartList" :key="cart._id">
               <cartGames :cart="cart" style="margin-left : 25vh; " />
             </v-flex>
-            <v-btn></v-btn>
           </v-layout>
         </v-layout>
       </div>
@@ -20,11 +20,9 @@
 
 <script>
 import cartGames from "../components/cart-games";
-import paymentSummary from "../components/paymentSummary";
 export default {
   name: "cart",
   components: {
-    paymentSummary,
     cartGames
   },
   data() {
