@@ -2,9 +2,9 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Products</router-link> |
-      <router-link to="/cart" v-if="$store.state.isLogin"> Cart</router-link> <a v-if="$store.state.isLogin"> | </a> 
-      <router-link to="/transaction" v-if="$store.state.isLogin"> Transaction</router-link> <a v-if="$store.state.isLogin"> | </a> 
-      <a class="pointer" data-toggle="modal" data-target="#balanceModal" v-if="$store.state.isLogin"> Topup </a> <a v-if="$store.state.isLogin"> | </a> 
+      <router-link to="/cart" v-if="$store.state.isLogin && !$store.state.isAdmin"> Cart</router-link> <a v-if="$store.state.isLogin && !$store.state.isAdmin"> | </a> 
+      <router-link to="/transaction" v-if="$store.state.isLogin && !$store.state.isAdmin"> Transaction</router-link> <a v-if="$store.state.isLogin && !$store.state.isAdmin"> | </a> 
+      <a class="pointer" data-toggle="modal" data-target="#balanceModal" v-if="$store.state.isLogin && !$store.state.isAdmin"> Topup </a> <a v-if="$store.state.isLogin && !$store.state.isAdmin"> | </a> 
       <router-link to="/admin" v-if="$store.state.isAdmin"> Admin </router-link> <a v-if="$store.state.isAdmin"> | </a> 
       <a class="pointer" data-toggle="modal" data-target="#signinModal" v-if="!$store.state.isLogin"> Signin </a>
       <a class="pointer" @click="signout" v-else> Signout </a>

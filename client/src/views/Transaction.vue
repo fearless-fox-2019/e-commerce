@@ -36,6 +36,7 @@ export default {
   name: 'Transaction',
   created () {
     this.$store.commit('checkLogin')
+    this.$store.commit('emptyState')
     this.$store.dispatch('retrieveProduct')
     this.$store.dispatch('retrieveTrx')
     this.$store.dispatch('retrieveReceived')

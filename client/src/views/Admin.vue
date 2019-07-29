@@ -3,7 +3,7 @@
         <div class="row">
             <!-- ADD PRODUCT -->
             <div class="col-6" style="border: solid 1px black;" v-if="editClicked === false">
-                <h2 style="margin: 2%" >Add Product </h2>                     
+                <h2 style="margin: 1%" >Add Product </h2>                     
                 <div class="col-12 collapse show" style="color: #343A40;">
                     <form @submit.prevent="addProduct">
                         <div class="form-group row">
@@ -35,7 +35,7 @@
             </div>
             <!-- EDIT PRODUCT -->
             <div class="col-6" style="border: solid 1px black;" v-if="editClicked === true">         
-                <h2 style="margin: 2%">Edit Product </h2>            
+                <h2 style="margin: 1%">Edit Product </h2>            
                 <div class="col-12 collapse show" style="color: #343A40;">
                     <form @submit.prevent="submitEdit(product._id)">
                         <div class="form-group row">
@@ -68,12 +68,12 @@
             </div>
             <!-- PRODUCT LIST -->
             <div class="col-6" style="border: solid 1px black;">
-                <h2 style="margin:1%;">Product List</h2>
+                <h2 style="margin: 1%;">Product List</h2>
                 <form>
                     <input type="text" class="form-control" placeholder="Search Product Here" style="width:100%">
                 </form>
-                <div class="row" style="max-height: 300px; overflow: auto; margin-top: 2%;">
-                    <div style="margin: 1%;" class="col-10" row align-center v-for="(product, index) in this.$store.state.products" :key="index">
+                <div class="row" style="max-height: 280px; overflow: auto; margin-top: 2%;">
+                    <div style="margin: 1%;" class="col-10" row align-center v-for="(product, index) in $store.state.products" :key="index">
                         <cartAdmin :data="product" v-bind:edit="editProduct" v-bind:remove="deleteProduct"/>
                     </div>
                 </div>
@@ -81,8 +81,8 @@
         </div>
         <!-- Transaction List -->
         <div class="row">
-            <div class="col-12" style="border: solid 1px black;">
-                <h2 style="margin-left: 1%">Transaction List</h2> 
+            <h2 style="margin-left: 1%">Transaction List</h2> 
+            <div class="col-12" style="max-height: 270px; overflow: auto;">
                 <div v-for="(cart, index) in $store.state.allTrx" :key="index"> 
                     <card :data="cart" />
                 </div>
@@ -100,6 +100,7 @@ export default {
     data() {
         return {
             editClicked: false,
+            products: [],
             product: {
                 img: '',
                 name: '',
@@ -108,6 +109,7 @@ export default {
                 stock: 0,
                 hotProducts: false
             },
+            
             baseUrl: 'http://localhost:3000',
         }
     },
@@ -116,6 +118,7 @@ export default {
       card
     },
     created() {
+        this.$store.commit('emptyState')
         this.$store.dispatch('retrieveProduct')
         this.$store.dispatch('getAllTrx')
     },
@@ -129,14 +132,10 @@ export default {
             this.editClicked = false
         },
         getDataImage(event) {
-            if (this.editClicked = false) {
+            if (!this.editClicked) {
                 this.product.img = event.target.files[0]  
-            } else {
-                if (event.target.files[0]) {
-                    this.product.img = event.target.files[0]  
-                } else {
-                    this.product.img = this.product.img
-                }
+            } else if (this.editClicked) {
+                if (event.target.files[0]) this.product.img = event.target.files[0]  
             }
         },
         addProduct() {
@@ -156,7 +155,7 @@ export default {
             })            
             .then(({data}) => {
                 // this.$store.state.products = []
-                this.retrieveProduct()
+                this.$store.dispatch('retrieveProduct')
                 this.product.img = ""
                 this.product.name = ""
                 this.product.description = ""  
@@ -224,7 +223,7 @@ export default {
                                 confirmButtonText: 'Ok'
                             })
                         })
-                    } else {
+                    } else if (typeof(this.product.img) === 'string') {
                         let obj = {
                             img: this.product.img,
                             name: this.product.name,
@@ -242,7 +241,6 @@ export default {
                             }
                         })   
                         .then(({data}) => {
-                            // this.$store.state.products = []
                             this.$store.dispatch('retrieveProduct')
                             Swal.fire({
                                 title: 'Success edit product!',
@@ -281,7 +279,7 @@ export default {
                     })            
                     .then(({data}) => {
                         // this.$store.state.products = []
-                        this.retrieveProduct()
+                        this.$store.dispatch('retrieveProduct')
                         Swal.fire(
                             'Deleted!',
                             'Your Product has been deleted.',

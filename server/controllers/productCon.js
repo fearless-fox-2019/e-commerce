@@ -41,18 +41,14 @@ class ProductController {
             price: req.body.price,
             stock: req.body.stock,
         }
-        Product.findOne({_id : req.params.id})
+        Product.findByIdAndUpdate(req.params.id, obj)
         .then(data => {
             if (!data) {
                 res.status(404).json({ message: 'Not Found' })
             } else {
-                data.set(obj)
-                return data.save()
+                res.status(200).json(data)
             }
         }) 
-        .then(data =>{
-            res.status(200).json(data)
-        })
         .catch(next)
     }
 
@@ -64,18 +60,14 @@ class ProductController {
             price: req.body.price,
             stock: req.body.stock,
         }
-        Product.findOne({_id : req.params.id})
+        Product.findByIdAndUpdate(req.params.id, obj)
         .then(data => {
             if (!data) {
                 res.status(404).json({ message: 'Not Found' })
             } else {
-                data.set(obj)
-                return data.save()
+                res.status(200).json(data)
             }
         }) 
-        .then(data =>{
-            res.status(200).json(data)
-        })
         .catch(next)
     }
 

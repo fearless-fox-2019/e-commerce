@@ -5,7 +5,7 @@
         <div class="card-body" style="margin-top: -5%">
         <h4 class="card-title">{{data.name}}</h4>
         <p class="card-text text-truncate">{{data.description}}</p>
-        <a href="/" class="btn btn-dark" style="width:100%" @click="addCart(data)">Add to Cart</a>
+        <a href="/" class="btn btn-dark" style="width:100%" @click="addCart(data)" v-if="!$store.state.isAdmin">Add to Cart</a>
         </div>
     </div>
 </template>

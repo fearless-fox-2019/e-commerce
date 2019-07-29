@@ -27,7 +27,7 @@ Router.patch('/updatestock/:id', productController.updateStock)
 Router.use(Authentication)
 Router.post('/', AdminAuthorization, multer.single('img'), uploadToGCS, productController.create)
 Router.patch('/image/:id', AdminAuthorization, multer.single('img'), uploadToGCS, productController.updateImage)
-Router.patch('/woimage/:id', AdminAuthorization, productController.updateImage)
+Router.patch('/woimage/:id', AdminAuthorization, productController.updateWOImage)
 Router.delete('/:id', AdminAuthorization, productController.delete)
 
 module.exports = Router;

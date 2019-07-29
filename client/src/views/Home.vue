@@ -16,6 +16,7 @@ export default {
     card
   },
   created () {
+    this.$store.commit('emptyState')
     this.$store.dispatch('retrieveProduct')
     this.$store.dispatch('retrieveCart')
   },

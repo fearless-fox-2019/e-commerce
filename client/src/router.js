@@ -40,7 +40,7 @@ router.beforeEach((to, from, next) => {
     }
   }
   if (to.fullPath === '/admin') {
-    if (!store.state.admin) {
+    if (!store.state.isAdmin) {
       next('/')
     }
   }

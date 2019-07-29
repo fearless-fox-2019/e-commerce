@@ -44,6 +44,11 @@ export default new Vuex.Store({
     retrieveAllTrx(state, data) {
       state.allTrx.push(data)
     },
+    emptyState(state) {
+      state.transaction = []
+      state.received = []
+      state.allTrx = []
+    }
   },
   actions: {
     retrieveProduct ({ commit }) {

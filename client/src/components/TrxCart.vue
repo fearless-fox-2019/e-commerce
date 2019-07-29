@@ -13,6 +13,8 @@
               <h5 style="margin-top: 2%;">{{data.totalPayment}} </h5>
             </div>
             <h5 class="col-2 pointer" style="margin-top: 2.5%; color: #5A9CD9; margin-top: 1.5%;" v-if="data.status == 'Paid' && !$store.state.isAdmin" @click="receive(data._id)"> Confirmation Receive </h5>
+            <h5 class="col-2 pointer" style="margin-top: 2.5%; color: #5A9CD9; margin-top: 1.5%;" v-if="data.status == 'Paid' && $store.state.isAdmin"> Paid </h5>
+            <h5 class="col-2 pointer" style="margin-top: 2.5%; color: #5A9CD9; margin-top: 1.5%;" v-if="data.status == 'Received' && $store.state.isAdmin"> Received </h5>
         </div>
     </div>
 </template>
