@@ -177,3 +177,53 @@ Request Body :
 }
 ```
 
+***
+
+## CART
+
+* ### POST **/carts**
+
+Request Headers : 
+
+```js
+{
+    "token": "ABCDEFG"
+}
+```
+
+Request Body : 
+
+```js
+{
+    "itemId": "abcdefg",
+    "quantity": 2
+}
+```
+
+Response : 
+
+```js
+{
+    "message": "succeed",
+    "id": "abcdefg"
+}
+```
+
+* ### DELETE **/carts/:id**
+
+Request Headers : 
+
+```js
+{
+    "token": "ABCDEFG"
+}
+```
+
+Response : 
+
+```js
+{
+    "message": "succeed",
+    "id": "abcdefg"
+}
+```
