@@ -10,6 +10,7 @@
             <v-flex class="pa-2" v-for="cart in $store.state.cartList" :key="cart._id">
               <cartGames :cart="cart" style="margin-left : 25vh; " />
             </v-flex>
+            <v-btn></v-btn>
           </v-layout>
         </v-layout>
       </div>
