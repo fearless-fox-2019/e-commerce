@@ -3,6 +3,17 @@
     <router-view/>
   </div>
 </template>
+<script>
+export default {
+  creted(){
+    if (localStorage.getItem("token")) {
+      this.$store.dispatch("whoami");
+      this.$store.commit("changeStatus",true)
+    }
+  }
+}
+</script>
+
 
 <style>
 html{

@@ -13,6 +13,9 @@ router.post('/signin/google', userController.googleSignin)
 router.use('/', authentication)
 
 router.get('/whoami', userController.whoami)
-router.patch('/addWishlist/:userId', userController.addWishlist)
+router.patch('/addWishlist/:itemId', userController.addWishlist)
+router.patch('/removeFromWishlist/:itemId', userController.removeFromWishlist)
+router.patch('/addToCart/:itemId', userController.addToCart)
+router.patch('/removeFromCart/:itemId', userController.removeFromCart)
 
 module.exports = router

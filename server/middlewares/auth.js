@@ -8,7 +8,6 @@ const transactionModel = require('../models/transactionModel')
 module.exports = {
     authentication: function (req, res, next) {
         let token = req.headers.token
-
         if (!token) {
             throw ({
                 code: 400,
@@ -21,6 +20,7 @@ module.exports = {
                     email: decode.email
                 })
                 .then((found) => {
+
                     let decode = verify(token)
                     req.decode = decode
                     req.logedUser = found
@@ -34,13 +34,34 @@ module.exports = {
                 })
         }
     },
-    authorization: function (req, res, next) {
+    sent_authorization: function (req, res, next) {
         let userId = req.logedUser._id
 
         userModel
             .findById(userId)
             .then(foundUser => {
                 console.log(foundUser)
+                return transactionModel
+                    .findById(req.params.transactionId)
+            })
+            .then(foundTransaction => {
+                console.log(foundTransaction)
+                if(userId === foundTransaction.userId){
+                    throw({
+                        code: 401,
+                        message: `Ooops, youre not user who order this item`
+                    })
+                }
+                next()
+            })
+            .catch(next)
+    },
+    admin_authorization: function(req,res,next){
+        let userId = req.logedUser._id
+
+        userModel
+            .findById(userId)
+            .then(foundUser => {
                 if (foundUser.role !== 'admin') {
                     throw ({
                         code: 401,
@@ -48,7 +69,6 @@ module.exports = {
                     })
                 }
                 next()
-            })
-            .catch(next)
+            }).catch(next)
     }
 }

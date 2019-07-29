@@ -11,8 +11,11 @@
         <el-row :gutter="10">
           <el-col :span="4">
             <div class="mainContent main-left">
-              <h3>Category</h3>
-              <accordion />
+              <h3 @click="productPage" class="categorytitle">Category</h3>
+              <div v-for="(category,i) in this.$store.getters.category" :key="i">
+                <span @click="searchbycategory(category)" class="categoryitem">{{category}}</span>
+                <hr />
+              </div>
             </div>
           </el-col>
           <el-col :span="16">
@@ -23,7 +26,7 @@
                     <card v-for="(item,i) in $store.state.allItem" :forCard="item" :key="i" />
                   </div>
                 </el-tab-pane>
-                <el-tab-pane label="Pre-order-Item" name="Pre-order">Pre-order-Item </el-tab-pane>
+                <el-tab-pane label="Pre-order-Item" name="Pre-order">Pre-order-Item</el-tab-pane>
                 <el-tab-pane label="Sale" name="Sale">Sale</el-tab-pane>
               </el-tabs>
             </div>
@@ -31,7 +34,7 @@
           <el-col :span="4">
             <div class="mainContent main-right">
               <h3>News</h3>
-              <!-- {{}} -->
+              {{this.$store.state.logedUser.username}}
             </div>
           </el-col>
         </el-row>
@@ -59,18 +62,27 @@ export default {
     accordion,
     footerlanding
   },
-  data(){
-    return{
-      activeName: 'first'
-    }
+  data() {
+    return {
+      activeName: "first"
+    };
   },
   methods: {
-    handleClick(tab,event){
-
+    handleClick(tab, event) {},
+    productPage() {
+      this.$router.push("/product");
+    },
+    searchbycategory(category){
+     console.log('mencari berdasarkan category ni==>',category) 
+     this.$store.dispatch('searchbycategory',category)
     }
   },
   created() {
     this.$store.dispatch("fetchItem");
+    if (localStorage.getItem("token")) {
+      this.$store.dispatch("whoami");
+      this.$store.commit("changeStatus", true);
+    }
   }
 };
 </script>
@@ -91,6 +103,12 @@ export default {
 }
 .el-header {
   margin-bottom: 5px;
+}
+.categorytitle {
+  cursor: pointer;
+}
+.categoryitem{
+  cursor: pointer;
 }
 </style>
 
