@@ -27,6 +27,7 @@ export default {
   methods: {
     addToCard() {
       this.$store.dispatch("addToCart", this.forCard._id);
+<<<<<<< HEAD
       this.$message({
         message: "Added to cart",
         type: "success"
@@ -43,6 +44,16 @@ export default {
     },
     detailItem() {
       this.$router.push(`/product/${this.forCard._id}`);
+=======
+          this.$store.dispatch("fetchItem");
+    },
+    addToWishlist() {
+      this.$store.dispatch("addToWishlist", this.forCard._id);
+          this.$store.dispatch("fetchItem");
+    },
+    detailItem(){
+      this.$router.push(`/product/${this.forCard._id}`)
+>>>>>>> 2498bc3e744f742d28bb009f300e873a16168112
     }
   }
 };

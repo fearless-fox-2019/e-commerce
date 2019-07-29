@@ -110,5 +110,11 @@ export default {
 .categoryitem{
   cursor: pointer;
 }
+.categorytitle {
+  cursor: pointer;
+}
+.categoryitem{
+  cursor: pointer;
+}
 </style>
 

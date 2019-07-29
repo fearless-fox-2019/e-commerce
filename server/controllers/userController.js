@@ -47,14 +47,12 @@ class UserController {
             res.status(200).json({
             token})
           } else {
-            console.log('salahnya tuh disini')
             throw ({
               code: 404,
               message: `invalid username / email / password`
             })
           }
         } else {
-          console.log('=-=-=-=-=-=-=-  eh disini ternyata')
           throw ({
             code: 404,
             message: `invalid username / email / password`

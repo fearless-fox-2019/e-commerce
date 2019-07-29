@@ -4,7 +4,11 @@
     {{this.$store.state.logedUser.cart}}-->
     <div class="top">
       <h1>My Cart</h1>
+<<<<<<< HEAD
       <el-button type="primary" @click="dialogFormVisible = true" v-if="myCart.length !== 0">Checkout</el-button>
+=======
+      <el-button type="primary" @click="dialogFormVisible = true">Checkout</el-button>
+>>>>>>> 2498bc3e744f742d28bb009f300e873a16168112
       <el-dialog title="Shipping address" :visible.sync="dialogFormVisible">
         <el-form :model="form" @submit.prevent.native="checkoutCart">
           <el-form-item label="Address" label-width="120px" autofocus="true"> 
@@ -13,7 +17,11 @@
         </el-form>
         <span slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">Cancel</el-button>
+<<<<<<< HEAD
           <el-button type="primary" @click="checkoutCart">Confirm</el-button>
+=======
+          <el-button type="primary" @click="checkoutCart" >Confirm</el-button>
+>>>>>>> 2498bc3e744f742d28bb009f300e873a16168112
         </span>
       </el-dialog>
     </div>
