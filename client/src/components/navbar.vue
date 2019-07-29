@@ -1,7 +1,7 @@
 <template>
   <div class="navbar">
     <div class="logo">
-      <span>Arcadia</span>
+      <span @click="toHome">Arcadia</span>
     </div>
     <el-form @submit.prevent.native="search">
       <el-input
@@ -14,6 +14,7 @@
       </el-input>
     </el-form>
     <div class="login-register-button">
+      <!-- {{$store.state.logedUser.cart.length}} -->
       <el-popover
         ref="popover"
         placement="left-start"
@@ -22,20 +23,52 @@
         trigger="hover"
         content="this is content, this is content, this is content"
       >
-        <el-table :data="cart">
-          <el-table-column width="150" property="date" label="date"></el-table-column>
-          <el-table-column width="100" property="name" label="name"></el-table-column>
-          <el-table-column width="300" property="address" label="address"></el-table-column>
+        <el-table :data="$store.state.logedUser.cart">
+          <el-table-column label="No." width="50px">
+            <template slot-scope="scope">
+              <span style="margin-left: 10px">{{ scope.$index+1 }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="Image" width="80px">
+            <template slot-scope="scope">
+              <img class="rowImage" :src="scope.row.image" alt />
+            </template>
+          </el-table-column>
+          <el-table-column label="Item Name" width="150px">
+            <template slot-scope="scope">
+              <span style="margin-left: 10px">{{ scope.row.itemname }}</span>
+            </template>
+          </el-table-column>
+          <!-- <el-table-column label="Description" width="300px">
+            <template slot-scope="scope">
+              <span style="margin-left: 10px">{{ scope.row.description }}</span>
+            </template>
+          </el-table-column> -->
+          <el-table-column label="Price" width="150px">
+            <template slot-scope="scope">
+              <span style="margin-left: 10px">{{ scope.row.price }}</span>
+            </template>
+          </el-table-column>
         </el-table>
-      </el-popover  >
-      <el-badge v-popover:popover :value="itemincart" class="item" v-show="this.$store.state.isLogin">
-        <i class="el-icon-shopping-bag-1 iconbag" ></i>
+      </el-popover>
+      <el-badge
+        v-popover:popover
+        :value="itemincart"
+        class="item"
+        v-show="this.$store.state.isLogin"
+      >
+        <i class="el-icon-shopping-bag-1 iconbag"></i>
       </el-badge>
-        <i class="el-icon-shopping-bag-1 iconbag" v-show="!this.$store.state.isLogin" ></i>
+      <i class="el-icon-shopping-bag-1 iconbag" v-show="!this.$store.state.isLogin"></i>
       <a class="signin" @click="signIn" v-show="!this.$store.state.isLogin">
         <i class="el-icon-user" style="margin-right: 8px;"></i>Login/Register
       </a>
-      <a class="myProfile" @click="myProfile">Hi, {{this.$store.state.logedUser.username}}</a>
+      <a
+        class="myProfile"
+        @click="myProfile"
+        v-show="this.$store.state.isLogin"
+      >Hi, {{this.$store.state.logedUser.username}}</a>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -46,28 +79,7 @@ export default {
     return {
       searchBar: "",
       itemincart: 0,
-      cart: [
-        {
-          date: "2016-05-02",
-          name: "Jack",
-          address: "New York City"
-        },
-        {
-          date: "2016-05-04",
-          name: "Jack",
-          address: "New York City"
-        },
-        {
-          date: "2016-05-01",
-          name: "Jack",
-          address: "New York City"
-        },
-        {
-          date: "2016-05-03",
-          name: "Jack",
-          address: "New York City"
-        }
-      ]
+      cart: []
     };
   },
   methods: {
@@ -83,14 +95,24 @@ export default {
       this.$store.dispatch("searchItem", this.searchBar);
       this.searchBar = "";
     },
-    myProfile() {}
+    myProfile() {
+      console.log(this.$store.state.logedUser.role, "ini rolenua");
+      if (this.$store.state.logedUser.role === "admin") {
+        this.$router.push("/admin");
+      } else {
+        this.$router.push("/profile");
+      }
+    },
+    toHome() {
+      console.log("ahahaha mau ke home");
+      this.$router.push("/");
+    }
   },
   created() {
     if (localStorage.getItem("token")) {
-      this.$store.dispatch("whoami");
-      this.$store.commit("changeStatus",true)
+      //   this.$store.dispatch("whoami");
+      this.$store.commit("changeStatus", true);
     }
-
   }
 };
 </script>
@@ -98,6 +120,10 @@ export default {
 <style>
 @import url("https://fonts.googleapis.com/css?family=Viga&display=swap");
 
+.rowImage {
+  max-width: 20px;
+  height: auto;
+}
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -140,5 +166,6 @@ export default {
 }
 .myProfile {
   cursor: pointer;
+  margin-right: 20px;
 }
 </style>

@@ -4,20 +4,23 @@
       <el-col :span="8" :offset="8">
         <div class="loginform" v-if="whatform === 'loginform'">
           <p class="signinformtitle">Login</p>
-          <el-form :label-position="'top'" ref="form" :model="signinform" label-width="120px">
-            <el-form-item label="Username / Email">
-              <el-input autofocus="true" class="signininput" v-model="signinform.ue"></el-input>
-            </el-form-item>
-            <el-form-item label="Password">
-              <el-input class="signininput" type="password" v-model="signinform.password"></el-input>
-            </el-form-item>
-            <span class="donthave">Don`t have an account? <span style="cursor: pointer; color: blue" @click="changeForm">Register here</span> </span>
-            <div >
-              <el-button class="buttonform" type="primary" @click="signIn">Sign In</el-button>
-              <el-link class="buttonform" type="info" @click="changeForm">Register</el-link>
-              <el-divider></el-divider>
-            </div>
-          </el-form>
+            <el-form :label-position="'top'" ref="form" :model="signinform" label-width="120px">
+              <form @submit.prevent="signIn">
+                  <el-form-item label="Username / Email">
+                    <el-input autofocus="true" class="signininput" v-model="signinform.ue"></el-input>
+                  </el-form-item>
+                  <el-form-item label="Password">
+                    <el-input class="signininput" type="password" v-model="signinform.password" show-password></el-input>
+                  </el-form-item>
+                  <span class="donthave">Don`t have an account? <span style="cursor: pointer; color: blue" @click="changeForm">Register here</span> </span>
+                  <div >
+                    <el-button class="buttonform" type="primary" @click="signIn">Sign In</el-button>
+                    <el-link class="buttonform" type="info" @click="changeForm">Register</el-link>
+                    <input type="submit" class="hidden-submit-button">
+                    <el-divider></el-divider>
+                  </div>
+                </form>
+              </el-form>
           <span>Or sign in with: </span>
           <div class="loginchoice">
               <span style="margin: 5px">facebook</span>
@@ -30,7 +33,7 @@
       <el-col :span="8" :offset="8">
         <div class="registerform" v-if="whatform === 'registerform'">
           <p class="signinformtitle">Register</p>
-          <el-form :label-position="'top'" ref="form" :model="signupform" label-width="120px">
+          <el-form :label-position="'top'" ref="form" :model="signupform" label-width="120px" @submit.prevent.native="signUp">
             <el-form-item label="Username">
               <el-input autofocus="true" class="signininput" v-model="signupform.username"></el-input>
             </el-form-item>
@@ -38,7 +41,7 @@
               <el-input class="signininput" type="email" v-model="signupform.email"></el-input>
             </el-form-item>
             <el-form-item label="Password">
-              <el-input class="signininput" type="password" v-model="signupform.password"></el-input>
+              <el-input class="signininput" type="password" v-model="signupform.password" show-password></el-input>
             </el-form-item>
             <span class="donthave">Already have an account? <span style="cursor: pointer; color: blue" @click="changeForm">Login here</span> </span>
             <div >
@@ -97,6 +100,14 @@ export default {
 </script>
 
 <style scoped>
+.hidden-submit-button {
+  visibility: hidden;
+  width: 0;
+  height: 0;
+  padding: 0;
+  border: 0;
+}
+
 .loginform {
   width: 400px;
   height: 550px;

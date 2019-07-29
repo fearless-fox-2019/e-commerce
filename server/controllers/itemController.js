@@ -113,12 +113,16 @@ class ItemController {
             category,
             rate
         } = req.body
-        // console.log(req.body)
+        console.log(req.file,'ini req file')
         tags = tags.split(',')
         tags = [...new Set(tags)]
         category = category.split(',')
         category = [...new Set(category)]
-        let update = {}
+        let cloudStoragePublicUrl = ''
+        if (req.file) { cloudStoragePublicUrl = req.file.cloudStoragePublicUrl }
+        let update = {
+            image: cloudStoragePublicUrl
+        }
         if (itemname) { update.itemname = itemname }
         if (description) { update.description = description }
         if (price) { update.price = price }
@@ -126,7 +130,7 @@ class ItemController {
         if (tags) { update.tags = tags }
         if (category) { update.category = category }
         if (rate) { update.rate = rate }
-        if (req.file) { update.cloudStoragePublicUrl = req.file.cloudStoragePublicUrl }
+
         console.log(update,'ini update yaa')
 
         itemModel

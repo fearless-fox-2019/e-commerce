@@ -22,6 +22,38 @@ export default new Router({
       path: '/sign',
       name: 'sign',
       component: () => import('./views/sign.vue')
+    },
+    {
+      path: '/profile',
+      name: 'userPage',
+      component: () => import('./views/customerPage.vue')
+    },
+    {
+      path: '/admin',
+      name: 'admnPage',
+      component: () => import('./views/adminPage.vue')
+    },
+    {
+      path: '/product',
+      // name: 'product',
+      component: () => import('./views/product.vue'),
+      children: [
+      {
+        path: '',
+        component: () => import('./views/allProduct.vue')
+      },
+      {
+        path: 'search',
+        component: () => import('./views/search.vue')
+      },
+      {
+        path: 'category/:searchquery',
+        component: () => import('./views/category.vue')
+      },
+      {
+        path: ':itemId',
+        component: () => import('./views/detailItem.vue')
+      }]
     }
   ],
 });

@@ -16,10 +16,31 @@ let transactionSchema = new Schema({
         default: 0
     },
     item: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Item',
-        default: []
-    }],  
+        itemid: {
+            type: Schema.Types.ObjectId,
+            required: [true, `item id needed`]
+        },
+        itemname: {
+            type: String,
+            required: [true, `item id needed`]
+        },
+        image: {
+            type: String,
+            required: [true, `item id needed`]
+        },
+        price: {
+            type: Number,
+            required: [true, `item id needed`]
+        },
+        ammount: {
+            type: Number,
+            min: 1
+        }
+    }],
+    address: {
+        type: String,
+        required: [true, 'Required address to send item']
+    }  
 },{
     timestamps: true
 })
