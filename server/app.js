@@ -8,7 +8,7 @@ const NODE_ENV = process.env.NODE_ENV
 const index=require('./routers/index.js')
 const cors= require('cors')
 const mongoose = require('mongoose')
-const connection = ''
+let connection = ''
 
 if (NODE_ENV) {
     connection =  'mongodb://localhost:27017/e-commerce-'+NODE_ENV
