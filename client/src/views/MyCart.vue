@@ -70,7 +70,7 @@
           <hr>
           <h3 style="float:left; font-size:30px"><b>Payment Form </b><small style="font-size:15px; color:red">required</small></h3>
             <div id="formPayment">
-              <form>
+              <form @submit.prevent="createTrans">
                 <b-field label="Email">
                   <b-input type="email" v-model="form.emailTo" placeholder="email" validate required></b-input>
                 </b-field>

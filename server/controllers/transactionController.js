@@ -41,13 +41,14 @@ class TransactionController{
                 console.log('success Update');
                 console.log('data: after create trans, delete cart, after promise all ', data);
                 console.log('result: ', result);
+                console.log('ok');
                 let textToSend = `
                     <h1> Hello ${req.loggedUser.username} </h1>
                     <h3> Thank you for choosing BRIDEZILLA</h3>
                     <p> We really exited to serve best things for you.</p>
                     <p> Your purchases have been sent to the destination.</p>
                     <p> Customer Details : </p>
-                    <p><b>Name : ${req.loggedUser.username.toUpperCase()}</b></p>
+                    <p><b>Name : ${req.loggedUser.username || emailTo}</b></p>
                     <p><b>Email : ${emailTo}</b></p>
                     <p><b>Phone Number : ${phoneTo}</b></p>
                     <p><b>Delivery To : ${deliveryTo}</b></p>
@@ -62,6 +63,7 @@ class TransactionController{
 
             })
             .catch(err => {
+                console.log('eror dari trans create', err);
                 res.status(500).json(err)
             })
     }

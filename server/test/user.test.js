@@ -124,23 +124,6 @@ describe('User', function(){
                     console.log(err)
                  })
             })
-            it('username contain space, should send status code 400', function(done){
-                chai
-                 .request(app)
-                 .post('/user/register')
-                 .send({ username : 'la la', email : 'lala@mail.com', password : '1234'})
-                 .then(result => {
-    
-                    expect(result).to.have.status(400)
-                    expect(result.body).to.be.an('Object')
-                    expect(result.body).to.have.property('message')
-                    expect(result.body.message).to.equal("username can't contain space")
-                    done()
-                 })
-                 .catch(err => {
-                    console.log(err)
-                 })
-            })
             it('empty username field, should send status code 400', function(done){
                 chai
                  .request(app)

@@ -5,14 +5,14 @@ const transporter = nodemailer.createTransport({
     port: 587,
     secure: false,
     auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD_EMAIL,
+        user: process.env.NODEMAILER_EMAIL,
+        pass: process.env.NODEMAILER_PASSWORD,
     }
 });
 
 function sendEmail(to,body) {
   let mailOptions = {
-    from: process.env.EMAIL,
+    from: process.env.NODEMAILER_EMAIL,
     to: to,
     subject: "Payment Confirmation - Bridezilla Team",
     html: body

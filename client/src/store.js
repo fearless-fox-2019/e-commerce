@@ -269,7 +269,7 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log('err: ', err);
-          console.log('err.response.data.message: ', err.response.data.message);
+          console.log('err.response.data.message: ', err.response);
           context.commit('getError', err.response.data.message)
           reject(false)
         })
