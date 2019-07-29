@@ -10,10 +10,10 @@ router.post('/upload', images.multer.single('image'), images.sendUploadToGCS,
   (req, res) => {
     res.status(200).json(req.file.cloudStoragePublicUrl)
 })
-// router.use(authentication)
-router.post('/', authentication, authorization, gameController.create)
-router.delete('/:id', authorization, gameController.delete)
+router.use(authentication)
+router.post('/', authorization, gameController.create)
 router.patch('/:id',  authorization, gameController.updateGame)
+router.delete('/:id', authorization, gameController.delete)
 
 // router.get()
 module.exports = router

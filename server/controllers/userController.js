@@ -11,7 +11,7 @@ class UserController {
             name : req.body.name,
             email : req.body.email,
             password : req.body.password,
-            isAdmin : false
+            isAdmin : req.body.isAdmin || false
         }
         User.create(data)
         .then(data => {

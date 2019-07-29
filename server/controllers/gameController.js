@@ -52,6 +52,8 @@ class GameController {
   }
 
   static updateGame(req, res, next){
+    console.log(req.params.id, 'ini params id')
+    // res.json(req.params.id)
     Game.updateOne({ _id : req.params.id}, req.body)
     .then(data => {
       if(data.nModified == 0){
