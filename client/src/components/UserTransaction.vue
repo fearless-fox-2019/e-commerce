@@ -52,8 +52,9 @@ export default {
 
       api
       .get(`/transactions/user-transaction`)
-      .then(({data}) => {
+      .then(({ data }) => {
           this.transaction = data
+          console.log(data);
       })
       .catch(err => console.log('errrr', err))
     },

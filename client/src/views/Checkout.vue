@@ -48,6 +48,7 @@ export default {
       this.updateUser({ address: this.user.address, phone: this.user.phone })
     },
     payNow() {
+      this.submitUserInformation()
       api.defaults.headers.common.token = localStorage.token
 
       let ProductId = []
@@ -60,8 +61,7 @@ export default {
         ProductId,
         totalPayment: this.user.totalPayment
       }
-
-      this.submitUserInformation()
+      console.log(payload);
       api.post(`/transactions`, payload)
         .then(transaction => {
           let emptyCarts = []
@@ -71,7 +71,9 @@ export default {
               'success'
           )
           this.setAllCarts(emptyCarts)
-          this.$router.push('/')
+          setTimeout(() => {
+            this.$router.push('/')
+          }, 1800)
         })
         .catch(err => console.log(err.response))
     },

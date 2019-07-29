@@ -32,7 +32,10 @@ class TransactionController {
   static findBelongs(req, res, next) {
     Transaction.find({ UserId: req.decoded._id })
     .populate('ProductId')
-    .then(transactions => res.status(200).json(transactions))
+    .then(transactions => {
+      res.status(200).json(transactions)
+      console.log(transactions);
+    })
     .catch(next)
   }
 

@@ -7,9 +7,9 @@ const transaction = require('./transaction');
 const authenticate = require('../middlewares/authenticate');
 
 router.use('/users', user);
-router.use(authenticate);
+// router.use();
 router.use('/products', product);
-router.use('/carts', cart);
-router.use('/transactions', transaction);
+router.use('/carts', authenticate, cart);
+router.use('/transactions', authenticate, transaction);
 
 module.exports = router;
