@@ -1,7 +1,7 @@
 # e-commerce
 
 ## Deploy Link
-http://------.irsantyohadi.com/
+http://e-commerce.irsantyohadi.com/
 
 ## Endpoint
 
