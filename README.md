@@ -1,5 +1,5 @@
 # e-commerce
-e-commerce.mhtrmkholis.com
+http://solid.mhtrmkholis.com
 ### Register :
 ```sh
 URL: localhost:3000/users/register
