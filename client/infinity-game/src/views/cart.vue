@@ -4,10 +4,16 @@
       <div id="cards">
         <v-layout row wrap>
           <v-flex id="payment">
-            <v-btn to="/cart/payment" flat>PAYMENT SUMMARY</v-btn>
+            <v-layout>
+            <v-flex>
+            <v-btn color="grey darken-1" to="/cart/payment">PAYMENT SUMMARY</v-btn>
+            </v-flex>
+            <v-flex style="margin-right : 50vw;">            
+            </v-flex>
+            </v-layout>
             <router-view></router-view>
           </v-flex>
-          <v-layout align-center column fill-height>
+          <v-layout align-center column fill-height style="margin-left : 450px;">
             <v-flex class="pa-2" v-for="cart in $store.state.cartList" :key="cart._id">
               <cartGames :cart="cart" style="margin-left : 25vh; " />
             </v-flex>
@@ -23,7 +29,8 @@ import cartGames from "../components/cart-games";
 export default {
   name: "cart",
   components: {
-    cartGames
+    cartGames,
+    history
   },
   data() {
     return {};

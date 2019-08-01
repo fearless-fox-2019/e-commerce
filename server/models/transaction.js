@@ -5,7 +5,9 @@ var Schema = mongoose.Schema;
 let TransactionSchema = new Schema({
     products : [{type : Object}],
     UserId : {type : Schema.Types.ObjectId, ref : 'User'},
-    transactionDate : Date
+    totalPrice : Number,
+    transactionDate : Date,
+    deliveredStatus : Boolean
 })
 
 /* middlewares/hooks */

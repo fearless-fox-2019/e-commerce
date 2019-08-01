@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Cart from './views/cart.vue'
 import Payment from './views/paymentSummary.vue'
+import History from './views/history.vue'
 
 Vue.use(Router)
 
@@ -26,6 +27,11 @@ export default new Router({
           component : Payment
         }
       ]       
+    },
+    {
+      path : '/history',
+      name : 'history',
+      component : History
     }
   ]
 })

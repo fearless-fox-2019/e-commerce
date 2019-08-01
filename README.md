@@ -8,7 +8,6 @@ baseUrl = http:localhost:3000
 |---------|----------|----------------|----------------|------------------|---------------|
 | /users/register| POST | { name, email, password } | { access_token } | 400(email has been registered!) <br>400(email format is wrong!)<br> 400(email required!)<br> 400(password length more than 6 characters!)<br> 400(password required!)|Register a new user|
 | /users/login | POST | { email, password }| { name, access_token }| 400(email/password wrong!) |Log in|
-| /users/loginGoogle | POST | { id_token } | { name, access_token } | |Sign in with Google|
 
 
 #### Game Routes

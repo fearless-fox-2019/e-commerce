@@ -17,6 +17,7 @@
     </v-flex>
     <v-spacer></v-spacer>
     <v-toolbar-items>
+      <v-btn flat to="/history" v-if="isLogin">Transaction history</v-btn>
       <v-btn flat @click="toCart">
         <v-icon>mdi-cart</v-icon>Cart
       </v-btn>
@@ -31,6 +32,7 @@
 import buttonLogin from "./login-button";
 import buttonRegister from "./register-button";
 import ax from "../api/api";
+import {mapState} from 'vuex'
 export default {
   components: {
     buttonLogin,
@@ -73,6 +75,9 @@ export default {
         this.$router.push("/cart");
       }
     }
+  },
+  computed : { 
+    ...mapState(['isLogin'])
   }
 };
 </script>

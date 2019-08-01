@@ -23,6 +23,7 @@
                 <v-text-field label="Email" prepend-icon="email" v-model="inputEmail" required></v-text-field>
               </v-flex>
               <v-flex xs12>
+                <v-form @submit.prevent="login">
                 <v-text-field
                   label="Password"
                   prepend-icon="vpn_key"
@@ -30,16 +31,16 @@
                   v-model="inputPassword"
                   required
                 ></v-text-field>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn flat dark @click="$store.commit('SET_MODAL_LOGIN', false)">Close</v-btn>
+                  <v-btn flat dark type="submit">Submit</v-btn>
+                </v-card-actions>
+                </v-form>
               </v-flex>
             </v-layout>
           </v-container>
-          <small>*indicates required field</small>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn flat dark @click="$store.commit('SET_MODAL_LOGIN', false)">Close</v-btn>
-          <v-btn flat dark @click="login">Submit</v-btn>
-        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-layout>

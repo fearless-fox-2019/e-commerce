@@ -15,8 +15,9 @@ export default new Vuex.Store({
     snackbar : {
       appearance: false,
       status: "",
-      alertMessage: ""
+      timeout : 2500     
     },
+    alertMessage: "",
     cartList:[],
     transactionList : []
   },
@@ -53,9 +54,10 @@ export default new Vuex.Store({
       state.modalLogin = payload
     },
     SET_SNACKBAR(state, payload){
+      console.log('ke set')
       state.snackbar.appearance = payload.appearance
       state.snackbar.status = payload.status
-      state.snackbar.alertMessage = payload.alertMessage
+      state.alertMessage = payload.alertMessage
     },
     SET_DIALOG_GLOB(state, payload){
       state.dialogGlob = payload
@@ -101,7 +103,7 @@ export default new Vuex.Store({
       })
       .catch(({response}) => {console.log(response)})
     },
-    getOneGame(contenxt, payload){    
+    getOneGame(context, payload){    
         ax({
           method : "get",
           url : `/games/${payload}`,
@@ -109,7 +111,7 @@ export default new Vuex.Store({
         })
         .then(({data}) => {
           // console.log(data)
-          contenxt.commit("SET_SINGLE_GAME_DATA", data)
+          context.commit("SET_SINGLE_GAME_DATA", data)
         })
         .catch(({response}) => {
           console.log(response, 'responseor di store getOneGame')          

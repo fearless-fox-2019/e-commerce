@@ -1,6 +1,7 @@
 <template>
   <v-content>
     <v-container fluid id="home" grey darken-2>
+      <snackbar />
       <v-layout row wrap>
         <v-flex xs12>
           <carousel />
@@ -24,12 +25,13 @@ import carousel from "../components/carousel";
 import productCard from "../components/productCard";
 import ax from "../api/api";
 import detail from "../components/detailGame";
-
+import snackbar from '../components/snackbar'
 export default {
   name: "home",
   components: {
     carousel,
-    productCard
+    productCard,
+    snackbar
   },
   created() {
     this.$store.dispatch("getAllGames");

@@ -57,9 +57,14 @@ export default {
       });
       return Promise.all(promises)
         .then(({ data }) => {
-          // console.log(data);
+          // console.log(data);          
+          let count = 0
+          for(let i = 0; i < this.$store.state.cartList.length; i++){
+            count += this.$store.state.cartList[i].totalPrice
+          }
           let newData = {
-            products: this.$store.state.cartList
+            products: this.$store.state.cartList,
+            totalPrice : count            
           };
           return ax({
             method: "post",
@@ -71,7 +76,7 @@ export default {
         .then(({ data }) => {
           console.log(data);
           this.$store.commit("SET_EMPTY_CART");
-          this.$router.push("/cart");
+          this.$router.push("/history");
         })
         .catch(({ response }) => {
           console.log(response);

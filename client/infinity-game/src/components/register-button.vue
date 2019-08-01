@@ -17,34 +17,35 @@
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
-            <v-layout wrap>
-              <v-flex xs12>
-                <v-text-field label="Name" prepend-icon="person" v-model="newUser.name" required></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field label="Email" prepend-icon="email" v-model="newUser.email" required></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field
-                  label="Password"
-                  prepend-icon="vpn_key"
-                  type="password"
-                  v-model="newUser.password"
-                  required
-                ></v-text-field>
-              </v-flex>
-            </v-layout>
+            <v-form @submit.prevent="register">
+              <v-layout wrap>
+                <v-flex xs12>
+                  <v-text-field label="Name" prepend-icon="person" v-model="newUser.name" required></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field label="Email" prepend-icon="email" v-model="newUser.email" required></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field
+                    label="Password"
+                    prepend-icon="vpn_key"
+                    type="password"
+                    v-model="newUser.password"
+                    required
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn flat dark @click="dialog = false">Close</v-btn>
+                  <v-btn flat dark type="submit">Submit</v-btn>
+                </v-card-actions>
+            </v-form>
           </v-container>
-          <small>*indicates required field</small>
         </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn flat dark @click="dialog = false">Close</v-btn>
-          <v-btn flat dark @click="register">Submit</v-btn>
-        </v-card-actions>
 
         <v-layout justify-center>
-          <v-dialog v-model="conrirmDialog" persistent max-width="320">          
+          <v-dialog v-model="conrirmDialog" persistent max-width="320">
             <v-card>
               <v-card-title class="headline">Successfully Registered, Proceed to Login?</v-card-title>
               <v-card-actions>
@@ -66,8 +67,8 @@ export default {
   data() {
     return {
       dialog: false,
-      conrirmDialog : false,
-      props : ['login'],
+      conrirmDialog: false,
+      props: ["login"],
       newUser: {
         name: "",
         email: "",
@@ -96,12 +97,16 @@ export default {
             this.newUser.name = "";
             this.newUser.email = "";
             this.newUser.password = "";
-            this.conrirmDialog = true
+            this.conrirmDialog = true;
           })
           .catch(err => {
             console.log(err.response.data.message);
             // console.log(err);
-            if (err.response.data.message.includes("email has already taken by another user!")) {
+            if (
+              err.response.data.message.includes(
+                "email has already taken by another user!"
+              )
+            ) {
               this.errorMessage = "email has already taken by another user!";
               this.alert = true;
               setTimeout(() => {
@@ -131,9 +136,9 @@ export default {
           });
       }
     },
-    toSignin(){
-      this.dialog = false
-      this.$store.commit('SET_MODAL_LOGIN', true)
+    toSignin() {
+      this.dialog = false;
+      this.$store.commit("SET_MODAL_LOGIN", true);
     }
   }
 };
