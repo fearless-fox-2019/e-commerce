@@ -62,16 +62,9 @@ class TransactionController {
                             message: 'Cart empty'
                         })
                 } else {
-                    let cart = req.body.cart
                     let total_price = req.body.total
                     let products = []
                     let productsId = []
-                    let quantity = []
-
-                    cart.forEach(el => {
-                        quantity.push( Number(el.quantity))
-                    })
-                    console.log(quantity, '====')
 
                     user.cart.forEach(product => {
                         products.push({

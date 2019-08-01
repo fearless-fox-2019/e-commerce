@@ -47,7 +47,14 @@ export default {
             email: '',
             password: '',
             errMsg: '',
-            role: localStorage.getItem('email', 'admin@mail.com') ? true : false,
+            role: '',
+        }
+    },
+    mounted(){
+        if(localStorage.getItem('email') === 'admin@mail.com'){
+            this.role = true
+        } else {
+            this.role = false
         }
     },
     computed: {
@@ -56,6 +63,7 @@ export default {
         }
     },
     created() {
+        // console.log(this.role)
         this.fetchProducts();
         if (this.isLogin) {
             this.fetchCart();
