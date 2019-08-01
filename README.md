@@ -13,26 +13,27 @@ baseUrl = http:localhost:3000
 #### Game Routes
 | `Routes`| `Method` | `Request Body` | `Response Data`| `Response Error` | `Description` |
 |---------|----------|----------------|----------------|------------------|---------------|
-| / | GET | - | { data }| <br> 500 (Internal Server Error) |  Get Game data
-| /:id | GET | - | { data }| <br> 500 (Internal Server Error) |  Get Single data
-| / | POST | {name, description, image, price, stock, screenshots} | { data }| 401 (Invalid Token) <br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Create new Game|
-| /:id | DELETE | - | { completed } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Delete your Game |
-| /:id| PATCH | - | { success } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Edit Game data |
-| /upload | POST | - | ${ success message }| 401 (Invalid Token)<br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Upload image to Google Cloud Storage |
+| /games | GET | - | { data }| <br> 500 (Internal Server Error) |  Get Game data
+| /games/:id | GET | - | { data }| <br> 500 (Internal Server Error) |  Get Single data
+| /games | POST | {name, description, image, price, stock, screenshots} | { data }| 401 (Invalid Token) <br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Create new Game|
+| /games/:id | DELETE | - | { completed } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Delete your Game |
+| /games/:id| PATCH | - | { success } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Edit Game data |
+| /games/upload | POST | - | ${ success message }| 401 (Invalid Token)<br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Upload image to Google Cloud Storage |
 
 
 #### Cart Routes
 | `Routes`| `Method` | `Request Body` | `Response Data`| `Response Error` | `Description` |
 |---------|----------|----------------|----------------|------------------|---------------|
-| / | POST | {UserId, GameId, quantity, totalPrice, checkoutStatus} | { data }| 401 (Invalid Token) <br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Create new Cart|
-| / | GET | - | { data }| <br> 500 (Internal Server Error) |  Get Cart data
-| /:id | GET | - | { data }| <br> 500 (Internal Server Error) |  Get Single data
-| /:id | DELETE | - | { completed } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Delete your Cart |
-| /:id| PATCH | - | { success } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Edit Cart data |
+| /carts | POST | {UserId, GameId, quantity, totalPrice, checkoutStatus} | { data }| 401 (Invalid Token) <br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Create new Cart|
+| /carts | GET | - | { data }| <br> 500 (Internal Server Error) |  Get Cart data
+| /carts/:id | GET | - | { data }| <br> 500 (Internal Server Error) |  Get Single data
+| /carts/:id | DELETE | - | { completed } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Delete your Cart |
+| /carts/:id| PATCH | - | { success } | 401 (Invalid Token)<br> 401 (you have to login first!) <br> 404 (Unauthorized) <br> 500 (Internal Server Error) | Edit Cart data |
 
 
 #### Transaction Routes
 | `Routes`| `Method` | `Request Body` | `Response Data`| `Response Error` | `Description` |
 |---------|----------|----------------|----------------|------------------|---------------|
-| / | POST | {products, , quantity, UserId, transactionDate} | { data }| 401 (Invalid Token) <br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Create new Transaction|
-| / | GET | - | { data }| <br> 500 (Internal Server Error) |  Get Transaction data |
+| /transactions | POST | {products, , quantity, UserId, transactionDate} | { data }| 401 (Invalid Token) <br> 401 (you have to login first!) <br> 500 (Internal Server Error) | Create new Transaction|
+| /transactions | GET | - | { data }|  401 (Invalid Token)<br> 401 (you have to login first!) <br> 500 (Internal Server Error) |  Get Transaction data |
+| /transactions/:id | PATCH | - | { data } |  401 (Invalid Token)<br> 401 (you have to login first!) <br> 500 (Internal Server Error) |  Get Transaction data |
