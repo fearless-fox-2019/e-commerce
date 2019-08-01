@@ -2,8 +2,8 @@
   <div id="app">
     <Navbar
         :is-login="isLogin"
-        :role="role"
         :total-items="totalItems"
+        :role="role"
         @logout="logout"
         />
     <router-view
@@ -50,13 +50,6 @@ export default {
             role: '',
         }
     },
-    mounted(){
-        if(localStorage.getItem('email') === 'admin@mail.com'){
-            this.role = true
-        } else {
-            this.role = false
-        }
-    },
     computed: {
         totalItems() {
             return this.cart.length
@@ -68,6 +61,14 @@ export default {
         if (this.isLogin) {
             this.fetchCart();
             this.fetchTransactions();
+        }
+
+        console.log(localStorage.email)
+
+        if(localStorage.email === 'admin@mail.com'){
+            this.role = true
+        } else {
+            this.role = false
         }
     },
     methods: {
@@ -166,7 +167,7 @@ export default {
                     this.$router.push('/')
                     localStorage.setItem('accesstoken', data.accesstoken)
                     localStorage.setItem('email', this.email)
-                    if(localStorage.getItem('email', 'admin@mail.com')){
+                    if(localStorage.email === 'admin@mail.com'){
                         this.role = true
                     }
                     this.clearForm()

@@ -25,7 +25,7 @@ export default {
   props: {
     isLogin: Boolean,
     totalItems: Number,
-    role: Boolean
+    role: Boolean,
   },
 };
 </script>
