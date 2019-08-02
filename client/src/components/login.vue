@@ -56,7 +56,7 @@ export default {
     loginUser() {
       axios({
         method: "POST",
-        url: `${this.url}/login`,
+        url: `${this.url}/users/login`,
         data: {
           email: this.login.email,
           password: this.login.password
