@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import db from '../config/myaxios'
+import db from './config/myaxios'
 
 
 
@@ -108,9 +108,9 @@ export default new Vuex.Store({
       db.post('/users/login', payload)
       .then(response => {
         commit('loginTrue')
-        localStorage.setItem('token', response.data.jwt)
+        localStorage.setItem('token', response.data.data.jwt)
         console.log(response.data, 'login controller')
-        commit('user', response.data)
+        commit('user', response.data.data)
         //adat data & jwt
       })
       .catch(err => {
