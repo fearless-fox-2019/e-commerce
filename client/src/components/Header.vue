@@ -81,14 +81,14 @@ export default {
             if(!localStorage.token){
                 Swal.fire('Maaf ...', 'khusus admin', 'error')
             }
-            // if(this.$store.state.userLogin.data.name){
-            //     const username = this.$store.state.userLogin.data.name
-            //     if(username === 'indi') this.$router.push('/adminpage')
-            //     else Swal.fire('Oops!', 'anda bukan admin', 'error')
-            // }else{
-            //     Swal.fire('Maaf ...', 'anda bukan admin', 'error')
-            //     console.log(this.$store.state.userLogin.data.name, 'pol')
-            // }
+            if(this.$store.state.userLogin.data.name){
+                const username = this.$store.state.userLogin.data.name
+                if(username === 'indi') this.$router.push('/adminpage')
+                else Swal.fire('Oops!', 'anda bukan admin', 'error')
+            }else{
+                Swal.fire('Maaf ...', 'anda bukan admin', 'error')
+                console.log(this.$store.state.userLogin.data.name, 'pol')
+            }
         },
         searching(){
             this.$store.dispatch('searchingitem', this.search)

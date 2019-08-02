@@ -108,9 +108,9 @@ export default new Vuex.Store({
       db.post('/users/login', payload)
       .then(response => {
         commit('loginTrue')
-        localStorage.setItem('token', response.data.data.jwt)
+        localStorage.setItem('token', response.data.jwt)
         console.log(response.data, 'login controller')
-        commit('user', response.data.data)
+        commit('user', response.data)
         //adat data & jwt
       })
       .catch(err => {

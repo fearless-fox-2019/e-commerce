@@ -6,7 +6,7 @@ const port =  process.env.PORT || 3000
 const errHandler = require('./middlewares/error-handlers')
 const routes = require('./routes/index')
 
-mongoose.connect(process.env.MONGODBURL, {useNewUrlParser:true})
+mongoose.connect('mongodb://localhost:27017/ecommerce', {useNewUrlParser:true})
 .then(response => {
     console.log('Connected to e-commerce')
 })
