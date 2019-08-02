@@ -86,7 +86,7 @@ export default {
         dlm = str[i] + dlm;
 
         if (dlm.length == 3 || i == 0) {
-          console.log("masuk");
+          // console.log("masuk");
           convert.push(dlm);
           dlm = "";
         }

@@ -8,7 +8,7 @@
         </b-col>
         <b-col cols="6" class="detail-products">
           <h2>{{prod.productname}}</h2>
-          <h4>{{price}}</h4>
+          <h4>{{convertIdr(prod.price)}}</h4>
           <span>Available : {{prod.qty}}</span>
           <br />
           <label for>Description :</label>
@@ -52,6 +52,9 @@ export default {
           text: "Something went wrong!" + JSON.stringify(err.message)
         });
       });
+  },
+  methods : {
+    convertIdr : convertIdr
   }
 };
 </script>

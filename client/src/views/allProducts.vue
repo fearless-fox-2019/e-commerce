@@ -15,7 +15,7 @@ export default {
   },
   data () {
     return {
-      products: []
+      productss: []
     }
   },
   methods: {
@@ -26,7 +26,7 @@ export default {
       })
         .then(({ data }) => {
           console.log('data', data)
-          this.products = data
+          this.productss = data
         })
         .catch(err => {
           console.log(err)
@@ -40,8 +40,20 @@ export default {
 </script>
 
 <style>
+.listproducts {
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  float: left;
+  max-width: 100%;
+}
+
 .product {
     display: flex;
+    justify-content: flex-start;
     flex-wrap : wrap;
+    margin-right: 20px;
 }
+
 </style>

@@ -28,16 +28,30 @@
       </b-form-group>
       <router-link to="/register">Don't have an account?</router-link>
       <button type="submit" class="button-ecom">Login</button>
+      <!-- <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccess" :onFailure="onFailure"></GoogleLogin> -->
     </form>
   </div>
 </template>
 
 <script>
 import axios from "../config/axios.js";
+import GoogleLogin from 'vue-google-login'
 
 export default {
+  components : {
+    GoogleLogin
+  },
   data() {
     return {
+      params: {
+          client_id:"152518803210-lqhg8i99tc2rr50ggrmvru8dusilpn5t.apps.googleusercontent.com"
+        },
+      // only needed if you want to render the button with the google ui
+      renderParams: {
+          width: 250,
+          height: 50,
+          longtitle: true
+      },
       user: {
         email: "",
         password: ""
@@ -65,8 +79,23 @@ export default {
             type: "error",
             title: "Oops...",
             text: "Something went wrong!" + JSON.stringify(err)
-          });
         });
+      });
+    },
+    onSuccess(googleUser) {
+        console.log(googleUser);
+        const id_token = googleUser.getAuthResponse().id_token;
+        console.log(id_token);
+        
+        // This only gets the user information: id, name, imageUrl and email
+        console.log(googleUser.getBasicProfile());
+        // this.$emit("loginPage", {
+        //   type : "Google",
+        //   id_token
+        // }) // change with axios
+    },
+    onFailure(error) {
+      console.log(error)
     }
   }
 };

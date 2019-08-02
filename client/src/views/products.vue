@@ -121,15 +121,6 @@ ul{
   display: flex;
   justify-content: center;
 }
-.listproducts {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  float: left;
-  justify-content: space-between;
-  max-width: 100%;
-}
 
 /* .button-cart{
   display: none;
