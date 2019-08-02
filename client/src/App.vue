@@ -15,8 +15,8 @@ export default {
   },
   created(){
     this.$store.dispatch('getAllProduct') // manggil actions
-    if(localStorage.token){
-      this.$store.commit('isLogin', true)
+    if(localStorage.getItem('token')){
+      this.$store.commit('loginTrue', true)
     }else{
       this.$router.push('/')
     }

@@ -9,7 +9,7 @@ function authentication(req, res, next) {
         next()
       } catch(err) {
         res.status(403).json({
-            message: 'Forbidden - gabisa',
+            message: 'Forbidden',
             data: err
         })
       }

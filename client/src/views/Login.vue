@@ -27,7 +27,7 @@
                                     </p>
                                 </b-field>
                             </!--> 
-                            <!-- <form @submit.prevent="login">
+                            <form >
                                 <b-field>
                                     <b-input placeholder="Email"
                                         v-model="email"
@@ -48,7 +48,9 @@
                                 <div style="display: flex; justify-content: space-around">
                                     <b-button type="submit is-primary is-rounded"
                                         inverted
-                                        outlined>
+                                        outlined
+                                        @click="login"
+                                        >
                                         Login
                                     </b-button>
                                     <b-button type="button is-warning is-rounded"
@@ -63,14 +65,14 @@
                                         Register
                                     </b-button>
                                 </div>
-                            </form> -->
-                            <form @submit.prevent="login">
+                            </form>
+                            <!-- <form @submit.prevent="login">
                                 <input type="text" v-model="email">
                                 <input type="password" v-model="password">
                                 <button type="submit">login</button>
                                 <button @click="$router.push('/')">home</button>
                                 <button @click="$router.push('/register')">register</button>
-                            </form>
+                            </form> -->
                         </div>
                     </div>
                 </div>

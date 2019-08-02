@@ -13,8 +13,8 @@
                     </div>
                     <div class="column box is-8 is-offset-2">
                         <div class="notification" style="background-color: #E49AC9;">
-                            <form action="" @submit.prevent="register">
-                                <!-- <b-field>
+                            <form @submit.prevent="register">
+                                <b-field>
                                     <b-input type="text"
                                         placeholder="Username"
                                         v-model="username"
@@ -55,13 +55,13 @@
                                         outlined>
                                         Register
                                     </b-button>
-                                </div> -->
-                                <input type="text" v-model="username" placeholder="username">
+                                </div>
+                                <!-- <input type="text" v-model="username" placeholder="username">
                                 <input type="text" v-model="email" placeholder="email">
-                                <input type="password" v-model="password" placeholder="password">
-                                <button class="is-warning" type="submit">register</button>
+                                <input type="password" v-model="password" placeholder="password"> -->
+                                <!-- <button class="is-warning" type="submit">register</button>
                                 <button @click="$router.push('/')">home</button>
-                                <button @click="$router.push('/login')">login</button>
+                                <button @click="$router.push('/login')">login</button> -->
                             </form>
                         </div>
                     </div>

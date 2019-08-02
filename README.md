@@ -1,6 +1,7 @@
 # e-commerce 🌎
 # GEMS 💎
 E-Commerce jualan boneka 🐼🦊🦁🐯🐨🐳🐙🦋
+[![standard-readme compliant](https://img.shields.io/badge/Link%20deploy-eCommerce-brightgreen.svg?style=flat-square)](https://ecommerce.indinabilah.me)
 
 Getting Startted
 
