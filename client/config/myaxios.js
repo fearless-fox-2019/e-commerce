@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const db = axios.create({
-    baseURL: 'http://localhost:3000'
+    baseURL: 'http://34.87.4.189'
 })
 
 export default db

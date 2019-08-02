@@ -13,7 +13,7 @@
                     </div>
                     <div class="column box is-8 is-offset-2">
                         <div class="notification" style="background-color: #E49AC9;">
-                            <form @submit.prevent="register">
+                            <form>
                                 <b-field>
                                     <b-input type="text"
                                         placeholder="Username"
@@ -51,6 +51,7 @@
                                         Home
                                     </b-button>
                                     <b-button type="submit is-primary is-rounded"
+                                        @click="register"
                                         inverted
                                         outlined>
                                         Register
