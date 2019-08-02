@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from './router'
-const url = 'http://35.198.252.94/api/'
+const url = 'http://localhost:3000/api/'
+// 35.198.252.94
 const ax = axios.create({
   baseURL: url
 })
@@ -16,7 +17,9 @@ export default new Vuex.Store({
     cart: {},
     dialogCheckout: false,
     shipping: [],
-    delivered: []
+    delivered: [],
+    ordered: [],
+    allTransactions: []
   },
   mutations: {
     INSERTPRODUCTS (state, payload) {
@@ -58,6 +61,9 @@ export default new Vuex.Store({
     },
     INSERTDELIVERED (state, payload) {
       state.delivered = payload
+    },
+    INSERTALLTRANSACTIONS (state, payload) {
+      state.allTransactions = payload
     }
   },
   actions: {
@@ -66,6 +72,7 @@ export default new Vuex.Store({
       ax.get('/products')
         .then(({ data }) => {
           commit('INSERTPRODUCTS', data)
+          router.push('/')
           state.isLoading = false
         })
         .catch(err => { console.log(err) })
@@ -145,11 +152,16 @@ export default new Vuex.Store({
     fetchTransactions ({ state, commit }, payload) {
       ax.get('/transactions', { headers: { token: localStorage.getItem('token') } })
         .then(({ data }) => {
-          let shipping = data.filter(transaction => transaction.status === 'shipping')
-          let delivered = data.filter(transaction => transaction.status === 'delivered')
+          let shipping = []
+          let delivered = []
+          data.forEach(transaction => {
+  
+            if(transaction.statusTransaction == 'delivered') delivered.push(transaction)
+            else shipping.push(transaction)
+          });
+          
           commit('INSERTSHIPPING', shipping)
           commit('INSERTDELIVERED', delivered)
-          console.log('transaction fetched')
         })
         .catch(err => { console.log(err.response.data) })
     },
@@ -159,6 +171,67 @@ export default new Vuex.Store({
         method: 'PATCH',
         headers: {
           token: localStorage.getItem('token')
+        }
+      })
+    },
+    create ({ state, commit, dispatch }, { data }) {
+      let formData = new FormData()
+      formData.append('name', data.name)
+      formData.append('description', data.description)
+      formData.append('stock', data.stock)
+      formData.append('price', data.price)
+      formData.append('image', data.image)
+      return ax({
+        method: 'POST',
+        url: '/products',
+        data: formData,
+        headers: {
+          token: localStorage.getItem('token'),
+          'Content-Type': 'multipart/form-data'
+        }
+      })
+    },
+    fetchAllTransactions ({ state, commit }, payload) {
+      ax.get('/transactions/admin', { headers: { token: localStorage.getItem('token') } })
+        .then(({ data }) => {
+          commit('INSERTALLTRANSACTIONS', data)
+        })
+        .catch(err => {
+          console.log(err.response.data.errors)
+        })
+    },
+    deleteProduct ({ state, commit }, payload) {
+      return ax({
+        method: 'DELETE',
+        url: '/products/delete/' + payload,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+    },
+    updateProduct ({ state, commit }, { data }) {
+      let formData = new FormData()
+      formData.append('name', data.name)
+      formData.append('description', data.description)
+      formData.append('stock', data.stock)
+      formData.append('price', data.price)
+      formData.append('image', data.image)
+      return ax({
+        url: '/products/' + data._id,
+        method: 'PUT',
+        headers: {
+          token: localStorage.getItem('token'),
+          'Content-Type': 'multipart/form-data'
+        },
+        data: formData
+      })
+    },
+    acceptTransaction ({ state, commit }, payload) {
+      return ax({
+        method: 'PATCH',
+        url: '/transactions/accept/' + payload,
+        headers : {
+          token : localStorage.getItem('token')
         }
       })
     }

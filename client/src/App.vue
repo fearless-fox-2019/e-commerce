@@ -9,7 +9,7 @@
         <v-btn depressed to="/" text class="white--text" exact-active-class="link-active" exact>home</v-btn>
         <v-btn depressed to="/login" v-if="!isLogin" text class="white--text">Login</v-btn>
         <v-btn depressed to="/register" v-if="!isLogin" text class="white--text">Register</v-btn>
-        <v-btn depressed text class="white--text" v-if="loggedUser.role == 'admin'" to="/admin">Admin</v-btn>
+        <v-btn depressed text class="white--text" v-if="loggedUser.role == 'admin'" to="/admin/create">Admin</v-btn>
         <v-btn depressed text class="white--text" v-if="loggedUser.role == 'user'" to="/transaction/shipping" @click="fetchTransactions">Transaction</v-btn>
         <v-btn depressed text class="white--text" v-if="isLogin" @click="logout">Logout</v-btn>
         <v-btn icon to="/cart">
@@ -53,6 +53,7 @@ export default {
     this.$store.dispatch('fetchProducts')
     this.$store.dispatch('fetchCart')
     this.$store.commit('CREATED')
+    this.$store.dispatch('fetchTransactions')
   },
   methods: {
     logout () {
@@ -61,6 +62,7 @@ export default {
     },
     fetchTransactions () {
       this.$store.dispatch('fetchTransactions')
+      
     }
   }
 }

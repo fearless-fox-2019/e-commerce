@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TransactionCard v-for="tr in shipping" :transaction="tr" :key="tr._id" type="shipping"/>
+    <TransactionCard v-for="tr in allTransactions" :transaction="tr" :key="tr._id" type="all"/>
   </div>
 </template>
 
@@ -9,11 +9,14 @@ import { mapState } from 'vuex'
 import TransactionCard from '@/components/TransactionCard.vue'
 export default {
   computed: {
-    ...mapState(['shipping'])
+    ...mapState(['delivered', 'allTransactions'])
   },
   components: {
     TransactionCard
   },
+  created () {
+    this.$store.dispatch('fetchAllTransactions')
+  }
 }
 </script>
 

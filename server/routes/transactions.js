@@ -9,6 +9,7 @@ router.use(authentication)
 router.get('/', ControllerTransaction.findUser)
 router.get('/admin', authorizeAdmin, ControllerTransaction.findAll )
 router.post('/', checkCart, ControllerTransaction.makeTransaction)
+router.patch('/accept/:transactionId', authorizeAdmin, ControllerTransaction.acceptTransaction)
 router.patch('/delivered/:transactionId', ControllerTransaction.updateStatus)
 router.delete('/:transactionId', ControllerTransaction.cancelTransaction)
 

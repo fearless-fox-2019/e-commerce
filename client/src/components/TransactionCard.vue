@@ -9,10 +9,13 @@
         </div>
         <div id="option">
           <v-card color="green white--text" elevation="4" style="padding: 7px;" v-if="type == 'shipping'">
-            <p>On Courier</p>
+            <p>{{transaction.statusTransaction}}</p>
           </v-card>
-          <v-card color="blue white--text" elevation="4" style="padding: 7px;" v-else>
+          <v-card color="blue white--text" elevation="4" style="padding: 7px;" v-if="type == 'delivered'">
             <p>Delivered</p>
+          </v-card>
+          <v-card color="black white--text" elevation="4" style="padding: 7px;" v-if="type == 'all'">
+            <p>{{transaction.statusTransaction}}</p>
           </v-card>
         </div>
       </div>
@@ -40,8 +43,14 @@
       </v-simple-table>
     </div>
     <v-divider></v-divider>
-    <v-btn block color="blue white--text" style="margin-top: 10px;" v-if="type == 'shipping'" @click="deliverThis">
+    <v-btn block color="blue white--text" style="margin-top: 10px;" v-if="transaction.statusTransaction === 'shipping' && type === 'shipping'" @click="deliverThis">
       Confirm Delivery
+    </v-btn>
+    <v-btn block color="blue white--text" style="margin-top: 10px;" v-if="transaction.statusTransaction === 'ordered' && type === 'all'" @click="acceptThis">
+      Accept Transaction
+    </v-btn>
+    <v-btn block color="black white--text" disabled style="margin-top: 10px;" v-if="transaction.statusTransaction === 'ordered' && type === 'shipping'" @click="acceptThis">
+      Pending
     </v-btn>
   </v-card>
 </template>
@@ -107,6 +116,17 @@ export default {
         .catch(err => {
           console.log(err.response.data)
         })
+    },
+    acceptThis () {
+      this.$store.dispatch('acceptTransaction', this.transaction._id)
+      .then(({data}) => {
+        this.$toast.open({ message: 'Product accepted ! Now shipping to customer :)', type: 'is-success'})
+        this.$store.dispatch('fetchTransactions')
+        this.transaction.statusTransaction = 'shipping'
+      })
+      .catch(err => {
+        console.log(err.response.data.errors)
+      })
     }
   }
 }
@@ -117,8 +137,9 @@ p {
   margin: 0;
 }
 .tr-item {
-  margin: 15px;
+  margin: 15px auto;
   padding: 10px;
+  width: 70%;
 }
 
 th {

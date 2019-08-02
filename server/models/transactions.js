@@ -10,9 +10,9 @@ const transactionSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  status: {
+  statusTransaction : {
     type: String,
-    default: 'shipping',
+    default: 'ordered',
     enum: ['ordered', 'shipping', 'delivered']
   },
   address : {

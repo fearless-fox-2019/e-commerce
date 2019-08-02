@@ -40,7 +40,7 @@ class ControllerTransaction {
     try {
       const transaction = await Transaction.findById({_id: req.params.transactionId})
       if(transaction) {
-        transaction.status = 'delivered'
+        transaction.statusTransaction = 'delivered'
         const result =  await transaction.save()
         res.status(200).json(result)
       } else {
@@ -55,6 +55,21 @@ class ControllerTransaction {
     try {
       const deleteResult = await Transaction.deleteOne({_id: req.params.transactionId})
       res.status(200).json(deleteResult)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  static async acceptTransaction (req, res, next) {
+    try {
+      const transaction = await Transaction.findById(req.params.transactionId)
+      if(transaction) {
+        transaction.statusTransaction = 'shipping'
+        const acceptedTransaction = await transaction.save()
+        res.status(200).json(acceptedTransaction)
+      } else {
+        throw { status: 404, resource : 'Transaction'}
+      }
     } catch (error) {
       next(error)
     }

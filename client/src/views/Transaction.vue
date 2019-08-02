@@ -17,9 +17,6 @@ export default {
       target: ['/transaction/shipping', '/transaction/delivered']
     }
   },
-  created () {
-    this.$store.dispatch('fetchTransactions')
-  }
 }
 </script>
 

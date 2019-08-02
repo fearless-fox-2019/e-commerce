@@ -23,11 +23,17 @@
           </v-tooltip>
         </div>
       </div>
+      <v-divider></v-divider>
+      <div v-if="loggedUser.role == 'admin'" id="admin-option">
+        <v-btn  color="red white--text" @click="deletThis">Delete</v-btn>
+        <v-btn  color="blue white--text" :to="`/edit/${book._id}`">Edit</v-btn>
+      </div>
     </v-card>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'productCard',
   props: ['book'],
@@ -49,7 +55,8 @@ export default {
       }
 
       return 'Rp ' + arr.join('')
-    }
+    },
+    ...mapState(['loggedUser'])
   },
   methods: {
     addToCart () {
@@ -64,7 +71,19 @@ export default {
           this.$store.dispatch('fetchCart')
         })
         .catch(err => {
-          console.log(err.response.data.errors)
+          console.log(err.response.data.errors[0])
+          this.$toast.open({ message: 'You have to login first !', type: 'is-danger' })
+          this.loading = false
+        })
+    },
+    deletThis () {
+      this.$store.dispatch('deleteProduct', this.book._id)
+        .then(({ data }) => {
+          this.$toast.open({ message: 'Product Deleted', type: 'is-success' })
+          this.$store.dispatch('fetchProducts')
+        })
+        .catch(err => {
+          console.log(err.response.data)
         })
     }
   }
@@ -88,5 +107,10 @@ export default {
   justify-content: space-between;
   height: 100%;
   align-items: flex-end;
+}
+#admin-option {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 </style>

@@ -9,6 +9,9 @@ import Checkout from './views/Checkout.vue'
 import Transaction from './views/Transaction.vue'
 import Delivered from './views/Transactions/Delivered.vue'
 import Shipping from './views/Transactions/Shipping.vue'
+import Create from './views/Admin/Create.vue'
+import TransactionAdmin from './views/Admin/Transactions.vue'
+import Edit from './views/Edit.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -38,7 +41,16 @@ export default new Router({
     {
       path: '/admin',
       name: 'admin',
-      component: Admin
+      component: Admin,
+      children: [{
+        path: 'create',
+        name: 'create',
+        component: Create
+      }, {
+        path: 'transactions',
+        name: 'transactions',
+        component: TransactionAdmin
+      }]
     },
     {
       path: '/checkout',
@@ -58,6 +70,11 @@ export default new Router({
         name: 'delivered',
         component: Delivered
       }]
+    },
+    {
+      path: '/edit/:id',
+      name: 'edit',
+      component: Edit
     }
   ]
 })
