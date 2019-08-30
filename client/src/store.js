@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from './router'
-const url = 'http://localhost:3000/api/'
+const url = 'http://35.198.252.94/api/'
 // 35.198.252.94
 const ax = axios.create({
   baseURL: url

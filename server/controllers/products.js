@@ -1,7 +1,7 @@
 const Product = require('../models/products')
 
 class ControllerProduct {
-  static findAll(req, res, next) {
+  static findAll(req, res, next) { 
     Product.find()
     .then(result => {
       res.status(200).json(result)
